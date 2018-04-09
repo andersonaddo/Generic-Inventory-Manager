@@ -1,5 +1,6 @@
 # Generic Inventory Manager! 
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/996f508151aa4d2186845bf07891e0b3)](https://app.codacy.com/app/niiaddo.andy/Generic-Inventory-Manager?utm_source=github.com&utm_medium=referral&utm_content=andersonaddo/Generic-Inventory-Manager&utm_campaign=badger)
 [![CodeFactor](https://www.codefactor.io/repository/github/andersonaddo/generic-inventory-manager/badge)](https://www.codefactor.io/repository/github/andersonaddo/generic-inventory-manager)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d0269824876a4a00a5c0624174f58ee0)](https://www.codacy.com/app/niiaddo.andy/Generic-Inventory-Manager?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=andersonaddo/Generic-Inventory-Manager&amp;utm_campaign=Badge_Grade)
 
