@@ -1,5 +1,7 @@
 # Generic Inventory Manager! 
 
+[![CodeFactor](https://www.codefactor.io/repository/github/andersonaddo/generic-inventory-manager/badge)](https://www.codefactor.io/repository/github/andersonaddo/generic-inventory-manager)
+
 <img src="docs/Chemical Cover image.jpg" width = "205" length = "205">
 
 This is an inventory manager created by **@andersonaddo** and **@Ogoe1** for a small local chemical shop in Ghana.  Even though it was made for a specific shop, with some modification, it can work for many businesses!
