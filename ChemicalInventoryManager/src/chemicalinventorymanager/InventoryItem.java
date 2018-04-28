@@ -8,6 +8,7 @@ package chemicalinventorymanager;
 public class InventoryItem {
     public String name, description, imageName, supplierId;
     public boolean stillSold = true;
+    public float price;
     public int amountAvailable;
     String id;
     

@@ -16,14 +16,13 @@ import java.util.Set;
  * This is a static helper class that manages all the logic for the SQLite backend of this application
  */
 public final class DatabaseManager {
-    
     private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
     
     private static Connection databaseConenction;
-    private static String DATABADE_PATH = "Databases\\ShopDatabase.db";
+    private static String DATABADE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
     private static String DATABADE_NAME = "ShopDatabase.db";
     
-    private void processError(Exception e){
+    private static void processError(Exception e){
         System.out.println(e);
     }
     
@@ -32,7 +31,7 @@ public final class DatabaseManager {
             if (databaseConenction != null) {
                 return;
             }
-            String url = "jdbc:sqlite" + DATABADE_PATH;
+            String url = "jdbc:sqlite:" + DATABADE_PATH;
             databaseConenction = DriverManager.getConnection(url);
         } catch (SQLException sQLException) {
             System.out.println(sQLException);
@@ -73,12 +72,12 @@ public final class DatabaseManager {
         }
     }
     
-    public void addCustomer (Customer customer) throws SQLException{      
+    public static void addCustomer (Customer customer) throws SQLException{      
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            String command = String.format("INSERT INTO Customers (id, full name, gender)"
-                    + "VALUES ('$s', '%s', '%s')", customer.getID(), customer.fullName, customer.getGender());
+            String command = String.format("INSERT INTO `Customers` (id, full name, gender)"
+                    + " VALUES ('$s', '%s', '%s')", customer.getID(), customer.fullName, customer.getGender());
             statement.executeUpdate(command);
             statement.close();            
         } catch (Exception e) {
@@ -92,7 +91,7 @@ public final class DatabaseManager {
      * @return
      * @throws SQLException 
      */
-    public Customer getCustomerWithId(String id) throws SQLException{
+    public static Customer getCustomerWithId(String id) throws SQLException{
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
@@ -139,7 +138,7 @@ public final class DatabaseManager {
      * @param query
      * @return A list of Items
      */
-    public List<InventoryItem> getItemsWithName(String query) throws SQLException{
+    public static List<InventoryItem> getItemsWithName(String query) throws SQLException{
         ArrayList<InventoryItem> resultList = new ArrayList <InventoryItem>();
         try {
             connect();
@@ -154,6 +153,7 @@ public final class DatabaseManager {
             while (results.next()) {
                 InventoryItem item = new InventoryItem(results.getString("ID"));
                 item.name = results.getString("NAME");
+                item.price = results.getFloat("PRICE");
                 item.description = results.getString("DESCRIPTION");
                 item.amountAvailable = results.getInt("AMOUNT AVAILABLE");
                 item.stillSold = (results.getInt("STILL SOLD")) == 1;
@@ -169,13 +169,13 @@ public final class DatabaseManager {
         }
     }
     
-    public void addItem (InventoryItem item) throws SQLException{      
+    public static void addItem (InventoryItem item) throws SQLException{      
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            String command = String.format("INSERT INTO Inventory Items"
-                    + "VALUES ('%s', '%s', '%s', '%d', '%d', '%s', '%s')", 
-                    item.getID(), item.name, item.description, (item.stillSold) ? 1 : 0, item.amountAvailable, item.imageName, item.supplierId);
+            String command = String.format("INSERT INTO `Inventory Items`"
+                    + " VALUES ('%s', '%s','%f', '%s', '%d', '%d', '%s', '%s')", 
+                    item.getID(), item.name, item.price ,item.description, (item.stillSold) ? 1 : 0, item.amountAvailable, item.imageName, item.supplierId);
             statement.executeUpdate(command);
             statement.close();            
         } catch (Exception e) {
@@ -190,7 +190,7 @@ public final class DatabaseManager {
      * @return
      * @throws SQLException 
      */
-    public InventoryItem getItemWithId(String id) throws SQLException{
+    public static InventoryItem getItemWithId(String id) throws SQLException{
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
@@ -204,6 +204,7 @@ public final class DatabaseManager {
             if (results.next()) {
                 item = new InventoryItem(results.getString("ID"));
                 item.name = results.getString("NAME");
+                item.price = results.getFloat("PRICE");
                 item.description = results.getString("DESCRIPTION");
                 item.amountAvailable = results.getInt("AMOUNT AVAILABLE");
                 item.stillSold = (results.getInt("STILL SOLD")) == 1;
@@ -229,7 +230,7 @@ public final class DatabaseManager {
      * @param query
      * @return A list of Suppliers
      */
-    public List<Supplier> getSuppliersWithName(String query) throws SQLException{
+    public static List<Supplier> getSuppliersWithName(String query) throws SQLException{
         ArrayList<Supplier> resultList = new ArrayList <Supplier>();
         try {
             connect();
@@ -263,13 +264,13 @@ public final class DatabaseManager {
         }
     }
     
-    public void addSupplier (Supplier supplier) throws SQLException{      
+    public static void addSupplier (Supplier supplier) throws SQLException{      
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = String.format("INSERT INTO Suppliers"
-                    + "VALUES ('%s', '%s', '%s', '%s', '%s')", 
+            String command = String.format("INSERT INTO `Suppliers`"
+                    + " VALUES ('%s', '%s', '%s', '%s', '%s')", 
                     supplier.getID(), supplier.name, supplier.email, supplier.phone, String.join(",", supplier.itemsSupplied));
             statement.executeUpdate(command);
             statement.close();            
@@ -285,7 +286,7 @@ public final class DatabaseManager {
      * @return
      * @throws SQLException 
      */
-    public Supplier getSupplierWithId(String id) throws SQLException{
+    public static Supplier getSupplierWithId(String id) throws SQLException{
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
@@ -326,7 +327,7 @@ public final class DatabaseManager {
      * @param query
      * @return A list of Suppliers
      */
-    public List<Transaction> getTransactionWithDate(String query) throws SQLException{
+    public static List<Transaction> getTransactionWithDate(String query) throws SQLException{
         ArrayList<Transaction> resultList = new ArrayList <Transaction>();
         try {
             connect();
@@ -368,7 +369,7 @@ public final class DatabaseManager {
         }
     }
     
-    public void addTransaction (Transaction tran) throws SQLException{      
+    public static void addTransaction (Transaction tran) throws SQLException{      
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
@@ -400,7 +401,7 @@ public final class DatabaseManager {
      * @return
      * @throws SQLException 
      */
-    public Transaction getTransactionWithId(String id) throws SQLException{
+    public static Transaction getTransactionWithId(String id) throws SQLException{
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
