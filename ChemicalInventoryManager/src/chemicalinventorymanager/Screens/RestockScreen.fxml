@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.DropdownButton?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -45,13 +45,6 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <DropdownButton layoutX="58.0" layoutY="127.0">
-                <items>
-                    <MenuItem text="Choice 1" />
-                    <MenuItem text="Choice 2" />
-                    <MenuItem text="Choice 3" />
-                </items>
-            </DropdownButton>
             <TextField layoutX="289.0" layoutY="121.0" prefHeight="26.0" prefWidth="64.0" style="-fx-border-color: #228B22;" />
             <TextField layoutX="504.0" layoutY="121.0" prefHeight="26.0" prefWidth="70.0" style="-fx-border-color: #228B22;" />
             <ImageView fitHeight="59.0" fitWidth="64.0" layoutX="561.0" layoutY="327.0" pickOnBounds="true" preserveRatio="true">
@@ -59,6 +52,7 @@
                   <Image url="@../Pictures/AddItemToSelection.jpg" />
                </image>
             </ImageView>
+            <ChoiceBox layoutX="40.0" layoutY="133.0" prefWidth="150.0" />
       </children>
     </AnchorPane>
   </children>
