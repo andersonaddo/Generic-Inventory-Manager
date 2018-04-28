@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.NewTransactionController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -56,7 +56,7 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="254.0" layoutY="29.0" text="Transactions">
+            <Label layoutX="232.0" layoutY="30.0" text="New Transaction">
                <font>
                   <Font size="24.0" />
                </font>
@@ -85,9 +85,9 @@
                     <MenuItem text="Pawpaw" />
                 </items>
             </DropdownButton>
-            <ImageView id="add_btn" fitHeight="35.0" fitWidth="26.0" layoutX="600.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="add_btn" fitHeight="57.0" fitWidth="50.0" layoutX="576.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../Pictures/plus-logo-icon-27956.png" />
+                  <Image url="@../Pictures/AddItemToSelection.jpg" />
                </image>
             </ImageView>
          </children>

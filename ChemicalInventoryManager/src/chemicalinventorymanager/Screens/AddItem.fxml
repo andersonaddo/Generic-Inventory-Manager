@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.DropdownButton?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.AddItemController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -56,40 +56,30 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Label layoutX="226.0" layoutY="34.0" text="Inventory Restock">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="89.0" layoutY="91.0" text="Item">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="295.0" layoutY="91.0" text="Quantity">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Label layoutX="494.0" layoutY="91.0" text="Wholesale Price">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <DropdownButton layoutX="58.0" layoutY="127.0">
-                <items>
-                    <MenuItem text="Choice 1" />
-                    <MenuItem text="Choice 2" />
-                    <MenuItem text="Choice 3" />
-                </items>
-            </DropdownButton>
-            <TextField layoutX="307.0" layoutY="121.0" prefHeight="26.0" prefWidth="26.0" />
-            <TextField layoutX="526.0" layoutY="121.0" prefHeight="26.0" prefWidth="26.0" />
-            <ImageView fitHeight="35.0" fitWidth="26.0" layoutX="600.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
+            <Button id="back_btn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
+            <ImageView id="item_image" fitHeight="304.0" fitWidth="233.0" layoutX="87.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Pictures/plus-logo-icon-27956.png" />
+                  <Image url="@Pictures/defaultCustomerImage.png" />
                </image>
             </ImageView>
+            <TextField id="name_field" layoutX="451.0" layoutY="71.0" prefHeight="25.0" prefWidth="171.0" />
+            <TextField id="price_field" layoutX="451.0" layoutY="113.0" prefHeight="25.0" prefWidth="171.0" />
+            <TextField id="description_field" layoutX="451.0" layoutY="159.0" prefHeight="146.0" prefWidth="171.0" />
+            <Label layoutX="389.0" layoutY="75.0" text="Name:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="392.0" layoutY="117.0" text="Price:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="375.0" layoutY="159.0" text="Description:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>

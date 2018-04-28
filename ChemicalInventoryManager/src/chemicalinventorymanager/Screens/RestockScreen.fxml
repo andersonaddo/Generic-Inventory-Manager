@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.DropdownButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.RestockScreenController">
+  <children>
+      <MenuBar>
+         <menus>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Label layoutX="226.0" layoutY="34.0" text="Inventory Restock">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="89.0" layoutY="91.0" text="Item">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="295.0" layoutY="91.0" text="Quantity">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="494.0" layoutY="91.0" text="Wholesale Price">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <DropdownButton layoutX="58.0" layoutY="127.0">
+                <items>
+                    <MenuItem text="Choice 1" />
+                    <MenuItem text="Choice 2" />
+                    <MenuItem text="Choice 3" />
+                </items>
+            </DropdownButton>
+            <TextField layoutX="289.0" layoutY="121.0" prefHeight="26.0" prefWidth="64.0" style="-fx-border-color: #228B22;" />
+            <TextField layoutX="504.0" layoutY="121.0" prefHeight="26.0" prefWidth="70.0" style="-fx-border-color: #228B22;" />
+            <ImageView fitHeight="59.0" fitWidth="64.0" layoutX="561.0" layoutY="327.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Pictures/AddItemToSelection.jpg" />
+               </image>
+            </ImageView>
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
