@@ -76,8 +76,8 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField id="quantity_field" layoutX="301.0" layoutY="124.0" prefHeight="26.0" prefWidth="26.0" />
-            <TextField id="selling_price_field" layoutX="516.0" layoutY="124.0" prefHeight="26.0" prefWidth="26.0" />
+            <TextField id="quantity_field" layoutX="283.0" layoutY="139.0" prefHeight="26.0" prefWidth="63.0" />
+            <TextField id="selling_price_field" layoutX="486.0" layoutY="139.0" prefHeight="26.0" prefWidth="86.0" />
             <ImageView id="add_btn" fitHeight="57.0" fitWidth="50.0" layoutX="576.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Pictures/AddItemToSelection.jpg" />
