@@ -10,8 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 
 
 /**
@@ -28,9 +30,9 @@ public class AddItemController implements Initializable {
 
     @FXML
     private TextField amountInStock;
-    
+
     @FXML
-    private TextField newItemId;
+    private Label amountInStockText;
 
     @FXML
     private ChoiceBox<?> supplierDropdown;
@@ -39,21 +41,32 @@ public class AddItemController implements Initializable {
     private TextArea newItemDescription;
 
     @FXML
+    private TextField newItemId;
+
+    @FXML
+    private Label itemIdText;
+
+    @FXML
     void addItem(ActionEvent event) throws SQLException {
         if (!inputsAreValid()) return;
-        String id = (!newItemId.getText().equals("")) ? newItemId.getText() : "545454";
+        String id = (!newItemId.getText().equals("")) ? newItemId.getText() : DatabaseManager.generateUniqueId(DatabaseManager.tableTypes.item);
         InventoryItem item = new InventoryItem(id);
-        item.supplierId = "";
+        item.supplierId = ""; //TODO: Gotta fix this too
         item.name = newItemName.getText();
         item.description = newItemDescription.getText();
         item.price = (!newItemPrice.getText().equals(""))? Float.parseFloat(newItemPrice.getText()) : 0;
+        item.amountAvailable = Integer.parseInt(amountInStock.getText());
         DatabaseManager.addItem(item);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         HelperClass.makeNumericOnly(newItemPrice);
-        HelperClass.makeNumericOnly(amountInStock);
+        HelperClass.makePositiveIntegerOnly(amountInStock);
+        
+        //TODO: Edit the delay for these tooltips
+        amountInStockText.setTooltip(new Tooltip("How much of this item do you aleady have? Default is 0."));
+        itemIdText.setTooltip(new Tooltip("The ID of this item of for the database. If not entered, it will be automatically generated"));
     }   
     
     boolean inputsAreValid(){

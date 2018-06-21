@@ -9,6 +9,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;  
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,6 +22,14 @@ public final class DatabaseManager {
     private static Connection databaseConenction;
     private static String DATABADE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
     private static String DATABADE_NAME = "ShopDatabase.db";
+    private static int DEFAULT_ID_LENGTH = 7;
+    
+    public static enum tableTypes{
+        customer,
+        item,
+        transaction,
+        supplier
+    }
     
     private static void processError(Exception e){
         System.out.println(e);
@@ -439,4 +448,55 @@ public final class DatabaseManager {
             return null;
         }
     }
+    
+    
+    public static String getTableFromEnum(tableTypes table){
+        String tableName = "";
+        switch (table){
+            case customer:
+                tableName = "`Customers`";
+                break;
+            case transaction:
+                tableName = "`Transactions`";
+                break;
+            case item:
+                tableName = "`Inventory Items`";
+                break;
+            case supplier:
+                tableName = "`Suppliers`";
+                break;                
+        }
+        return tableName;
+    }
+    
+    
+    public static HashSet<String> getIDs(tableTypes table) throws SQLException{
+        connect();
+        HashSet<String> idStrings = new HashSet<String>();
+        Statement statement = databaseConenction.createStatement();      
+        String command = "SELECT DISTINCT ID FROM " + getTableFromEnum(table);            
+        ResultSet results = statement.executeQuery(command);
+        while (results.next()) idStrings.add(results.getString("ID"));
+        return idStrings;
+    }
+    
+        
+     /**
+     * Generates a unique id for use in the entered table type.
+     * This will break the whole app once the user gets a few billion entries (which probably won't happen).
+     * @throws SQLException 
+     */
+    public static String generateUniqueId(tableTypes table) throws SQLException{
+        connect();
+        String id = "";
+        boolean valid = false;
+        HashSet<String> idStrings = getIDs(table);                   
+
+        while (!valid){
+            id = RandomString.nextString(DEFAULT_ID_LENGTH);
+            valid = !idStrings.contains(id);
+        }
+        return id;
+    }
+
 }

@@ -1,9 +1,13 @@
 
 package chemicalinventorymanager;
 
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.util.StringConverter;
 
 /**
  * This class just contains a lot of useful methods and variables that are universally used throughout the application
@@ -12,6 +16,7 @@ import javafx.scene.control.TextField;
 public class HelperClass {
     
     //Makes TextFields only accept numeric input with a max of one radix point
+    //TODO: Change this logic to a TextFormatter
    public static void makeNumericOnly(TextField textInput){
         textInput.textProperty().addListener(new ChangeListener<String>() {
         @Override
@@ -39,4 +44,39 @@ public class HelperClass {
         }
         });
     }
+   
+   public static void makePositiveIntegerOnly(TextField textField){
+       Pattern validEditingState = Pattern.compile("(([1-9][0-9]*)|0)?");
+
+        UnaryOperator<TextFormatter.Change> filter = c -> {
+            String text = c.getControlNewText();
+            if (validEditingState.matcher(text).matches()) {
+                return c ;
+            } else {
+                return null ;
+            }
+        };
+
+        StringConverter<Integer> converter = new StringConverter<Integer>() {
+
+            @Override
+            public Integer fromString(String s) {
+                if (s.isEmpty()) {
+                    return 0 ;
+                } else {
+                    return Integer.valueOf(s);
+                }
+            }
+
+
+            @Override
+            public String toString(Integer d) {
+                return d.toString();
+            }
+        };
+
+        TextFormatter<Integer> textFormatter = new TextFormatter<>(converter, 0, filter);
+        textField.setTextFormatter(textFormatter);
+
+       }
 }
