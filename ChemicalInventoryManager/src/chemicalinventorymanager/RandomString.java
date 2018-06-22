@@ -10,7 +10,7 @@ import java.util.Random;
 public class RandomString {
     
     public static final String lower = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toLowerCase(Locale.ENGLISH);
-    public static final String digits = "0123456789";
+    public static final String digits = "0123456789--";
     public static final String[] alphanum = (lower + digits).split("");
     
     /**
