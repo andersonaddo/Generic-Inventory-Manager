@@ -2,9 +2,12 @@
 package chemicalinventorymanager;
 
 import java.util.function.UnaryOperator;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
@@ -15,7 +18,7 @@ import javafx.util.StringConverter;
  */
 public class HelperClass {
     
-    //Makes TextFields only accept numeric input with a max of one radix point
+    //Makes TextFields only accept positive numeric input with a max of one radix point
     //TODO: Change this logic to a TextFormatter
    public static void makeNumericOnly(TextField textInput){
         textInput.textProperty().addListener(new ChangeListener<String>() {
@@ -77,6 +80,35 @@ public class HelperClass {
 
         TextFormatter<Integer> textFormatter = new TextFormatter<>(converter, 0, filter);
         textField.setTextFormatter(textFormatter);
-
        }
+   
+   
+       /**
+        * Used to alert the user when he/she enters something invalid as input
+        * @author ADDO_a
+        */
+       public static void alertInvalidInput(String message){
+           Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Invalid Input");
+            alert.setHeaderText("You didn't enter something right!");
+            alert.setContentText(message);
+
+            alert.showAndWait();
+       }
+       
+       //Makes TextFields reject whitespace
+       public static void disallowSpaces(TextField textField) {
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            
+            //Using regex to fing and eliminate whitespace
+            Pattern pattern = Pattern.compile("\\s");
+            Matcher matcher = pattern.matcher(change.getText());
+            if (matcher.find()){
+                change.setText(change.getText().replaceAll("\\s",""));
+            }
+            return change;
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        textField.setTextFormatter(textFormatter);
+    }
 }

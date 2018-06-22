@@ -63,14 +63,29 @@ public class AddItemController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         HelperClass.makeNumericOnly(newItemPrice);
         HelperClass.makePositiveIntegerOnly(amountInStock);
+        HelperClass.disallowSpaces(newItemId);
         
         //TODO: Edit the delay for these tooltips
         amountInStockText.setTooltip(new Tooltip("How much of this item do you aleady have? Default is 0."));
         itemIdText.setTooltip(new Tooltip("The ID of this item of for the database. If not entered, it will be automatically generated"));
     }   
     
-    boolean inputsAreValid(){
-        return true; //TODO: Complete this method
+    boolean inputsAreValid() throws SQLException{
+        if (DatabaseManager.getIDs(DatabaseManager.tableTypes.item).contains(newItemId.getText())){
+            HelperClass.alertInvalidInput("The id you entered is aleady associated to another item.");
+            return false;
+        }
+        
+        if (newItemName.getText().trim().equals("")){
+            HelperClass.alertInvalidInput("The name you entered isn't valid!");
+            return false;            
+        }
+        
+        if (newItemPrice.getText().equals("") || Double.parseDouble(newItemPrice.getText()) == 0){
+            HelperClass.alertInvalidInput("The price you entered isn't valid!");
+            return false;            
+        }
+        return  true;   
     }
     
 }
