@@ -50,6 +50,7 @@ public class AddItemController implements Initializable {
     void addItem(ActionEvent event) throws SQLException {
         try{
             if (!inputsAreValid()) return;
+            if (!HelperClass.confirmUser("Are you sure you want to add this item?")) return;
             String id = (!newItemId.getText().equals("")) ? newItemId.getText() : DatabaseManager.generateUniqueId(DatabaseManager.tableTypes.item);
             InventoryItem item = new InventoryItem(id);
             item.supplierId = ""; //TODO: Gotta fix this too

@@ -187,7 +187,8 @@ public final class DatabaseManager {
                     + " VALUES ('%s', '%s','%f', '%s', '%d', '%d', '%s', '%s')", 
                     item.getID(), item.name, item.price ,item.description, (item.stillSold) ? 1 : 0, item.amountAvailable, item.imageName, item.supplierId);
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close();    
+            HelperClass.showSuccess(item.name + " was successfully added to the database!");
         } catch (Exception e) {
             processError(e);
         }

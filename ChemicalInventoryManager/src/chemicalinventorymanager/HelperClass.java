@@ -1,6 +1,7 @@
 
 package chemicalinventorymanager;
 
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,6 +9,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
@@ -83,12 +86,29 @@ public class HelperClass {
        }
    
    
+       //Makes TextFields reject whitespace
+       public static void disallowSpaces(TextField textField) {
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            
+            //Using regex to fing and eliminate whitespace
+            Pattern pattern = Pattern.compile("\\s");
+            Matcher matcher = pattern.matcher(change.getText());
+            if (matcher.find()){
+                change.setText(change.getText().replaceAll("\\s",""));
+            }
+            return change;
+        };
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        textField.setTextFormatter(textFormatter);
+    }
+   
+   
        /**
         * Used to alert the user when he/she enters something invalid as input
         * @author ADDO_a
         */
        public static void alertInvalidInput(String message){
-           Alert alert = new Alert(AlertType.ERROR);
+           Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Invalid Input");
             alert.setHeaderText("You didn't enter something right!");
             alert.setContentText(message);
@@ -111,19 +131,28 @@ public class HelperClass {
             alert.showAndWait();
        }
        
-       //Makes TextFields reject whitespace
-       public static void disallowSpaces(TextField textField) {
-        UnaryOperator<TextFormatter.Change> filter = change -> {
-            
-            //Using regex to fing and eliminate whitespace
-            Pattern pattern = Pattern.compile("\\s");
-            Matcher matcher = pattern.matcher(change.getText());
-            if (matcher.find()){
-                change.setText(change.getText().replaceAll("\\s",""));
-            }
-            return change;
-        };
-        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-        textField.setTextFormatter(textFormatter);
+    public static boolean confirmUser(String message) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Are you sure?");
+        alert.setContentText(message);
+
+        ButtonType confirm = new ButtonType("Yes");
+        ButtonType cancel = new ButtonType("No", ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(confirm, cancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get() == confirm;
+
     }
+
+    public static void showSuccess(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Success!");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+       
 }
