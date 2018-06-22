@@ -33,6 +33,7 @@ public final class DatabaseManager {
     
     private static void processError(Exception e){
         System.out.println(e);
+        HelperClass.alertError(e);
     }
     
     private static void connect() throws SQLException{

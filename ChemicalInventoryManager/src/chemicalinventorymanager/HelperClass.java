@@ -94,6 +94,21 @@ public class HelperClass {
             alert.setContentText(message);
 
             alert.showAndWait();
+        }
+       
+        /**
+        * Used to alert the user a general error is encountered
+        * @author ADDO_a
+        */
+       public static void alertError(Exception e){
+           Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Faced");
+            alert.setHeaderText(null);
+            alert.setContentText("We encountered an error! \nPerhaps you enetered something that was too long.\n"
+                    + "Double check your inputs, and call the developers for help."
+                    + "Error: " + e);
+
+            alert.showAndWait();
        }
        
        //Makes TextFields reject whitespace

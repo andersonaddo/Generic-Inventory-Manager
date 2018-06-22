@@ -48,15 +48,19 @@ public class AddItemController implements Initializable {
 
     @FXML
     void addItem(ActionEvent event) throws SQLException {
-        if (!inputsAreValid()) return;
-        String id = (!newItemId.getText().equals("")) ? newItemId.getText() : DatabaseManager.generateUniqueId(DatabaseManager.tableTypes.item);
-        InventoryItem item = new InventoryItem(id);
-        item.supplierId = ""; //TODO: Gotta fix this too
-        item.name = newItemName.getText();
-        item.description = newItemDescription.getText();
-        item.price = (!newItemPrice.getText().equals(""))? Float.parseFloat(newItemPrice.getText()) : 0;
-        item.amountAvailable = Integer.parseInt(amountInStock.getText());
-        DatabaseManager.addItem(item);
+        try{
+            if (!inputsAreValid()) return;
+            String id = (!newItemId.getText().equals("")) ? newItemId.getText() : DatabaseManager.generateUniqueId(DatabaseManager.tableTypes.item);
+            InventoryItem item = new InventoryItem(id);
+            item.supplierId = ""; //TODO: Gotta fix this too
+            item.name = newItemName.getText();
+            item.description = newItemDescription.getText();
+            item.price = (!newItemPrice.getText().equals(""))? Float.parseFloat(newItemPrice.getText()) : 0;
+            item.amountAvailable = Integer.parseInt(amountInStock.getText());
+            DatabaseManager.addItem(item);
+        }catch(Exception e){
+            HelperClass.alertError(e);
+        }
     }
 
     @Override
@@ -71,21 +75,26 @@ public class AddItemController implements Initializable {
     }   
     
     boolean inputsAreValid() throws SQLException{
-        if (DatabaseManager.getIDs(DatabaseManager.tableTypes.item).contains(newItemId.getText())){
-            HelperClass.alertInvalidInput("The id you entered is aleady associated to another item.");
+        try{
+            if (DatabaseManager.getIDs(DatabaseManager.tableTypes.item).contains(newItemId.getText())){
+                HelperClass.alertInvalidInput("The id you entered is aleady associated to another item.");
+                return false;
+            }
+
+            if (newItemName.getText().trim().equals("")){
+                HelperClass.alertInvalidInput("The name you entered isn't valid!");
+                return false;            
+            }
+
+            if (newItemPrice.getText().equals("") || Double.parseDouble(newItemPrice.getText()) == 0){
+                HelperClass.alertInvalidInput("The price you entered isn't valid!");
+                return false;            
+            }
+            return  true; 
+        }catch(Exception e){
+            HelperClass.alertError(e);
             return false;
         }
-        
-        if (newItemName.getText().trim().equals("")){
-            HelperClass.alertInvalidInput("The name you entered isn't valid!");
-            return false;            
-        }
-        
-        if (newItemPrice.getText().equals("") || Double.parseDouble(newItemPrice.getText()) == 0){
-            HelperClass.alertInvalidInput("The price you entered isn't valid!");
-            return false;            
-        }
-        return  true;   
     }
     
 }
