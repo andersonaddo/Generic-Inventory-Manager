@@ -284,7 +284,8 @@ public final class DatabaseManager {
                     + " VALUES ('%s', '%s', '%s', '%s', '%s')", 
                     supplier.getID(), supplier.name, supplier.email, supplier.phone, String.join(",", supplier.itemsSupplied));
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close(); 
+            HelperClass.showSuccess(supplier.name + " was successfully added to the database!");
         } catch (Exception e) {
             processError(e);
         }

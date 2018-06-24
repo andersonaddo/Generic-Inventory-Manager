@@ -124,9 +124,9 @@ public class HelperClass {
            Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error Faced");
             alert.setHeaderText(null);
-            alert.setContentText("We encountered an error! \nPerhaps you enetered something that was too long.\n"
+            alert.setContentText("We encountered an error! \nPerhaps you enetered something that was too long, or contained either an inverted comma (\') or speech marks (\").\n"
                     + "Double check your inputs, and call the developers for help."
-                    + "Error: " + e);
+                    + "\n\nError: " + e);
 
             alert.showAndWait();
        }
