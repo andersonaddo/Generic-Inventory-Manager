@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="chemicalinventorymanager.Screens.ViewTransactionController">
+   <children>
+      <Label id="TransactionIdLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="163.0" layoutY="34.0" prefHeight="73.0" prefWidth="275.0">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Label>
+      <Label layoutX="106.0" layoutY="125.0" text="Date:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="TransactionDateLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="125.0" prefHeight="18.0" prefWidth="186.0" />
+      <Label layoutX="62.0" layoutY="159.0" text="Customer ID:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerIdLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="159.0" prefHeight="18.0" prefWidth="186.0" />
+      <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label layoutX="32.0" layoutY="231.0" text="Transaction Mode:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="TransactionModeLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="232.0" prefHeight="18.0" prefWidth="186.0" />
+      <TableView layoutX="380.0" layoutY="116.0" prefHeight="229.0" prefWidth="186.0">
+        <columns>
+          <TableColumn prefWidth="92.0" text="Item Sold" />
+          <TableColumn prefWidth="93.0" text="Quantity" />
+        </columns>
+      </TableView>
+      <Label layoutX="77.0" layoutY="192.0" text="Customer:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerNameLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="191.0" prefHeight="18.0" prefWidth="186.0" />
+   </children>
+</AnchorPane>
