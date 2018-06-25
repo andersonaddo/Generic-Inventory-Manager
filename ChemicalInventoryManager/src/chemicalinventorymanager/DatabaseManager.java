@@ -407,7 +407,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
+            String command = "select * from " + DATABADE_NAME + ".Transactions"
                     + "where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
