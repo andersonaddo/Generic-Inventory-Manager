@@ -22,13 +22,13 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="TransactionDateLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="125.0" prefHeight="18.0" prefWidth="186.0" />
+      <Label id="TransactionDateLabel" fx:id="TransactionDateLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="125.0" prefHeight="18.0" prefWidth="186.0" />
       <Label layoutX="62.0" layoutY="159.0" text="Customer ID:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="CustomerIdLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="159.0" prefHeight="18.0" prefWidth="186.0" />
+      <Label id="CustomerIdLabel" fx:id="CustomerIdLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="159.0" prefHeight="18.0" prefWidth="186.0" />
       <MenuBar layoutY="1.0" prefHeight="25.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -53,11 +53,11 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="TransactionModeLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="232.0" prefHeight="18.0" prefWidth="186.0" />
-      <TableView layoutX="380.0" layoutY="116.0" prefHeight="229.0" prefWidth="186.0">
+      <Label id="TransactionModeLabel" fx:id="TransactionModeLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="232.0" prefHeight="18.0" prefWidth="186.0" />
+      <TableView fx:id="ItemsTable" layoutX="380.0" layoutY="116.0" prefHeight="229.0" prefWidth="186.0">
         <columns>
-          <TableColumn prefWidth="92.0" text="Item Sold" />
-          <TableColumn prefWidth="93.0" text="Quantity" />
+          <TableColumn fx:id="ItemSoldColumn" prefWidth="92.0" text="Item Sold" />
+          <TableColumn fx:id="QuantitySoldColumn" prefWidth="93.0" text="Quantity" />
         </columns>
       </TableView>
       <Label layoutX="77.0" layoutY="192.0" text="Customer:">
@@ -65,6 +65,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="CustomerNameLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="191.0" prefHeight="18.0" prefWidth="186.0" />
+      <Label id="CustomerNameLabel" fx:id="CustomerNameLabel" contentDisplay="CENTER" layoutX="144.0" layoutY="191.0" prefHeight="18.0" prefWidth="186.0" />
    </children>
 </AnchorPane>
