@@ -64,7 +64,7 @@ public class AddSupplierController implements Initializable {
         HelperClass.disallowSpaces(newSupplierId);
         
         //TODO: Edit the delay for these tooltips 
-        supplierIdText.setTooltip(new Tooltip("The ID of this supplier of for the database. If not entered, it will be automatically generated"));
+        supplierIdText.setTooltip(new Tooltip("The ID of this supplier for the database. If not entered, it will be automatically generated"));
     }   
     
     boolean inputsAreValid() throws SQLException{

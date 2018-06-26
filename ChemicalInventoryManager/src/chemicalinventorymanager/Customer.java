@@ -1,6 +1,5 @@
 package chemicalinventorymanager;
 
-import java.util.Dictionary;
 import java.util.Map;
 
 /**
@@ -9,8 +8,8 @@ import java.util.Map;
  */
 public class Customer {
     public String imageName, fullName;
-    Gender gender;
-    Double totalDebt;
+    public Gender gender;
+    public Double totalDebt;
     Map<String, Double> debts;
     private String id;
     
@@ -25,7 +24,7 @@ public class Customer {
     
     public String getID() {return id;}
     
-    enum Gender{
+    public enum Gender{
         male,
         female
     }  

@@ -72,7 +72,7 @@ public class AddItemController implements Initializable {
         
         //TODO: Edit the delay for these tooltips
         amountInStockText.setTooltip(new Tooltip("How much of this item do you aleady have? Default is 0."));
-        itemIdText.setTooltip(new Tooltip("The ID of this item of for the database. If not entered, it will be automatically generated"));
+        itemIdText.setTooltip(new Tooltip("The ID of this item for the database. If not entered, it will be automatically generated"));
     }   
     
     boolean inputsAreValid() throws SQLException{

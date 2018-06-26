@@ -51,7 +51,7 @@ public final class DatabaseManager {
     /**
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
-     * @return A list of Customers
+     * @return A list of Customers without their array of debts (for performance reasons)
      */
     public List<Customer> getCustomersWithName(String query) throws SQLException{
         ArrayList<Customer> resultList = new ArrayList <Customer>();
@@ -60,7 +60,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select ID, f, GENDER, TOTAL DEBT from " + DATABADE_NAME + ".Customers"
+            String command = "select ID, full name, GENDER, TOTAL DEBT from " + DATABADE_NAME + ".Customers"
                     + "where lower(FULL NAME) contains " + query;
             
             ResultSet results = statement.executeQuery(command);
@@ -86,10 +86,11 @@ public final class DatabaseManager {
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            String command = String.format("INSERT INTO `Customers` (id, full name, gender)"
-                    + " VALUES ('$s', '%s', '%s')", customer.getID(), customer.fullName, customer.getGender());
+            String command = String.format("INSERT INTO `Customers` (`ID`, `Full Name`, `Gender`, `Total Debt`)"
+                    + " VALUES ('%s', '%s', '%s', '%f')", customer.getID(), customer.fullName, customer.getGender(), customer.totalDebt);
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close(); 
+            HelperClass.showSuccess(customer.fullName + " was successfully added to the database!");
         } catch (Exception e) {
             processError(e);
         }    
@@ -98,7 +99,7 @@ public final class DatabaseManager {
     /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
-     * @return
+     * @return A whole customer object, including the customer's array of debts
      * @throws SQLException 
      */
     public static Customer getCustomerWithId(String id) throws SQLException{
