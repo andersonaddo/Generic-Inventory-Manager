@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -11,9 +11,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.SearchScreenController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.SearchScreenController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -26,19 +25,18 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
-            <TextField id="search_bar" layoutX="171.0" layoutY="83.0" prefHeight="25.0" prefWidth="298.0" />
-            <ListView id="transactions_list" layoutY="161.0" prefHeight="215.0" prefWidth="640.0" />
-            <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="129.0" layoutY="79.0">
+            <TextField id="search_bar" fx:id="SearchTerm" layoutX="125.0" layoutY="71.0" prefHeight="25.0" prefWidth="278.0" promptText="Search anything" />
+            <ListView id="transactions_list" fx:id="ResultsView" layoutY="161.0" prefHeight="215.0" prefWidth="640.0" />
+            <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="82.0" layoutY="67.0">
                <image>
                   <Image url="@../Pictures/Search.png" />
                </image>
             </ImageView>
+            <ComboBox fx:id="Filter" layoutX="414.0" layoutY="71.0" prefHeight="25.0" prefWidth="145.0" promptText="All" visibleRowCount="4" >
+                
+            </ComboBox>
+            <Button fx:id="Search" layoutX="269.0" layoutY="112.0" mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="103.0" text="Search" />
       </children>
     </AnchorPane>
   </children>

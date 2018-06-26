@@ -195,8 +195,8 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "SELECT * FROM " +  " [Inventory Items] "
+                    + "WHERE ID = '" + id + "'";
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -209,16 +209,16 @@ public final class DatabaseManager {
                 item.amountAvailable = results.getInt("AMOUNT AVAILABLE");
                 item.stillSold = (results.getInt("STILL SOLD")) == 1;
                 item.supplierId = results.getString("SUPPLIERS");
-                item.imageName = results.getString("PICTURE NAME");                
+                item.imageName = results.getString("PICTURE NAME");  
+                statement.close();
             }
             statement.close();
             return item;
-
+            
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
-        }
+        } 
     }
     
     
@@ -439,4 +439,73 @@ public final class DatabaseManager {
             return null;
         }
     }
+    
+    public static List<String> searchWtihFilter(String searchTerm, String filter) throws SQLException{
+        try {
+            connect();
+            filter = "["+filter+"]";
+            List<String> ArrSearchResults = new ArrayList<>();
+            List<String> ColumnNames = new ArrayList<>();
+            Statement statement = databaseConenction.createStatement();
+            String getColumns = "SELECT * FROM " + filter + "";
+            ResultSet rs = statement.executeQuery (getColumns);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int ColumnCount = rsmd.getColumnCount();
+            for(int i = 1; i<=ColumnCount; i++){
+                ColumnNames.add(rsmd.getColumnName(i));
+            }
+            String nameColumn1 = ColumnNames.get(0);
+            String nameColumn2 = ColumnNames.get(1);
+            String nameColumn3 = ColumnNames.get(2);
+            for(int i = 0; i<ColumnCount; i++){
+                String getResults = "SELECT * FROM " + filter + " WHERE ["+ ColumnNames.get(i) + "] LIKE " +"'%" +searchTerm + "%'";
+                ResultSet rs2 = statement.executeQuery(getResults);
+                String SearchOutput;
+                while (rs2.next()){
+                    SearchOutput = rs.getString(nameColumn1) + "-" + rs.getString(nameColumn2) + "-" + rs.getString(nameColumn3);
+                    if(!ArrSearchResults.contains(SearchOutput)){
+                        ArrSearchResults.add(SearchOutput);
+                    }
+                }
+                rs2.close();
+            }
+            rs.close();
+            statement.close();
+            return ArrSearchResults;
+        } catch (Exception e) {
+            processError(e);
+            return null;
+        }
+    }
+    
+    public static List<String> searchEntireDatabase(String searchTerm) throws SQLException{
+        try {
+        List<List> ArrSearchList = new ArrayList<>();
+        List<String> ArrSearchCustomers = new ArrayList<>();
+        List<String> ArrSearchInventoryItems = new ArrayList<>();
+        List<String> ArrSearchSuppliers = new ArrayList<>();
+        List<String> ArrSearchTransactions = new ArrayList<>();
+        List<String> ArrSearchAll = new ArrayList<>();
+        ArrSearchCustomers = searchWtihFilter(searchTerm,"Customers");
+        ArrSearchInventoryItems = searchWtihFilter(searchTerm,"Inventory Items");
+        ArrSearchSuppliers = searchWtihFilter(searchTerm,"Suppliers");
+        ArrSearchTransactions = searchWtihFilter(searchTerm,"Transactions");
+        ArrSearchList.add(ArrSearchCustomers);
+        ArrSearchList.add(ArrSearchInventoryItems);
+        ArrSearchList.add(ArrSearchSuppliers);
+        ArrSearchList.add(ArrSearchTransactions);
+        
+        for(List<String> list:ArrSearchList){
+            for(String result : list){
+                ArrSearchAll.add(result);
+            }
+        }
+        return ArrSearchAll;
+        }catch (Exception e) {
+            processError(e);
+            return null;
+        }
+    }
+    
+
 }
