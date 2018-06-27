@@ -24,10 +24,13 @@ public class Customer {
     }
     
     public String getID() {return id;}
+    public String getfullName(){return fullName;}
+    
     
     enum Gender{
         male,
         female
     }  
+
     
 }
