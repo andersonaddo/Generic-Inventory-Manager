@@ -5,8 +5,7 @@
         <group>
             <file>file:/C:/Users/user%20pc/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/DatabaseManager.java</file>
             <file>file:/C:/Users/user%20pc/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Screens/ViewTransactionController.java</file>
-            <file>file:/C:/Users/user%20pc/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Transaction.java</file>
-            <file>file:/C:/Users/user%20pc/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Screens/AddItem.fxml</file>
+            <file>file:/C:/Users/user%20pc/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Screens/AddItemController.java</file>
         </group>
     </open-files>
 </project-private>

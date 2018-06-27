@@ -5,8 +5,10 @@
  */
 package chemicalinventorymanager.Screens;
 
+import chemicalinventorymanager.DatabaseManager;
 import chemicalinventorymanager.Transaction;
 import java.net.URL;
+import java.sql.*;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -24,28 +27,39 @@ import javafx.scene.control.TableView;
  */
 public class ViewTransactionController implements Initializable {
     
-    @FXML
-    private Label TransactionDateLabel;
+    Transaction tran; 
     
     @FXML
-    private Label CustomerIdLabel;
+    private Label transactionDateLabel;
     
     @FXML
-    private Label CustomerNameLabel;
+    private Label customerIdLabel;
     
     @FXML
-    private Label TransactionModeLabel;
+    private Label customerNameLabel;
     
     @FXML
-    private TableView<Map> ItemsTable;
+    private Label transactionModeLabel;
     
     @FXML
-    private TableColumn<Map, String> ItemSoldColumn;
+    private TableView<Map> itemsTable;
     
     @FXML
-    private TableColumn<Map, Integer> QuantitySoldColumn;
+    private TableColumn<Map, String> itemSoldColumn;
     
-    public static void showTransaction(){/*/name/id?*/}
+    @FXML
+    private TableColumn<Map, Integer> quantityColumn;
+    
+    /**
+     * The search screen will call this method
+     * @param id
+     * @throws SQLException
+     */
+    @FXML
+    public static void viewTransaction(String id) throws SQLException {
+        ViewTransactionController.tran = DatabaseManager.getTransactionWithId(id);
+    }
+     
     
     
     
@@ -56,7 +70,8 @@ public class ViewTransactionController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        itemSoldColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("item"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("quantity"));
     }    
     
 }

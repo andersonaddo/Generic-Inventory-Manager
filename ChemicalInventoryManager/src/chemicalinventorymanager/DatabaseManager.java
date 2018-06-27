@@ -398,7 +398,7 @@ public final class DatabaseManager {
      /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
-     * @return
+     * @return Transaction
      * @throws SQLException 
      */
     public static Transaction getTransactionWithId(String id) throws SQLException{
