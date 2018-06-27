@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.ViewCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="515.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.ViewCustomerController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="600.0">
         <menus>
@@ -61,11 +61,12 @@
          </font>
       </Label>
       <Label id="CustomerNameLabel" fx:id="customerGenderLabel" contentDisplay="CENTER" layoutX="372.0" layoutY="140.0" prefHeight="18.0" prefWidth="186.0" text="insert Gender here" />
-      <TableView fx:id="debtsTable" layoutX="261.0" layoutY="207.0" prefHeight="168.0" prefWidth="316.0">
+      <TableView fx:id="debtsTable" layoutX="256.0" layoutY="306.0" prefHeight="168.0" prefWidth="316.0">
         <columns>
           <TableColumn prefWidth="158.0" text="Transaction ID" />
           <TableColumn prefWidth="157.0" text="Debt" />
         </columns>
       </TableView>
+      <Label id="TransactionDateLabel" fx:id="customerNameLabel1" contentDisplay="CENTER" layoutX="262.0" layoutY="215.0" prefHeight="85.0" prefWidth="304.0" text="This table shows the debt accumulated by this customet, but some of these may have been paid off. Only the total debt field is a true representation of how much he owes you." wrapText="true" />
    </children>
 </AnchorPane>
