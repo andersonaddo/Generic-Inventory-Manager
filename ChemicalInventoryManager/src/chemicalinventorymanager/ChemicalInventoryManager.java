@@ -37,7 +37,6 @@ public class ChemicalInventoryManager extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException {
-        System.out.println(DatabaseManager.getCustomersWithName("12"));
         launch(args);
     }
     

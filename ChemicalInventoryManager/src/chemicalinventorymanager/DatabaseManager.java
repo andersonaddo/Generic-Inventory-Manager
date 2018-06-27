@@ -53,12 +53,18 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * from [Customers] where lower([FULL NAME]) like '%" + query +"%'";
+            String command = "select ID, GENDER, [TOTAL DEBT] from Customers "
+                    + "where lower([FULL NAME]) like '%" + query + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                resultList.add(DatabaseManager.convertCustomer(results));
+                Customer customer = new Customer(results.getString("ID"));
+                customer.fullName = results.getString("FULL NAME");
+                Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
+                customer.gender = gender;
+                customer.totalDebt = results.getDouble("TOTAL DEBT");
+                resultList.add(customer);
             }
             statement.close();
             return resultList;
@@ -94,8 +100,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABASE_NAME + ".Customers"
-                    + "where ID = " + id;
+            String command = "select * from Customers where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Customer customer = null;
@@ -120,14 +125,13 @@ public final class DatabaseManager {
      * @return A list of Items
      */
     public static List<InventoryItem> getItemsWithName(String query) throws SQLException{
-        ArrayList<InventoryItem> resultList = new ArrayList <InventoryItem>();
+        ArrayList<InventoryItem> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABASE_NAME + ".Inventory Items"
-                    + "where lower(NAME) contains " + query;
+            String command = "select * from [Inventory Items] where lower(NAME) like '%" + query + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
@@ -167,8 +171,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABASE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from [Inventory Items] where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -192,14 +195,13 @@ public final class DatabaseManager {
      * @return A list of Suppliers
      */
     public static List<Supplier> getSuppliersWithName(String query) throws SQLException{
-        ArrayList<Supplier> resultList = new ArrayList <Supplier>();
+        ArrayList<Supplier> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABASE_NAME + ".Suppliers"
-                    + "where lower(NAME) contains " + query;
+            String command = "select * Suppliers where lower(NAME) like '%" + query + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
@@ -240,8 +242,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABASE_NAME + ".Suppliers"
-                    + "where ID = " + id;
+            String command = "select * from Suppliers where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Supplier supplier = null;
@@ -266,14 +267,13 @@ public final class DatabaseManager {
      * @return A list of Suppliers
      */
     public static List<Transaction> getTransactionWithDate(String query) throws SQLException{
-        ArrayList<Transaction> resultList = new ArrayList <Transaction>();
+        ArrayList<Transaction> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABASE_NAME + ".Transactions"
-                    + "where lower(DATE) contains " + query;
+            String command = "select * Transactions where lower(DATE) contains " + query;
             ResultSet results = statement.executeQuery(command);  
             
             while (results.next()) {
@@ -322,10 +322,8 @@ public final class DatabaseManager {
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
             
-            String command = "select * from " + DATABASE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from Inventory Items where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Transaction tran = null;
