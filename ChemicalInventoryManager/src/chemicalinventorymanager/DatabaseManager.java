@@ -77,7 +77,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             String command = String.format("INSERT INTO `Customers` (id, full name, gender)"
-                    + " VALUES ('$s', '%s', '%s')", customer.getID(), customer.fullName, customer.getGender());
+                    + " VALUES ('$s', '%s', '%s')", customer.getID(), customer.fullName, customer.getGender()); //TODO:add total debt and array of debts
             statement.executeUpdate(command);
             statement.close();            
         } catch (Exception e) {
