@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.ViewCustomerController">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ImageView fx:id="customerImage" fitHeight="195.0" fitWidth="200.0" layoutX="34.0" layoutY="50.0">
+         <image>
+            <Image url="@../Pictures/defaultCustomerImage.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="260.0" layoutY="77.0" text="Name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="TransactionDateLabel" fx:id="customerNameLabel" contentDisplay="CENTER" layoutX="372.0" layoutY="76.0" prefHeight="18.0" prefWidth="186.0" text="insert name here" />
+      <Label layoutX="260.0" layoutY="108.0" text="ID:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerIdLabel" fx:id="customerIdLabel" contentDisplay="CENTER" layoutX="372.0" layoutY="108.0" prefHeight="18.0" prefWidth="186.0" text="insert ID here" />
+      <Label layoutX="263.0" layoutY="171.0" text="Total Debt:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="TransactionModeLabel" fx:id="totalDebtLabel" contentDisplay="CENTER" layoutX="372.0" layoutY="173.0" prefHeight="18.0" prefWidth="186.0" text="insert total debt here" />
+      <Label layoutX="261.0" layoutY="140.0" text="Gender:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerNameLabel" fx:id="customerGenderLabel" contentDisplay="CENTER" layoutX="372.0" layoutY="140.0" prefHeight="18.0" prefWidth="186.0" text="insert Gender here" />
+      <TableView fx:id="debtsTable" layoutX="261.0" layoutY="207.0" prefHeight="168.0" prefWidth="316.0">
+        <columns>
+          <TableColumn prefWidth="158.0" text="Transaction ID" />
+          <TableColumn prefWidth="157.0" text="Debt" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
