@@ -48,10 +48,10 @@ public class SearchScreenController implements Initializable {
             }else{
                 SearchResults = DatabaseManager.searchWtihFilter(search, filter);
             }
-            ResultsView.getItems().clear();
+            /*ResultsView.getItems().clear();
             for(String Result:SearchResults){
                 ResultsView.getItems().add(Result);
-            }
+            }*/
         }
         
     }
