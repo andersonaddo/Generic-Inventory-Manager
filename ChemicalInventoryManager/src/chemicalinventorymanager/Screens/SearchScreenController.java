@@ -11,6 +11,8 @@ import java.util.List;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -45,7 +47,7 @@ public class SearchScreenController implements Initializable {
             if(filter.equals("All")){
                 SearchResults = DatabaseManager.searchEntireDatabase(search);
             }else{
-                SearchResults = DatabaseManager.searchWtihFilter(search, filter);
+                SearchResults = DatabaseManager.searchWithFilter(search, filter);
             }
             ResultsView.getItems().clear();
             for(Object Result:SearchResults){
@@ -60,6 +62,18 @@ public class SearchScreenController implements Initializable {
         Filter.getItems().clear();
         Filter.getItems().addAll("All", "Inventory Items", "Customers", "Suppliers", "Transactions");
         Filter.getSelectionModel().select(0);
+        try {
+            List<String> SearchResults;
+            String search ="_";
+            SearchResults = DatabaseManager.searchEntireDatabase(search);
+            ResultsView.getItems().clear();
+            for(Object Result:SearchResults){
+                ResultsView.getItems().add(Result);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
         SearchTerm.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,

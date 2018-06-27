@@ -31,4 +31,26 @@ public class Transaction {
         return "Transaction Date: "+ date + "\tCustomer ID: " + customerID;
     }
     
+    @Override
+    public boolean equals(Object o) {
+ 
+        if (o == this) {
+            return true;
+        }
+ 
+        if (!(o instanceof Transaction)) {
+            return false;
+        }
+         
+        Transaction c = (Transaction) o;
+         
+        return id.equals(c.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
 }

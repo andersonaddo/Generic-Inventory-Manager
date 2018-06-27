@@ -58,12 +58,7 @@ public final class DatabaseManager {
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                Customer customer = new Customer(results.getString("ID"));
-                customer.fullName = results.getString("FULL NAME");
-                Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
-                customer.gender = gender;
-                customer.totalDebt = results.getDouble("TOTAL DEBT");
-                resultList.add(customer);
+                resultList.add(DatabaseManager.convertCustomer(results));
             }
             statement.close();
             return resultList;
@@ -105,7 +100,22 @@ public final class DatabaseManager {
             Customer customer = null;
             
             if (results.next()) {
-                customer = DatabaseManager.convertCustomer(results);
+                customer = new Customer(results.getString("ID"));
+                customer.fullName = results.getString("FULL NAME");
+                Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
+                customer.gender = gender;
+                customer.totalDebt = results.getDouble("TOTAL DEBT");
+
+                Blob debtsBytes = results.getBlob("ARRAY OF CREDITS");
+                if (debtsBytes != null  && debtsBytes.length() > 0) {
+                    InputStream binaryInput = debtsBytes.getBinaryStream();
+                    ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
+                    customer.debts = (Map<String, Double>)inputStream.readObject();
+                }else {
+                    customer.debts = null;
+                }
+                return customer;
+               
             }
             statement.close();
             return customer;
@@ -340,7 +350,7 @@ public final class DatabaseManager {
     }
     
     
-    public static List searchWtihFilter(String searchTerm, String filter) throws SQLException{
+    public static List searchWithFilter(String searchTerm, String filter) throws SQLException{
         try {
             connect();
             String tableName = "["+filter+"]";
@@ -355,7 +365,7 @@ public final class DatabaseManager {
                 ColumnNames.add(rsmd.getColumnName(i));
             }
             for(int i = 0; i<ColumnCount; i++){
-                String getResults = "SELECT * FROM " + tableName + " WHERE ["+ ColumnNames.get(i) + "] LIKE " +"'%" +searchTerm + "%'";
+                String getResults = "SELECT * FROM " + tableName + " WHERE ["+ ColumnNames.get(i) + "] LIKE " + "'%" + searchTerm + "%'";
                 ResultSet rs2 = statement.executeQuery(getResults);
                 
                 while (rs2.next()){
@@ -365,17 +375,17 @@ public final class DatabaseManager {
                             if(!ArrSearchResults.contains(item)){
                                 ArrSearchResults.add(item);
                             }   break;
-                        case "Customer":
+                        case "Customers":
                             Customer customer = DatabaseManager.convertCustomer(rs2);
                             if(!ArrSearchResults.contains(customer)){
                                 ArrSearchResults.add(customer);
                             }   break;
-                        case "Supplier":
+                        case "Suppliers":
                             Supplier supplier = DatabaseManager.convertSupplier(rs2);
                             if(!ArrSearchResults.contains(supplier)){
                                 ArrSearchResults.add(supplier);
                             }   break;
-                        case "Transaction":
+                        case "Transactions":
                             Transaction transaction = DatabaseManager.convertTransaction(rs2);
                             if(!ArrSearchResults.contains(transaction)){
                                 ArrSearchResults.add(transaction);
@@ -400,10 +410,10 @@ public final class DatabaseManager {
         List ArrSearchCustomers, ArrSearchInventoryItems, ArrSearchSuppliers, ArrSearchTransactions;
         List ArrSearchAll = new ArrayList<>();
         
-        ArrSearchCustomers = searchWtihFilter(searchTerm,"Customers");
-        ArrSearchInventoryItems = searchWtihFilter(searchTerm,"Inventory Items");
-        ArrSearchSuppliers = searchWtihFilter(searchTerm,"Suppliers");
-        ArrSearchTransactions = searchWtihFilter(searchTerm,"Transactions");
+        ArrSearchCustomers = searchWithFilter(searchTerm,"Customers");
+        ArrSearchInventoryItems = searchWithFilter(searchTerm,"Inventory Items");
+        ArrSearchSuppliers = searchWithFilter(searchTerm,"Suppliers");
+        ArrSearchTransactions = searchWithFilter(searchTerm,"Transactions");
         ArrSearchList.add(ArrSearchCustomers);
         ArrSearchList.add(ArrSearchInventoryItems);
         ArrSearchList.add(ArrSearchSuppliers);
@@ -441,16 +451,7 @@ public final class DatabaseManager {
         Customer.Gender gender = (result.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
         customer.gender = gender;
         customer.totalDebt = result.getDouble("TOTAL DEBT");
-
-        Blob debtsBytes = result.getBlob("ARRAY OF CREDITS");
-        InputStream binaryInput = null;
-        if (null != debtsBytes && debtsBytes.length() > 0) {
-            binaryInput = debtsBytes.getBinaryStream();
-            ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
-            customer.debts = (Map<String, Double>)inputStream.readObject();
-        }else {
-            customer.debts = null;
-        }
+        
         return customer;
     }
     public static Supplier convertSupplier(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
