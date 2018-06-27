@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="613.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.AddTransactionController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <AnchorPane prefHeight="593.0" prefWidth="718.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="89.0" style="-fx-font-weight: bold; -fx-font-size: 24;" text="Record a new transaction" textAlignment="CENTER" />
+            <Label layoutX="90.0" layoutY="55.0" text="Customer" />
+            <ImageView fitHeight="60.0" fitWidth="54.0" layoutX="618.0" layoutY="144.0" onMouseClicked="#addItemPair" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Pictures/AddItemToSelection.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="94.0" layoutY="103.0" text="Date" />
+            <Label layoutX="89.0" layoutY="501.0" text="Total Cost" />
+            <Label layoutX="205.0" layoutY="501.0" text="Credit (if any)" />
+            <Button layoutX="509.0" layoutY="518.0" mnemonicParsing="false" onAction="#addSupplier" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #458554;" text="Save" textFill="WHITE" />
+            <Label layoutX="89.0" layoutY="535.0" text="0.00" />
+            <DatePicker fx:id="date" layoutX="149.0" layoutY="99.0" prefHeight="25.0" prefWidth="390.0" />
+            <ListView fx:id="transactionListView" layoutX="141.0" layoutY="144.0" prefHeight="347.0" prefWidth="478.0" />
+            <ChoiceBox fx:id="customerDrawer" layoutX="157.0" layoutY="51.0" prefHeight="25.0" prefWidth="384.0" />
+            <TextField layoutX="203.0" layoutY="531.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

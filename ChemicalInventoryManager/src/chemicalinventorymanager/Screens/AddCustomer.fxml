@@ -13,46 +13,50 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.AddCustomerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.AddCustomerController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="446.0" prefWidth="732.0">
                <children>
-                  <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="524.0" prefWidth="732.0">
+                  <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="582.0" prefWidth="732.0">
                      <children>
-                        <Button id="back_btn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
-                        <ImageView id="item_image" fitHeight="304.0" fitWidth="233.0" layoutX="87.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+                        <Button id="back_btn" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" text="Back" />
+                        <ImageView id="item_image" fitHeight="304.0" fitWidth="233.0" layoutX="87.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Pictures/defaultCustomerImage.png" />
                            </image>
                         </ImageView>
-                        <TextField id="name_field" fx:id="name" layoutX="451.0" layoutY="71.0" prefHeight="25.0" prefWidth="171.0" promptText="Full name of customer" />
-                        <Label layoutX="375.0" layoutY="75.0" text="Full Name *:">
+                        <TextField id="name_field" fx:id="name" layoutX="451.0" layoutY="130.0" prefHeight="25.0" prefWidth="171.0" promptText="Full name of customer" />
+                        <Label layoutX="375.0" layoutY="134.0" text="Full Name *:">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Button layoutX="158.0" layoutY="327.0" mnemonicParsing="false" text="Upload Image" />
-                        <Button layoutX="146.0" layoutY="391.0" mnemonicParsing="false" onAction="#addCustomer" style="-fx-background-color: #458554;" text="Add new customer" textFill="WHITE" />
-                        <Label layoutX="389.0" layoutY="110.0" text="Gender *:">
+                        <Button layoutX="158.0" layoutY="386.0" mnemonicParsing="false" text="Upload Image" />
+                        <Button layoutX="146.0" layoutY="450.0" mnemonicParsing="false" onAction="#addCustomer" style="-fx-background-color: #458554;" text="Add new customer" textFill="WHITE" />
+                        <Label layoutX="389.0" layoutY="169.0" text="Gender *:">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="genderDropdown" layoutX="451.0" layoutY="106.0" prefHeight="25.0" prefWidth="172.0" />
-                        <TextField id="name_field" fx:id="customerID" layoutX="458.0" layoutY="185.0" prefHeight="25.0" prefWidth="171.0" promptText="Optional" />
-                        <Label fx:id="customerIdText" layoutX="366.0" layoutY="189.0" text="Customer ID:">
+                        <ChoiceBox fx:id="genderDropdown" layoutX="451.0" layoutY="165.0" prefHeight="25.0" prefWidth="172.0" />
+                        <TextField id="name_field" fx:id="customerID" layoutX="458.0" layoutY="244.0" prefHeight="25.0" prefWidth="171.0" promptText="Optional" />
+                        <Label fx:id="customerIdText" layoutX="366.0" layoutY="248.0" text="Customer ID:">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="73.0" layoutY="424.0" prefHeight="62.0" prefWidth="264.0" text="Any field with * is required. Some fields show extra information if you hover the mouse over them." textAlignment="CENTER" textFill="RED" wrapText="true" />
-                        <TextField id="name_field" fx:id="debt" layoutX="454.0" layoutY="142.0" prefHeight="25.0" prefWidth="171.0" promptText="Debt in cedis" />
-                        <Label fx:id="debtText" layoutX="407.0" layoutY="146.0" text="Debt:">
+                        <Label alignment="CENTER" layoutX="73.0" layoutY="483.0" prefHeight="62.0" prefWidth="264.0" text="Any field with * is required. Some fields show extra information if you hover the mouse over them." textAlignment="CENTER" textFill="RED" wrapText="true" />
+                        <TextField id="name_field" fx:id="debt" layoutX="454.0" layoutY="201.0" prefHeight="25.0" prefWidth="171.0" promptText="Debt in cedis" />
+                        <Label fx:id="debtText" layoutX="407.0" layoutY="205.0" text="Debt:">
                            <font>
                               <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="236.0" layoutY="33.0" style="-fx-font-weight: bold;" text="Add a new customer" textAlignment="CENTER">
+                           <font>
+                              <Font size="27.0" />
                            </font>
                         </Label>
                      </children>
