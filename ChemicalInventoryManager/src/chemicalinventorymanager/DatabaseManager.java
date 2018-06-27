@@ -44,9 +44,10 @@ public final class DatabaseManager {
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
      * @return A list of Customers
+     * @throws java.sql.SQLException
      */
     public List<Customer> getCustomersWithName(String query) throws SQLException{
-        ArrayList<Customer> resultList = new ArrayList <Customer>();
+        ArrayList<Customer> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
@@ -58,18 +59,16 @@ public final class DatabaseManager {
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                Customer customer = new Customer(results.getString("ID"));
-                customer.fullName = results.getString("FULL NAME");
-                Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
-                customer.gender = gender;
-                customer.totalDebt = results.getDouble("TOTAL DEBT");
-                resultList.add(customer);
+                resultList.add(DatabaseManager.convertCustomer(results));
             }
             statement.close();
             return resultList;
 
-        } catch (SQLException sQLException) {
-            System.out.println(sQLException);
+        }catch(SQLException sqlexception) {
+            System.out.println(sqlexception);
+            return null;
+        } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }
@@ -105,21 +104,7 @@ public final class DatabaseManager {
             Customer customer = null;
             
             if (results.next()) {
-                customer = new Customer(results.getString("ID"));
-                customer.fullName = results.getString("FULL NAME");
-                Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
-                customer.gender = gender;
-                customer.totalDebt = results.getDouble("TOTAL DEBT");
-                
-                Blob debtsBytes = results.getBlob("ARRAY OF CREDITS");
-                InputStream binaryInput = null;
-                if (null != debtsBytes && debtsBytes.length() > 0) {
-                    binaryInput = debtsBytes.getBinaryStream();
-                    ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
-                    customer.debts = (Map<String, Double>)inputStream.readObject();
-                }else {
-                    customer.debts = null;
-                }
+                customer = DatabaseManager.convertCustomer(results);
             }
             statement.close();
             return customer;
@@ -153,14 +138,7 @@ public final class DatabaseManager {
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                InventoryItem item = new InventoryItem(results.getString("ID"));
-                item.name = results.getString("NAME");
-                item.price = results.getFloat("PRICE");
-                item.description = results.getString("DESCRIPTION");
-                item.amountAvailable = results.getInt("AMOUNT AVAILABLE");
-                item.stillSold = (results.getInt("STILL SOLD")) == 1;
-                item.supplierId = results.getString("SUPPLIERS");
-                resultList.add(item);
+                resultList.add(DatabaseManager.convertInventoryItem(results));
             }
             statement.close();
             return resultList;
@@ -204,15 +182,7 @@ public final class DatabaseManager {
             InventoryItem item = null;
             
             if (results.next()) {
-                item = new InventoryItem(results.getString("ID"));
-                item.name = results.getString("NAME");
-                item.price = results.getFloat("PRICE");
-                item.description = results.getString("DESCRIPTION");
-                item.amountAvailable = results.getInt("AMOUNT AVAILABLE");
-                item.stillSold = (results.getInt("STILL SOLD")) == 1;
-                item.supplierId = results.getString("SUPPLIERS");
-                item.imageName = results.getString("PICTURE NAME");  
-                statement.close();
+                item = DatabaseManager.convertInventoryItem(results);
             }
             statement.close();
             return item;
@@ -222,9 +192,6 @@ public final class DatabaseManager {
             return null;
         } 
     }
-    
-    
-    
     
     
      /**
@@ -245,17 +212,7 @@ public final class DatabaseManager {
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                Supplier supplier = new Supplier(results.getString("ID"));
-                supplier.name = results.getString("NAME");
-                supplier.email = results.getString("EMAIL");
-                supplier.phone = results.getString("PHONE");
-                
-                String stringofItemIds = results.getString("ITEMS SUPPLIED");
-                List<String> items = Arrays.asList(stringofItemIds.split("\\s*,\\s*"));
-                ArrayList<String> idArray = new ArrayList<>(items);
-                supplier.itemsSupplied = idArray;
-                
-                resultList.add(supplier);
+                resultList.add(DatabaseManager.convertSupplier(results));
             }
             statement.close();
             return resultList;
@@ -300,15 +257,7 @@ public final class DatabaseManager {
             Supplier supplier = null;
             
             if (results.next()) {
-                supplier = new Supplier(results.getString("ID"));
-                supplier.name = results.getString("NAME");
-                supplier.email = results.getString("EMAIL");
-                supplier.phone = results.getString("PHONE");
-                
-                String stringofItemIds = results.getString("ITEMS SUPPLIED");
-                List<String> items = Arrays.asList(stringofItemIds.split("\\s*,\\s*"));
-                ArrayList<String> idArray = new ArrayList<>(items);
-                supplier.itemsSupplied = idArray;           
+                supplier = DatabaseManager.convertSupplier(results);
             }
             statement.close();
             return supplier;
@@ -338,34 +287,15 @@ public final class DatabaseManager {
             query = query.toLowerCase();
             String command = "select * " + DATABADE_NAME + ".Transactions"
                     + "where lower(DATE) contains " + query;
-            
-            ResultSet results = statement.executeQuery(command);
-            SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
+            ResultSet results = statement.executeQuery(command);  
             
             while (results.next()) {
-                Transaction tran = new Transaction(results.getString("ID"), results.getString("CUSTOMERID"));
-                tran.date = formatter.parse(results.getString("DATE"));
-                tran.mode = (results.getInt("DEBIT OR CREDIT") == 0) ? Transaction.transactionMode.debit : Transaction.transactionMode.credit;
-                tran.creditAmount = results.getDouble("CREDIT AMOUNT");
-                
-                List<String> itemIDs = Arrays.asList(results.getString("ITEMS SOLD").split("\\s*,\\s*"));
-                
-                List<String> quantities = Arrays.asList(results.getString("QUANTITIES SOLD").split("\\s*,\\s*"));
-                
-                Map<String, Integer> transactions = new HashMap<>();
-                 
-                 for (int i = 0; i < itemIDs.size(); i++){
-                    transactions.put(itemIDs.get(i), Integer.parseInt(quantities.get(i)));
-                 }
-                 
-                tran.transactions = transactions;
-                
-                resultList.add(tran);
+                resultList.add(DatabaseManager.convertTransaction(results));
             }
             statement.close();
             return resultList;
 
-        } catch (Exception e) {
+        }catch (Exception e) {
             processError(e);
             return null;
         }
@@ -414,27 +344,12 @@ public final class DatabaseManager {
             
             ResultSet results = statement.executeQuery(command);
             Transaction tran = null;
-            
             if (results.next()) {
-                tran = new Transaction(results.getString("ID"), results.getString("CUSTOMERID"));
-                tran.date = formatter.parse(results.getString("DATE"));
-                tran.mode = (results.getInt("DEBIT OR CREDIT") == 0) ? Transaction.transactionMode.debit : Transaction.transactionMode.credit;
-                tran.creditAmount = results.getDouble("CREDIT AMOUNT");
-                
-                List<String> itemIDs = Arrays.asList(results.getString("ITEMS SOLD").split("\\s*,\\s*"));
-                
-                List<String> quantities = Arrays.asList(results.getString("QUANTITIES SOLD").split("\\s*,\\s*"));
-                
-                Map<String, Integer> transactions = new HashMap<>();
-                 
-                 for (int i = 0; i < itemIDs.size(); i++){
-                    transactions.put(itemIDs.get(i), Integer.parseInt(quantities.get(i)));
-                 }
-                 
-                tran.transactions = transactions;
-                return tran;
+                tran = DatabaseManager.convertTransaction(results);
             }
-
+            statement.close();
+            return tran;
+            
         } catch (Exception e) {
             processError(e);
         } finally{
@@ -459,51 +374,49 @@ public final class DatabaseManager {
             for(int i = 0; i<ColumnCount; i++){
                 String getResults = "SELECT * FROM " + tableName + " WHERE ["+ ColumnNames.get(i) + "] LIKE " +"'%" +searchTerm + "%'";
                 ResultSet rs2 = statement.executeQuery(getResults);
-                //String SearchOutput;
+                
                 while (rs2.next()){
-                    if(filter.equals("Inventory Items")){
-                        InventoryItem item = DatabaseManager.convertInventoryItem(rs2);
-                        if(!ArrSearchResults.contains(item)){
-                            ArrSearchResults.add(item);
-                        }
-                    }else if(filter.equals("Customer")){
-                        Customer customer = DatabaseManager.convertCustomer(rs2);
-                        if(!ArrSearchResults.contains(customer)){
-                            ArrSearchResults.add(customer);
-                        }
-                    }else if(filter.equals("Supplier")){
-                        Supplier supplier = DatabaseManager.convertSupplier(rs2);
-                        if(!ArrSearchResults.contains(supplier)){
-                            ArrSearchResults.add(supplier);
-                        }
-                    }else if(filter.equals("Transaction")){
-                        Transaction transaction = DatabaseManager.convertTransaction(rs2);
-                        if(!ArrSearchResults.contains(transaction)){
-                            ArrSearchResults.add(transaction);
-                        }
+                    switch (filter) {
+                        case "Inventory Items":
+                            InventoryItem item = DatabaseManager.convertInventoryItem(rs2);
+                            if(!ArrSearchResults.contains(item)){
+                                ArrSearchResults.add(item);
+                            }   break;
+                        case "Customer":
+                            Customer customer = DatabaseManager.convertCustomer(rs2);
+                            if(!ArrSearchResults.contains(customer)){
+                                ArrSearchResults.add(customer);
+                            }   break;
+                        case "Supplier":
+                            Supplier supplier = DatabaseManager.convertSupplier(rs2);
+                            if(!ArrSearchResults.contains(supplier)){
+                                ArrSearchResults.add(supplier);
+                            }   break;
+                        case "Transaction":
+                            Transaction transaction = DatabaseManager.convertTransaction(rs2);
+                            if(!ArrSearchResults.contains(transaction)){
+                                ArrSearchResults.add(transaction);
+                            }   break;
+                        default:
+                            break;
                     }
-                    //SearchOutput = rs.getString(nameColumn1) + "-" + rs.getString(nameColumn2) + "-" + rs.getString(nameColumn3);
-                   
                 }
                 rs2.close();
             }
             rs.close();
             statement.close();
             return ArrSearchResults;
-        } catch (Exception e) {
+        } catch (SQLException | ParseException | IOException | ClassNotFoundException e) {
             processError(e);
             return null;
         }
     }
-    
     public static List searchEntireDatabase(String searchTerm) throws SQLException{
         try {
         List<List> ArrSearchList = new ArrayList<>();
-        List ArrSearchCustomers = new ArrayList<>();
-        List ArrSearchInventoryItems = new ArrayList<>();
-        List ArrSearchSuppliers = new ArrayList<>();
-        List ArrSearchTransactions = new ArrayList<>();
+        List ArrSearchCustomers, ArrSearchInventoryItems, ArrSearchSuppliers, ArrSearchTransactions;
         List ArrSearchAll = new ArrayList<>();
+        
         ArrSearchCustomers = searchWtihFilter(searchTerm,"Customers");
         ArrSearchInventoryItems = searchWtihFilter(searchTerm,"Inventory Items");
         ArrSearchSuppliers = searchWtihFilter(searchTerm,"Suppliers");
@@ -525,8 +438,9 @@ public final class DatabaseManager {
         }
     }
     
+    
     public static InventoryItem convertInventoryItem(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
-        InventoryItem item = null;
+        InventoryItem item;
         item = new InventoryItem(result.getString("ID"));
         item.name = result.getString("NAME");
         item.price = result.getFloat("PRICE");
@@ -538,7 +452,7 @@ public final class DatabaseManager {
         return item;
     }
     public static Customer convertCustomer(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
-        Customer customer = null;
+        Customer customer;
         customer = new Customer(result.getString("ID"));
         customer.fullName = result.getString("FULL NAME");
         Customer.Gender gender = (result.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
@@ -557,7 +471,7 @@ public final class DatabaseManager {
         return customer;
     }
     public static Supplier convertSupplier(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
-        Supplier supplier = null;
+        Supplier supplier;
         supplier = new Supplier(result.getString("ID"));
         supplier.name = result.getString("NAME");
         supplier.email = result.getString("EMAIL");
@@ -568,9 +482,8 @@ public final class DatabaseManager {
         supplier.itemsSupplied = idArray;
         return supplier;
     }
-    
     public static Transaction convertTransaction(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
-        Transaction transaction = null;
+        Transaction transaction;
         SimpleDateFormat formatDate = new SimpleDateFormat("E, MMM dd yyyy");
         transaction = new Transaction(result.getString("ID"), result.getString("CUSTOMERID"));
         transaction.date = formatDate.parse(result.getString("DATE"));
@@ -585,6 +498,4 @@ public final class DatabaseManager {
         transaction.transactions = transactions;
         return transaction;
     }
-    
-
 }

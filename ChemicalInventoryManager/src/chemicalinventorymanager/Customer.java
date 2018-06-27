@@ -30,4 +30,9 @@ public class Customer {
         female
     }  
     
+    @Override
+    public String toString(){
+        return "Customer ID: " + id + "\tCustomer Name: " + fullName;
+    }
 }
+

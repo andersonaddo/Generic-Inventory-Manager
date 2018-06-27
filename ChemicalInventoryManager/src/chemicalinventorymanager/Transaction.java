@@ -28,4 +28,9 @@ public class Transaction {
         credit
     }
     
+    @Override
+    public String toString(){
+        return "Transaction Date: "+ date + "\tCustomer ID: " + customerID;
+    }
+    
 }

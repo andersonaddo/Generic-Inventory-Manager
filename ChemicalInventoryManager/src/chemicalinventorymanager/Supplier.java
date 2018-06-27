@@ -15,4 +15,9 @@ public class Supplier {
     public Supplier(String id){
         this.id = id;
     }
+    
+    @Override
+    public String toString(){
+        return "Supplier: " + name;
+    }
 }

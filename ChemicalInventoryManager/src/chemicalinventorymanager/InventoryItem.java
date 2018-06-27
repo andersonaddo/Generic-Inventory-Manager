@@ -17,4 +17,9 @@ public class InventoryItem {
     }
     
     public String getID() {return id;}
+    
+    @Override
+    public String toString(){
+        return "Item Name: " + name + "\tPrice: " + price;
+    }
 }
