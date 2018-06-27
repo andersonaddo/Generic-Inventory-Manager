@@ -36,7 +36,7 @@ public class SearchScreenController implements Initializable {
     private ListView ResultsView;
     
     @FXML
-    void search() throws SQLException {
+    private void search() throws SQLException {
         String search = SearchTerm.getText();
         String filter = Filter.getValue().toString();
         

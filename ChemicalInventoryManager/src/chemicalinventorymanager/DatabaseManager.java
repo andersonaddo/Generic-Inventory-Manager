@@ -19,7 +19,7 @@ import java.util.Set;
 public final class DatabaseManager {
     private static Connection databaseConenction;
     private static String DATABASE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
-    private static String DATABASE_NAME = "ShopDatabase.db";
+    //private static String DATABASE_NAME = "ShopDatabase.db";
     
     private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
     private static void processError(Exception e){
@@ -44,15 +44,15 @@ public final class DatabaseManager {
      * @return A list of Customers
      * @throws java.sql.SQLException
      */
-    public static List<Customer> getCustomersWithName(String name) throws SQLException{
+    public static List<Customer> getCustomersWithName(String Customername) throws SQLException{
         ArrayList<Customer> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            name = name.toLowerCase();
+            Customername = Customername.toLowerCase();
             String command = "select ID, GENDER, [TOTAL DEBT] from Customers "
-                    + "where lower([FULL NAME]) like '%" + name + "%'";
+                    + "where lower([FULL NAME]) like '%" + Customername + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
