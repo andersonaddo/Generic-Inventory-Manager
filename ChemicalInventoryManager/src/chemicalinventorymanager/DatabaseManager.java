@@ -6,7 +6,6 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.List;
 import java.text.SimpleDateFormat;  
 import java.util.Collection;
@@ -273,7 +272,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * Transactions where lower(DATE) contains " + query;
+            String command = "select * Transactions where lower(DATE) like '%" + query + "%'";
             ResultSet results = statement.executeQuery(command);  
             
             while (results.next()) {

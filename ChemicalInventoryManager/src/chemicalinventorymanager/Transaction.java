@@ -1,7 +1,6 @@
 package chemicalinventorymanager;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +20,6 @@ public class Transaction {
         this.id = id;
         customerID = cid;
     }
-    
     
     enum transactionMode{
         debit,

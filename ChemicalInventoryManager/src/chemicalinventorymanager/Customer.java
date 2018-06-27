@@ -1,6 +1,5 @@
 package chemicalinventorymanager;
 
-import java.util.Dictionary;
 import java.util.Map;
 
 /**
