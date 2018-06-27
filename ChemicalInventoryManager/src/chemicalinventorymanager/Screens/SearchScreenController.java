@@ -11,8 +11,6 @@ import java.util.List;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -44,7 +42,7 @@ public class SearchScreenController implements Initializable {
         
         if(!search.isEmpty()){
             List<String> SearchResults;
-            if(filter.equals("All")){
+            if("All".equals(filter)){
                 SearchResults = DatabaseManager.searchEntireDatabase(search);
             }else{
                 SearchResults = DatabaseManager.searchWithFilter(search, filter);

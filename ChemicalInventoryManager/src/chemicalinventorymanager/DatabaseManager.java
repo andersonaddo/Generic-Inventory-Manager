@@ -17,12 +17,11 @@ import java.util.Set;
  * This is a static helper class that manages all the logic for the SQLite backend of this application
  */
 public final class DatabaseManager {
-    private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
-    
     private static Connection databaseConenction;
     private static String DATABASE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
     private static String DATABASE_NAME = "ShopDatabase.db";
     
+    private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
     private static void processError(Exception e){
         System.out.println(e);
     }
@@ -45,15 +44,15 @@ public final class DatabaseManager {
      * @return A list of Customers
      * @throws java.sql.SQLException
      */
-    public static List<Customer> getCustomersWithName(String query) throws SQLException{
+    public static List<Customer> getCustomersWithName(String name) throws SQLException{
         ArrayList<Customer> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            query = query.toLowerCase();
+            name = name.toLowerCase();
             String command = "select ID, GENDER, [TOTAL DEBT] from Customers "
-                    + "where lower([FULL NAME]) like '%" + query + "%'";
+                    + "where lower([FULL NAME]) like '%" + name + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
@@ -407,7 +406,10 @@ public final class DatabaseManager {
     public static List searchEntireDatabase(String searchTerm) throws SQLException{
         try {
         List<List> ArrSearchList = new ArrayList<>();
-        List ArrSearchCustomers, ArrSearchInventoryItems, ArrSearchSuppliers, ArrSearchTransactions;
+        List ArrSearchCustomers;
+        List ArrSearchInventoryItems;
+        List ArrSearchSuppliers;
+        List ArrSearchTransactions;
         List ArrSearchAll = new ArrayList<>();
         
         ArrSearchCustomers = searchWithFilter(searchTerm,"Customers");
