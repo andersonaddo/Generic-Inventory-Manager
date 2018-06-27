@@ -26,17 +26,16 @@
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
-            <TextField id="search_bar" fx:id="SearchTerm" layoutX="125.0" layoutY="71.0" prefHeight="25.0" prefWidth="278.0" promptText="Search anything" />
+            <TextField id="search_bar" fx:id="SearchTerm" layoutX="143.0" layoutY="90.0" onInputMethodTextChanged="#search" prefHeight="25.0" prefWidth="278.0" promptText="Search anything" />
             <ListView id="transactions_list" fx:id="ResultsView" layoutY="161.0" prefHeight="215.0" prefWidth="640.0" />
-            <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="82.0" layoutY="67.0">
+            <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="81.0" layoutY="86.0">
                <image>
                   <Image url="@../Pictures/Search.png" />
                </image>
             </ImageView>
-            <ComboBox fx:id="Filter" layoutX="414.0" layoutY="71.0" prefHeight="25.0" prefWidth="145.0" promptText="All" visibleRowCount="4" >
+            <ComboBox fx:id="Filter" layoutX="433.0" layoutY="90.0" prefHeight="25.0" prefWidth="145.0" promptText="All" visibleRowCount="4">
                 
             </ComboBox>
-            <Button fx:id="Search" layoutX="269.0" layoutY="112.0" mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="103.0" text="Search" />
       </children>
     </AnchorPane>
   </children>
