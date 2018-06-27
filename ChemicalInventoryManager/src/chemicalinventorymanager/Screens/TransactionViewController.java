@@ -11,6 +11,8 @@ import java.net.URL;
 import java.sql.*;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -25,12 +27,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
  *
  * @author Ekow Bentsi-Enchill
  */
-public class ViewTransactionController implements Initializable {
+public class TransactionViewController implements Initializable {
     
     Transaction tran; 
     
     @FXML
     private Label transactionDateLabel;
+    
+    @FXML
+    private Label transIdLabel;
     
     @FXML
     private Label customerIdLabel;
@@ -50,28 +55,23 @@ public class ViewTransactionController implements Initializable {
     @FXML
     private TableColumn<Map, Integer> quantityColumn;
     
-    /**
-     * The search screen will call this method
-     * @param id
-     * @throws SQLException
-     */
-    @FXML
-    public static void viewTransaction(String id) throws SQLException {
-        ViewTransactionController.tran = DatabaseManager.getTransactionWithId(id);
+    public TransactionViewController(String id) throws SQLException{
+        tran = DatabaseManager.getTransactionWithId("1");
     }
-     
-    
-    
-    
-    
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        itemSoldColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("item"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<Map, String>("quantity"));
+        customerIdLabel.setText(tran.getCustomerID());
+        transactionDateLabel.setText(tran.getDate());
+        try {
+            customerNameLabel.setText(DatabaseManager.getCustomerWithId(tran.getCustomerID()).getfullName());
+        } catch (SQLException ex) {
+            customerNameLabel.setText(null);
+        }
+        
     }    
     
 }
