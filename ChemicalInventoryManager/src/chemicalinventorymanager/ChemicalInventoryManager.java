@@ -6,6 +6,7 @@
 package chemicalinventorymanager;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,7 +36,8 @@ public class ChemicalInventoryManager extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        System.out.println(DatabaseManager.getCustomersWithName("12"));
         launch(args);
     }
     

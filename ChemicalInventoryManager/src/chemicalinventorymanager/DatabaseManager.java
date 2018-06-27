@@ -21,8 +21,8 @@ public final class DatabaseManager {
     private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
     
     private static Connection databaseConenction;
-    private static String DATABADE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
-    private static String DATABADE_NAME = "ShopDatabase.db";
+    private static String DATABASE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
+    private static String DATABASE_NAME = "ShopDatabase.db";
     
     private static void processError(Exception e){
         System.out.println(e);
@@ -33,7 +33,7 @@ public final class DatabaseManager {
             if (databaseConenction != null) {
                 return;
             }
-            String url = "jdbc:sqlite:" + DATABADE_PATH;
+            String url = "jdbc:sqlite:" + DATABASE_PATH;
             databaseConenction = DriverManager.getConnection(url);
         } catch (SQLException sQLException) {
             System.out.println(sQLException);
@@ -46,15 +46,14 @@ public final class DatabaseManager {
      * @return A list of Customers
      * @throws java.sql.SQLException
      */
-    public List<Customer> getCustomersWithName(String query) throws SQLException{
+    public static List<Customer> getCustomersWithName(String query) throws SQLException{
         ArrayList<Customer> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select ID, f, GENDER, TOTAL DEBT from " + DATABADE_NAME + ".Customers"
-                    + "where lower(FULL NAME) contains " + query;
+            String command = "select * from [Customers] where lower([FULL NAME]) like '%" + query +"%'";
             
             ResultSet results = statement.executeQuery(command);
             
@@ -72,7 +71,6 @@ public final class DatabaseManager {
             return null;
         }
     }
-    
     public static void addCustomer (Customer customer) throws SQLException{      
         try {
             connect();
@@ -85,7 +83,6 @@ public final class DatabaseManager {
             processError(e);
         }    
     }
-    
     /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -97,7 +94,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Customers"
+            String command = "select * from " + DATABASE_NAME + ".Customers"
                     + "where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
@@ -117,9 +114,6 @@ public final class DatabaseManager {
     }
     
     
-    
-    
-    
      /**
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
@@ -132,7 +126,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABADE_NAME + ".Inventory Items"
+            String command = "select * " + DATABASE_NAME + ".Inventory Items"
                     + "where lower(NAME) contains " + query;
             
             ResultSet results = statement.executeQuery(command);
@@ -148,7 +142,6 @@ public final class DatabaseManager {
             return null;
         }
     }
-    
     public static void addItem (InventoryItem item) throws SQLException{      
         try {
             connect();
@@ -163,7 +156,6 @@ public final class DatabaseManager {
         }
       
     }
-    
      /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -175,8 +167,8 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "SELECT * FROM " +  " [Inventory Items] "
-                    + "WHERE ID = '" + id + "'";
+            String command = "select * from " + DATABASE_NAME + ".Inventory Items"
+                    + "where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -206,7 +198,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABADE_NAME + ".Suppliers"
+            String command = "select * " + DATABASE_NAME + ".Suppliers"
                     + "where lower(NAME) contains " + query;
             
             ResultSet results = statement.executeQuery(command);
@@ -222,7 +214,6 @@ public final class DatabaseManager {
             return null;
         }
     }
-    
     public static void addSupplier (Supplier supplier) throws SQLException{      
         try {
             connect();
@@ -238,7 +229,6 @@ public final class DatabaseManager {
         }
       
     }
-    
      /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -250,7 +240,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
+            String command = "select * from " + DATABASE_NAME + ".Suppliers"
                     + "where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
@@ -270,9 +260,6 @@ public final class DatabaseManager {
     }
     
     
-    
-    
-        
      /**
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
@@ -285,7 +272,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABADE_NAME + ".Transactions"
+            String command = "select * " + DATABASE_NAME + ".Transactions"
                     + "where lower(DATE) contains " + query;
             ResultSet results = statement.executeQuery(command);  
             
@@ -300,7 +287,6 @@ public final class DatabaseManager {
             return null;
         }
     }
-    
     public static void addTransaction (Transaction tran) throws SQLException{      
         try {
             connect();
@@ -326,7 +312,6 @@ public final class DatabaseManager {
         }
       
     }
-    
      /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -339,7 +324,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
+            String command = "select * from " + DATABASE_NAME + ".Inventory Items"
                     + "where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
@@ -356,6 +341,7 @@ public final class DatabaseManager {
             return null;
         }
     }
+    
     
     public static List searchWtihFilter(String searchTerm, String filter) throws SQLException{
         try {
