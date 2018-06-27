@@ -50,9 +50,9 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            Customername = Customername.toLowerCase();
+            String name = Customername.toLowerCase();
             String command = "select ID, GENDER, [TOTAL DEBT] from Customers "
-                    + "where lower([FULL NAME]) like '%" + Customername + "%'";
+                    + "where lower([FULL NAME]) like '%" + name + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
