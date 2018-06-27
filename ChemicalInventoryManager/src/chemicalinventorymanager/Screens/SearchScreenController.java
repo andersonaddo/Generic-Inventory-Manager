@@ -37,9 +37,9 @@ public class SearchScreenController implements Initializable {
     
     @FXML
     void search() throws SQLException {
-       
         String search = SearchTerm.getText();
         String filter = Filter.getValue().toString();
+        
         if(!search.isEmpty()){
             List<String> SearchResults;
             if(filter.equals("All")){
@@ -47,7 +47,6 @@ public class SearchScreenController implements Initializable {
             }else{
                 SearchResults = DatabaseManager.searchWtihFilter(search, filter);
             }
-            
             ResultsView.getItems().clear();
             for(Object Result:SearchResults){
                 ResultsView.getItems().add(Result);
