@@ -52,10 +52,10 @@ public class HelperClass {
     }
    
    public static void makePositiveIntegerOnly(TextField textField){
-       Pattern validEditingState = Pattern.compile("(([1-9][0-9]*)|0)?");
+       Pattern validEditingState = Pattern.compile("(([0-9]*)|0)?");
 
         UnaryOperator<TextFormatter.Change> filter = c -> {
-            String text = c.getControlNewText();
+            String text = c.getText();
             if (validEditingState.matcher(text).matches()) {
                 return c ;
             } else {

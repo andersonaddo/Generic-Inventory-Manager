@@ -52,7 +52,7 @@ public final class DatabaseManager {
      * @param query
      * @return A list of Customers without their array of debts (for performance reasons)
      */
-    public List<Customer> getCustomersWithName(String query) throws SQLException{
+    public static List<Customer> getCustomersWithName(String query) throws SQLException{
         ArrayList<Customer> resultList = new ArrayList <Customer>();
         try {
             connect();
@@ -134,9 +134,8 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
-            return null;
-        }
+            return  null;
+        } 
     }
     
     
@@ -155,8 +154,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABADE_NAME + ".Inventory Items"
-                    + "where lower(NAME) contains " + query;
+            String command = "select * from `Inventory Items` where lower(`NAME`) like '%" + query + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
@@ -206,8 +204,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from `Inventory Items` where `ID` = '" + id + "'";
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -227,8 +224,7 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
-            return null;
+            return  null;
         }
     }
     
@@ -325,7 +321,6 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
         }
     }
@@ -447,9 +442,9 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
         }
+        return  null;
     }
     
     
