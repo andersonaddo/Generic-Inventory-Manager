@@ -10,9 +10,11 @@ import chemicalinventorymanager.Supplier;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 /**
  * FXML Controller class
@@ -33,10 +35,10 @@ public class SupplierSummaryController implements Initializable {
     Label supplierPhoneLabel;
     
     @FXML
-    Label itemsSuppliedLabel;
+    ListView itemsSuppliedList;
     
     public SupplierSummaryController(String id) throws SQLException{
-        supplier = DatabaseManager.getSupplierWithId(id);
+        supplier = DatabaseManager.getSupplierWithId("1");
     }
     /**
      * Initializes the controller class.
@@ -47,6 +49,12 @@ public class SupplierSummaryController implements Initializable {
         supplierEmailLabel.setText(supplier.email);
         supplierPhoneLabel.setText(supplier.phone);
         
+        
+        ArrayList<String> items = supplier.getItemsSupplied();
+        
+        items.forEach((item) -> {
+            itemsSuppliedList.getItems().add(item);
+        });
     }    
     
 }

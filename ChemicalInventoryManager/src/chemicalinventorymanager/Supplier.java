@@ -11,6 +11,9 @@ public class Supplier {
     ArrayList <String> itemsSupplied;
     
     public String getID() {return id;}
+
+    public ArrayList<String> getItemsSupplied() {return itemsSupplied;}
+    
     
     public Supplier(String id){
         this.id = id;

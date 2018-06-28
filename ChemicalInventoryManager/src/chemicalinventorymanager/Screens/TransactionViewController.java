@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -47,7 +50,7 @@ public class TransactionViewController implements Initializable {
     private Label transactionModeLabel;
     
     @FXML
-    private TableView<Map> itemsTable;
+    private TableView<Map<String, Integer>> itemsTable;
     
     @FXML
     private TableColumn<Map, String> itemSoldColumn;
@@ -56,7 +59,7 @@ public class TransactionViewController implements Initializable {
     private TableColumn<Map, Integer> quantityColumn;
     
     public TransactionViewController(String id) throws SQLException{
-        tran = DatabaseManager.getTransactionWithId("1");
+        tran = DatabaseManager.getTransactionWithId(id);
     }
     
     /**
@@ -71,7 +74,16 @@ public class TransactionViewController implements Initializable {
         } catch (SQLException ex) {
             customerNameLabel.setText(null);
         }
-        
+        transIdLabel.setText(tran.getID());
+        transactionModeLabel.setText(tran.getMode());
+
+        //to populate the tableview with transaction item details
+        Map<String,Integer> transItems = tran.getTransactions();
+        ObservableMap<String,Integer> oTransItems 
+                = FXCollections.observableMap(transItems);
+        ObservableList<ObservableMap.Entry<String,Integer>> oTransItemsList 
+                = FXCollections.observableArrayList(oTransItems.entrySet());
+        //itemsTable.setItems(oTransItemsList);
     }    
     
 }
