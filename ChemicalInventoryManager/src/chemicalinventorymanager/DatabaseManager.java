@@ -1,10 +1,11 @@
 package chemicalinventorymanager;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.List;
 import java.text.SimpleDateFormat;  
 import java.util.Collection;
@@ -16,12 +17,11 @@ import java.util.Set;
  * This is a static helper class that manages all the logic for the SQLite backend of this application
  */
 public final class DatabaseManager {
-    private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
-    
     private static Connection databaseConenction;
-    private static String DATABADE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
-    private static String DATABADE_NAME = "ShopDatabase.db";
+    private static String DATABASE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
+    //private static String DATABASE_NAME = "ShopDatabase.db";
     
+    private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
     private static void processError(Exception e){
         System.out.println(e);
     }
@@ -31,7 +31,7 @@ public final class DatabaseManager {
             if (databaseConenction != null) {
                 return;
             }
-            String url = "jdbc:sqlite:" + DATABADE_PATH;
+            String url = "jdbc:sqlite:" + DATABASE_PATH;
             databaseConenction = DriverManager.getConnection(url);
         } catch (SQLException sQLException) {
             System.out.println(sQLException);
@@ -42,36 +42,34 @@ public final class DatabaseManager {
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
      * @return A list of Customers
+     * @throws java.sql.SQLException
      */
-    public List<Customer> getCustomersWithName(String query) throws SQLException{
-        ArrayList<Customer> resultList = new ArrayList <Customer>();
+    public static List<Customer> getCustomersWithName(String Customername) throws SQLException{
+        ArrayList<Customer> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            query = query.toLowerCase();
-            String command = "select ID, f, GENDER, TOTAL DEBT from " + DATABADE_NAME + ".Customers"
-                    + "where lower(FULL NAME) contains " + query;
+            String name = Customername.toLowerCase();
+            String command = "select ID, GENDER, [TOTAL DEBT] from Customers "
+                    + "where lower([FULL NAME]) like '%" + name + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                Customer customer = new Customer(results.getString("ID"));
-                customer.fullName = results.getString("FULL NAME");
-                Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
-                customer.gender = gender;
-                customer.totalDebt = results.getDouble("TOTAL DEBT");
-                resultList.add(customer);
+                resultList.add(DatabaseManager.convertCustomer(results));
             }
             statement.close();
             return resultList;
 
-        } catch (SQLException sQLException) {
-            System.out.println(sQLException);
+        }catch(SQLException sqlexception) {
+            System.out.println(sqlexception);
+            return null;
+        } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }
-    
     public static void addCustomer (Customer customer) throws SQLException{      
         try {
             connect();
@@ -84,7 +82,6 @@ public final class DatabaseManager {
             processError(e);
         }    
     }
-    
     /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -96,8 +93,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Customers"
-                    + "where ID = " + id;
+            String command = "select * from Customers where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Customer customer = null;
@@ -108,16 +104,17 @@ public final class DatabaseManager {
                 Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
                 customer.gender = gender;
                 customer.totalDebt = results.getDouble("TOTAL DEBT");
-                
+
                 Blob debtsBytes = results.getBlob("ARRAY OF CREDITS");
-                InputStream binaryInput = null;
-                if (null != debtsBytes && debtsBytes.length() > 0) {
-                    binaryInput = debtsBytes.getBinaryStream();
+                if (debtsBytes != null  && debtsBytes.length() > 0) {
+                    InputStream binaryInput = debtsBytes.getBinaryStream();
                     ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
                     customer.debts = (Map<String, Double>)inputStream.readObject();
                 }else {
                     customer.debts = null;
                 }
+                return customer;
+               
             }
             statement.close();
             return customer;
@@ -130,35 +127,24 @@ public final class DatabaseManager {
     }
     
     
-    
-    
-    
      /**
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
      * @return A list of Items
      */
     public static List<InventoryItem> getItemsWithName(String query) throws SQLException{
-        ArrayList<InventoryItem> resultList = new ArrayList <InventoryItem>();
+        ArrayList<InventoryItem> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABADE_NAME + ".Inventory Items"
-                    + "where lower(NAME) contains " + query;
+            String command = "select * from [Inventory Items] where lower(NAME) like '%" + query + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                InventoryItem item = new InventoryItem(results.getString("ID"));
-                item.name = results.getString("NAME");
-                item.price = results.getFloat("PRICE");
-                item.description = results.getString("DESCRIPTION");
-                item.amountAvailable = results.getInt("AMOUNT AVAILABLE");
-                item.stillSold = (results.getInt("STILL SOLD")) == 1;
-                item.supplierId = results.getString("SUPPLIERS");
-                resultList.add(item);
+                resultList.add(DatabaseManager.convertInventoryItem(results));
             }
             statement.close();
             return resultList;
@@ -168,7 +154,6 @@ public final class DatabaseManager {
             return null;
         }
     }
-    
     public static void addItem (InventoryItem item) throws SQLException{      
         try {
             connect();
@@ -183,7 +168,6 @@ public final class DatabaseManager {
         }
       
     }
-    
      /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -195,34 +179,22 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from [Inventory Items] where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
             
             if (results.next()) {
-                item = new InventoryItem(results.getString("ID"));
-                item.name = results.getString("NAME");
-                item.price = results.getFloat("PRICE");
-                item.description = results.getString("DESCRIPTION");
-                item.amountAvailable = results.getInt("AMOUNT AVAILABLE");
-                item.stillSold = (results.getInt("STILL SOLD")) == 1;
-                item.supplierId = results.getString("SUPPLIERS");
-                item.imageName = results.getString("PICTURE NAME");                
+                item = DatabaseManager.convertInventoryItem(results);
             }
             statement.close();
             return item;
-
+            
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
-        }
+        } 
     }
-    
-    
-    
     
     
      /**
@@ -231,29 +203,18 @@ public final class DatabaseManager {
      * @return A list of Suppliers
      */
     public static List<Supplier> getSuppliersWithName(String query) throws SQLException{
-        ArrayList<Supplier> resultList = new ArrayList <Supplier>();
+        ArrayList<Supplier> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABADE_NAME + ".Suppliers"
-                    + "where lower(NAME) contains " + query;
+            String command = "select * Suppliers where lower(NAME) like '%" + query + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
-                Supplier supplier = new Supplier(results.getString("ID"));
-                supplier.name = results.getString("NAME");
-                supplier.email = results.getString("EMAIL");
-                supplier.phone = results.getString("PHONE");
-                
-                String stringofItemIds = results.getString("ITEMS SUPPLIED");
-                List<String> items = Arrays.asList(stringofItemIds.split("\\s*,\\s*"));
-                ArrayList<String> idArray = new ArrayList<>(items);
-                supplier.itemsSupplied = idArray;
-                
-                resultList.add(supplier);
+                resultList.add(DatabaseManager.convertSupplier(results));
             }
             statement.close();
             return resultList;
@@ -263,7 +224,6 @@ public final class DatabaseManager {
             return null;
         }
     }
-    
     public static void addSupplier (Supplier supplier) throws SQLException{      
         try {
             connect();
@@ -279,7 +239,6 @@ public final class DatabaseManager {
         }
       
     }
-    
      /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -291,22 +250,13 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from Suppliers where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Supplier supplier = null;
             
             if (results.next()) {
-                supplier = new Supplier(results.getString("ID"));
-                supplier.name = results.getString("NAME");
-                supplier.email = results.getString("EMAIL");
-                supplier.phone = results.getString("PHONE");
-                
-                String stringofItemIds = results.getString("ITEMS SUPPLIED");
-                List<String> items = Arrays.asList(stringofItemIds.split("\\s*,\\s*"));
-                ArrayList<String> idArray = new ArrayList<>(items);
-                supplier.itemsSupplied = idArray;           
+                supplier = DatabaseManager.convertSupplier(results);
             }
             statement.close();
             return supplier;
@@ -319,56 +269,32 @@ public final class DatabaseManager {
     }
     
     
-    
-    
-        
      /**
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
      * @return A list of Suppliers
      */
     public static List<Transaction> getTransactionWithDate(String query) throws SQLException{
-        ArrayList<Transaction> resultList = new ArrayList <Transaction>();
+        ArrayList<Transaction> resultList = new ArrayList <>();
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * " + DATABADE_NAME + ".Transactions"
-                    + "where lower(DATE) contains " + query;
-            
-            ResultSet results = statement.executeQuery(command);
-            SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
+            String command = "select * Transactions where lower(DATE) like '%" + query + "%'";
+            ResultSet results = statement.executeQuery(command);  
             
             while (results.next()) {
-                Transaction tran = new Transaction(results.getString("ID"), results.getString("CUSTOMERID"));
-                tran.date = formatter.parse(results.getString("DATE"));
-                tran.mode = (results.getInt("DEBIT OR CREDIT") == 0) ? Transaction.transactionMode.debit : Transaction.transactionMode.credit;
-                tran.creditAmount = results.getDouble("CREDIT AMOUNT");
-                
-                List<String> itemIDs = Arrays.asList(results.getString("ITEMS SOLD").split("\\s*,\\s*"));
-                
-                List<String> quantities = Arrays.asList(results.getString("QUANTITIES SOLD").split("\\s*,\\s*"));
-                
-                Map<String, Integer> transactions = new HashMap<>();
-                 
-                 for (int i = 0; i < itemIDs.size(); i++){
-                    transactions.put(itemIDs.get(i), Integer.parseInt(quantities.get(i)));
-                 }
-                 
-                tran.transactions = transactions;
-                
-                resultList.add(tran);
+                resultList.add(DatabaseManager.convertTransaction(results));
             }
             statement.close();
             return resultList;
 
-        } catch (Exception e) {
+        }catch (Exception e) {
             processError(e);
             return null;
         }
     }
-    
     public static void addTransaction (Transaction tran) throws SQLException{      
         try {
             connect();
@@ -394,7 +320,6 @@ public final class DatabaseManager {
         }
       
     }
-    
      /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
@@ -405,38 +330,158 @@ public final class DatabaseManager {
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from Inventory Items where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Transaction tran = null;
-            
             if (results.next()) {
-                tran = new Transaction(results.getString("ID"), results.getString("CUSTOMERID"));
-                tran.date = formatter.parse(results.getString("DATE"));
-                tran.mode = (results.getInt("DEBIT OR CREDIT") == 0) ? Transaction.transactionMode.debit : Transaction.transactionMode.credit;
-                tran.creditAmount = results.getDouble("CREDIT AMOUNT");
-                
-                List<String> itemIDs = Arrays.asList(results.getString("ITEMS SOLD").split("\\s*,\\s*"));
-                
-                List<String> quantities = Arrays.asList(results.getString("QUANTITIES SOLD").split("\\s*,\\s*"));
-                
-                Map<String, Integer> transactions = new HashMap<>();
-                 
-                 for (int i = 0; i < itemIDs.size(); i++){
-                    transactions.put(itemIDs.get(i), Integer.parseInt(quantities.get(i)));
-                 }
-                 
-                tran.transactions = transactions;
-                return tran;
+                tran = DatabaseManager.convertTransaction(results);
             }
-
+            statement.close();
+            return tran;
+            
         } catch (Exception e) {
             processError(e);
         } finally{
             return null;
         }
+    }
+    
+    
+    public static List searchWithFilter(String searchTerm, String filter) throws SQLException{
+        try {
+            connect();
+            String tableName = "["+filter+"]";
+            List ArrSearchResults = new ArrayList<>();
+            List<String> ColumnNames = new ArrayList<>();
+            Statement statement = databaseConenction.createStatement();
+            String getColumns = "SELECT * FROM " + tableName + "";
+            ResultSet rs = statement.executeQuery (getColumns);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int ColumnCount = rsmd.getColumnCount();
+            for(int i = 1; i<=ColumnCount; i++){
+                ColumnNames.add(rsmd.getColumnName(i));
+            }
+            for(int i = 0; i<ColumnCount; i++){
+                String getResults = "SELECT * FROM " + tableName + " WHERE ["+ ColumnNames.get(i) + "] LIKE " + "'%" + searchTerm + "%'";
+                ResultSet rs2 = statement.executeQuery(getResults);
+                
+                while (rs2.next()){
+                    switch (filter) {
+                        case "Inventory Items":
+                            InventoryItem item = DatabaseManager.convertInventoryItem(rs2);
+                            if(!ArrSearchResults.contains(item)){
+                                ArrSearchResults.add(item);
+                            }   break;
+                        case "Customers":
+                            Customer customer = DatabaseManager.convertCustomer(rs2);
+                            if(!ArrSearchResults.contains(customer)){
+                                ArrSearchResults.add(customer);
+                            }   break;
+                        case "Suppliers":
+                            Supplier supplier = DatabaseManager.convertSupplier(rs2);
+                            if(!ArrSearchResults.contains(supplier)){
+                                ArrSearchResults.add(supplier);
+                            }   break;
+                        case "Transactions":
+                            Transaction transaction = DatabaseManager.convertTransaction(rs2);
+                            if(!ArrSearchResults.contains(transaction)){
+                                ArrSearchResults.add(transaction);
+                            }   break;
+                        default:
+                            break;
+                    }
+                }
+                rs2.close();
+            }
+            rs.close();
+            statement.close();
+            return ArrSearchResults;
+        } catch (SQLException | ParseException | IOException | ClassNotFoundException e) {
+            processError(e);
+            return null;
+        }
+    }
+    public static List searchEntireDatabase(String searchTerm) throws SQLException{
+        try {
+        List<List> ArrSearchList = new ArrayList<>();
+        List ArrSearchCustomers;
+        List ArrSearchInventoryItems;
+        List ArrSearchSuppliers;
+        List ArrSearchTransactions;
+        List ArrSearchAll = new ArrayList<>();
+        
+        ArrSearchCustomers = searchWithFilter(searchTerm,"Customers");
+        ArrSearchInventoryItems = searchWithFilter(searchTerm,"Inventory Items");
+        ArrSearchSuppliers = searchWithFilter(searchTerm,"Suppliers");
+        ArrSearchTransactions = searchWithFilter(searchTerm,"Transactions");
+        ArrSearchList.add(ArrSearchCustomers);
+        ArrSearchList.add(ArrSearchInventoryItems);
+        ArrSearchList.add(ArrSearchSuppliers);
+        ArrSearchList.add(ArrSearchTransactions);
+        
+        for(List list:ArrSearchList){
+            for(Object result : list){
+                ArrSearchAll.add(result);
+            }
+        }
+        return ArrSearchAll;
+        }catch (Exception e) {
+            processError(e);
+            return null;
+        }
+    }
+    
+    
+    public static InventoryItem convertInventoryItem(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
+        InventoryItem item;
+        item = new InventoryItem(result.getString("ID"));
+        item.name = result.getString("NAME");
+        item.price = result.getFloat("PRICE");
+        item.description = result.getString("DESCRIPTION");
+        item.amountAvailable = result.getInt("AMOUNT AVAILABLE");
+        item.stillSold = (result.getInt("STILL SOLD")) == 1;
+        item.supplierId = result.getString("SUPPLIERS");
+        item.imageName = result.getString("PICTURE NAME");
+        return item;
+    }
+    public static Customer convertCustomer(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
+        Customer customer;
+        customer = new Customer(result.getString("ID"));
+        customer.fullName = result.getString("FULL NAME");
+        Customer.Gender gender = (result.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
+        customer.gender = gender;
+        customer.totalDebt = result.getDouble("TOTAL DEBT");
+        
+        return customer;
+    }
+    public static Supplier convertSupplier(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
+        Supplier supplier;
+        supplier = new Supplier(result.getString("ID"));
+        supplier.name = result.getString("NAME");
+        supplier.email = result.getString("EMAIL");
+        supplier.phone = result.getString("PHONE");
+        String stringofItemIds = result.getString("ITEMS SUPPLIED");
+        List<String> items = Arrays.asList(stringofItemIds.split("\\s*,\\s*"));
+        ArrayList<String> idArray = new ArrayList<>(items);
+        supplier.itemsSupplied = idArray;
+        return supplier;
+    }
+    public static Transaction convertTransaction(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
+        Transaction transaction;
+        SimpleDateFormat formatDate = new SimpleDateFormat("E, MMM dd yyyy");
+        transaction = new Transaction(result.getString("ID"), result.getString("CUSTOMERID"));
+        transaction.date = formatDate.parse(result.getString("DATE"));
+        transaction.mode = (result.getInt("DEBIT OR CREDIT") == 0) ? Transaction.transactionMode.debit : Transaction.transactionMode.credit;
+        transaction.creditAmount = result.getDouble("CREDIT AMOUNT");
+        List<String> itemIDs = Arrays.asList(result.getString("ITEMS SOLD").split("\\s*,\\s*"));
+        List<String> quantities = Arrays.asList(result.getString("QUANTITIES SOLD").split("\\s*,\\s*"));
+        Map<String, Integer> transactions = new HashMap<>();
+        for (int i = 0; i < itemIDs.size(); i++){
+            transactions.put(itemIDs.get(i), Integer.parseInt(quantities.get(i)));
+        }
+        transaction.transactions = transactions;
+        return transaction;
     }
 }
