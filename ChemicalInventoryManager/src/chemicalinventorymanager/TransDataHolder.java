@@ -14,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 /**
@@ -39,6 +40,12 @@ public class TransDataHolder {
     
     ItemQuantityPair pair; //Keeping a reference to the object so we can edit it from here
     
+    @FXML
+    void deletePair(MouseEvent event) {
+        AddTransactionController.Instance.observableList.remove(pair);
+        AddTransactionController.Instance.updateTotalCost();
+    }
+    
     public TransDataHolder()
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Screens/NewTransactionListCell.fxml"));      
@@ -53,11 +60,16 @@ public class TransDataHolder {
         }
     }
 
-    public void setInfo(ItemQuantityPair pair)
+    public void setInfo(ItemQuantityPair pair) throws SQLException
     {
         this.pair = pair;
         HelperClass.makePositiveIntegerOnly(quantity);
-        idDrpDown.setItems(FXCollections.observableArrayList(AddTransactionController.idList));
+        idDrpDown.setItems(FXCollections.observableArrayList(AddTransactionController.Instance.idList));
+        
+        if (pair.itemID != null || !"".equals(pair.itemID)) idDrpDown.setValue(pair.itemID);
+        if (pair.quantity != 0) quantity.setText(pair.quantity + "");
+        updatePrice();
+        
         
         //Adding listener tp dropdown menu
         idDrpDown.getSelectionModel()
@@ -65,16 +77,41 @@ public class TransDataHolder {
         .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> 
         {
             try {
-                totalPrice.setText((DatabaseManager.getItemWithId(newValue).price * (Integer)quantity.getTextFormatter().getValue()) + "");
-                pair.itemID = newValue;
+                updatePrice();
             } catch (Exception ex) {
                 Logger.getLogger(TransDataHolder.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         
-        
-    }
+        //Also adding a listener to the quantity text field
+        quantity.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                updatePrice();
+            } catch (SQLException ex) {
+                Logger.getLogger(TransDataHolder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        }
 
+    void updatePrice() throws SQLException{
+        String dropDownValue = idDrpDown.getValue();
+        if (dropDownValue == null){
+            return;
+        }
+        totalPrice.setText((DatabaseManager.getItemWithId(dropDownValue).price * getQuantity())+ "");
+        pair.totalPrice = Double.parseDouble(totalPrice.getText());
+        pair.itemID = dropDownValue;
+        pair.quantity = getQuantity();
+        
+        AddTransactionController.Instance.updateTotalCost();
+    }
+    
+    
+    int getQuantity(){
+        if (quantity.getText() == null || quantity.getText().isEmpty()) return 0;
+        return Integer.parseInt(quantity.getText());
+    }
+    
     public HBox getBox()
     {
         return hbox;

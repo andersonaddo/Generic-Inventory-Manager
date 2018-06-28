@@ -59,8 +59,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select ID, full name, GENDER, TOTAL DEBT from " + DATABADE_NAME + ".Customers"
-                    + "where lower(FULL NAME) contains " + query;
+            String command = "select `ID`, `full name`, `GENDER`, `TOTAL DEBT` from `Customers` where lower(`FULL NAME`) like '%" + query + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
@@ -391,11 +390,12 @@ public final class DatabaseManager {
             quantities = mappings.toString();
             quantities = quantities.substring(1, quantities.length()-1); 
             
-            String command = String.format("INSERT INTO Suppliers"
+            String command = String.format("INSERT INTO `Transactions`"
                     + "VALUES ('%s', '%s', '%s', '%d', '%s', '%s', '%f')", 
                     tran.getID(), tran.getCustomerID(), formatter.format(tran.date), (tran.mode == Transaction.transactionMode.debit) ? 0 : 1, itemKeys, quantities, tran.creditAmount);
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close();    
+            HelperClass.showSuccess("This transaction was successfully added to the database! \n It's id is " + tran.getID() );
         } catch (Exception e) {
             processError(e);
         }

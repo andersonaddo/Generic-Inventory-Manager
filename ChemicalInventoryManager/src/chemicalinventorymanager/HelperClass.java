@@ -63,25 +63,7 @@ public class HelperClass {
             }
         };
 
-        StringConverter<Integer> converter = new StringConverter<Integer>() {
-
-            @Override
-            public Integer fromString(String s) {
-                if (s.isEmpty()) {
-                    return 0 ;
-                } else {
-                    return Integer.valueOf(s);
-                }
-            }
-
-
-            @Override
-            public String toString(Integer d) {
-                return d.toString();
-            }
-        };
-
-        TextFormatter<Integer> textFormatter = new TextFormatter<>(converter, 0, filter);
+        TextFormatter<Integer> textFormatter = new TextFormatter<>(filter);
         textField.setTextFormatter(textFormatter);
        }
    

@@ -1,5 +1,8 @@
 package chemicalinventorymanager;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ListCell;
 
 /**
@@ -12,12 +15,17 @@ public class ItemQuantityPairListCell extends ListCell<ItemQuantityPair>{
     public void updateItem(ItemQuantityPair pair, boolean empty)
     {
         super.updateItem(pair, empty);
-        
-        if(pair != null)
+        if(pair != null && !empty)
         {
             TransDataHolder data = new TransDataHolder();
-            data.setInfo(pair);
+            try {
+                data.setInfo(pair);
+            } catch (SQLException ex) {
+                Logger.getLogger(ItemQuantityPairListCell.class.getName()).log(Level.SEVERE, null, ex);
+            }
             setGraphic(data.getBox());
+        }else{
+            setGraphic(null);
         }
         
     }

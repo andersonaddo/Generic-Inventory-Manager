@@ -7,4 +7,5 @@ package chemicalinventorymanager;
 public class ItemQuantityPair extends Object{
    public String itemID;
    public int quantity;
+   public double totalPrice;
 }

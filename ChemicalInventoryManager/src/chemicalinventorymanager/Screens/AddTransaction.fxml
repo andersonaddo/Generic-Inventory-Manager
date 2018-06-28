@@ -49,12 +49,12 @@
             <Label layoutX="94.0" layoutY="103.0" text="Date" />
             <Label layoutX="89.0" layoutY="501.0" text="Total Cost" />
             <Label layoutX="205.0" layoutY="501.0" text="Credit (if any)" />
-            <Button layoutX="509.0" layoutY="518.0" mnemonicParsing="false" onAction="#addSupplier" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #458554;" text="Save" textFill="WHITE" />
-            <Label layoutX="89.0" layoutY="535.0" text="0.00" />
+            <Button layoutX="509.0" layoutY="518.0" mnemonicParsing="false" onAction="#recordTransaction" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #458554;" text="Save" textFill="WHITE" />
+            <Label fx:id="totalPrice" layoutX="89.0" layoutY="535.0" text="0.00" />
             <DatePicker fx:id="date" layoutX="149.0" layoutY="99.0" prefHeight="25.0" prefWidth="390.0" />
             <ListView fx:id="transactionListView" layoutX="141.0" layoutY="144.0" prefHeight="347.0" prefWidth="478.0" />
             <ChoiceBox fx:id="customerDrawer" layoutX="157.0" layoutY="51.0" prefHeight="25.0" prefWidth="384.0" />
-            <TextField layoutX="203.0" layoutY="531.0" />
+            <TextField fx:id="credit" layoutX="203.0" layoutY="531.0" />
          </children>
       </AnchorPane>
    </center>
