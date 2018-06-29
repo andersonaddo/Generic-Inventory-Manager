@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.AddSupplierController">
+   <center>
+      <AnchorPane prefHeight="476.0" prefWidth="752.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="598.0" prefWidth="752.0">
+               <children>
+                  <Button id="back_btn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
+                  <ImageView id="item_image" fitHeight="304.0" fitWidth="233.0" layoutX="86.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Pictures/defaultCustomerImage.png" />
+                     </image>
+                  </ImageView>
+                  <TextField id="name_field" fx:id="name" layoutX="465.0" layoutY="127.0" prefHeight="25.0" prefWidth="171.0" promptText="Name of the item" />
+                  <Label layoutX="406.0" layoutY="131.0" text="Name *:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="157.0" layoutY="383.0" mnemonicParsing="false" text="Upload Image" />
+                  <Button layoutX="148.0" layoutY="447.0" mnemonicParsing="false" onAction="#addSupplier" style="-fx-background-color: #458554;" text="Add new supplier" textFill="WHITE" />
+                  <TextField id="name_field" fx:id="newSupplierId" layoutX="467.0" layoutY="255.0" prefHeight="25.0" prefWidth="174.0" promptText="Optional" />
+                  <Label fx:id="supplierIdText" layoutX="391.0" layoutY="259.0" text="Supplier ID:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="71.0" layoutY="480.0" prefHeight="62.0" prefWidth="264.0" text="Any field with * is required. Some fields show extra information if you hover the mouse over them." textAlignment="CENTER" textFill="RED" wrapText="true" />
+                  <TextField id="name_field" fx:id="email" layoutX="465.0" layoutY="169.0" prefHeight="25.0" prefWidth="171.0" promptText="Name of the item" />
+                  <Label layoutX="406.0" layoutY="173.0" text="Email:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField id="name_field" fx:id="phone" layoutX="465.0" layoutY="210.0" prefHeight="25.0" prefWidth="171.0" promptText="Name of the item" />
+                  <Label layoutX="406.0" layoutY="214.0" text="Phone:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Label layoutX="246.0" layoutY="43.0" style="-fx-font-weight: bold;" text="Add a new supplier" textAlignment="CENTER">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

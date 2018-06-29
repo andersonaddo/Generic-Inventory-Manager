@@ -10,6 +10,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;  
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,12 +19,22 @@ import java.util.Set;
  */
 public final class DatabaseManager {
     private static Connection databaseConenction;
+
+    private static int DEFAULT_ID_LENGTH = 7;
     private static String DATABASE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
     //private static String DATABASE_NAME = "ShopDatabase.db";
     
+    public static enum tableTypes{
+        customer,
+        item,
+        transaction,
+        supplier
+    }
+  
     private DatabaseManager(){} //This class is static; it shouldn't be able to be instanced
     private static void processError(Exception e){
         System.out.println(e);
+        HelperClass.alertError(e);
     }
     
     private static void connect() throws SQLException{
@@ -41,7 +52,7 @@ public final class DatabaseManager {
     /**
      * This class is designed for integration with ListViews with search-by-name capabilities
      * @param query
-     * @return A list of Customers
+     * @return A list of Customers without their array of debts (for performance reasons)
      * @throws java.sql.SQLException
      */
     public static List<Customer> getCustomersWithName(String Customername) throws SQLException{
@@ -49,10 +60,9 @@ public final class DatabaseManager {
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            
             String name = Customername.toLowerCase();
-            String command = "select ID, GENDER, [TOTAL DEBT] from Customers "
-                    + "where lower([FULL NAME]) like '%" + name + "%'";
+
+            String command = "select `ID`, `full name`, `GENDER`, `TOTAL DEBT` from `Customers` where lower(`FULL NAME`) like '%" + name + "%'";
             
             ResultSet results = statement.executeQuery(command);
             
@@ -74,10 +84,11 @@ public final class DatabaseManager {
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            String command = String.format("INSERT INTO `Customers` (id, full name, gender)"
-                    + " VALUES ('$s', '%s', '%s')", customer.getID(), customer.fullName, customer.getGender());
+            String command = String.format("INSERT INTO `Customers` (`ID`, `Full Name`, `Gender`, `Total Debt`)"
+                    + " VALUES ('%s', '%s', '%s', '%f')", customer.getID(), customer.fullName, customer.getGender(), customer.totalDebt);
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close(); 
+            HelperClass.showSuccess(customer.fullName + " was successfully added to the database!");
         } catch (Exception e) {
             processError(e);
         }    
@@ -85,7 +96,7 @@ public final class DatabaseManager {
     /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
-     * @return
+     * @return A whole customer object, including the customer's array of debts
      * @throws SQLException 
      */
     public static Customer getCustomerWithId(String id) throws SQLException{
@@ -121,9 +132,8 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
-            return null;
-        }
+            return  null;
+        } 
     }
     
     
@@ -139,8 +149,8 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             
             query = query.toLowerCase();
-            String command = "select * from [Inventory Items] where lower(NAME) like '%" + query + "%'";
-            
+            String command = "select * from `Inventory Items` where lower(`NAME`) like '%" + query + "%'";
+
             ResultSet results = statement.executeQuery(command);
             
             while (results.next()) {
@@ -162,7 +172,8 @@ public final class DatabaseManager {
                     + " VALUES ('%s', '%s','%f', '%s', '%d', '%d', '%s', '%s')", 
                     item.getID(), item.name, item.price ,item.description, (item.stillSold) ? 1 : 0, item.amountAvailable, item.imageName, item.supplierId);
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close();    
+            HelperClass.showSuccess(item.name + " was successfully added to the database!");
         } catch (Exception e) {
             processError(e);
         }
@@ -179,7 +190,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from [Inventory Items] where ID = " + id;
+            String command = "select * from `Inventory Items` where `ID` = '" + id + "'";
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -192,8 +203,9 @@ public final class DatabaseManager {
             
         } catch (Exception e) {
             processError(e);
-            return null;
-        } 
+            return  null;
+        }
+
     }
     
     
@@ -233,7 +245,8 @@ public final class DatabaseManager {
                     + " VALUES ('%s', '%s', '%s', '%s', '%s')", 
                     supplier.getID(), supplier.name, supplier.email, supplier.phone, String.join(",", supplier.itemsSupplied));
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close(); 
+            HelperClass.showSuccess(supplier.name + " was successfully added to the database!");
         } catch (Exception e) {
             processError(e);
         }
@@ -263,7 +276,6 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
         }
     }
@@ -310,11 +322,12 @@ public final class DatabaseManager {
             quantities = mappings.toString();
             quantities = quantities.substring(1, quantities.length()-1); 
             
-            String command = String.format("INSERT INTO Suppliers"
+            String command = String.format("INSERT INTO `Transactions`"
                     + "VALUES ('%s', '%s', '%s', '%d', '%s', '%s', '%f')", 
                     tran.getID(), tran.getCustomerID(), formatter.format(tran.date), (tran.mode == Transaction.transactionMode.debit) ? 0 : 1, itemKeys, quantities, tran.creditAmount);
             statement.executeUpdate(command);
-            statement.close();            
+            statement.close();    
+            HelperClass.showSuccess("This transaction was successfully added to the database! \n It's id is " + tran.getID() );
         } catch (Exception e) {
             processError(e);
         }
@@ -343,12 +356,63 @@ public final class DatabaseManager {
             
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
         }
+        return  null;
     }
     
     
+    public static String getTableFromEnum(tableTypes table){
+        String tableName = "";
+        switch (table){
+            case customer:
+                tableName = "`Customers`";
+                break;
+            case transaction:
+                tableName = "`Transactions`";
+                break;
+            case item:
+                tableName = "`Inventory Items`";
+                break;
+            case supplier:
+                tableName = "`Suppliers`";
+                break;                
+        }
+        return tableName;
+    }
+    
+    
+    public static HashSet<String> getIDs(tableTypes table) throws SQLException{
+        connect();
+        HashSet<String> idStrings = new HashSet<String>();
+        Statement statement = databaseConenction.createStatement();      
+        String command = "SELECT DISTINCT ID FROM " + getTableFromEnum(table);            
+        ResultSet results = statement.executeQuery(command);
+        while (results.next()) idStrings.add(results.getString("ID"));
+        return idStrings;
+    }
+    
+        
+     /**
+     * Generates a unique id for use in the entered table type.
+     * This will break the whole app once the user gets a few billion entries (which probably won't happen).
+     * @throws SQLException 
+     */
+    public static String generateUniqueId(tableTypes table) throws SQLException{
+        connect();
+        String id = "";
+        boolean valid = false;
+        HashSet<String> idStrings = getIDs(table);                   
+
+        while (!valid){
+            id = RandomString.nextString(DEFAULT_ID_LENGTH);
+            valid = !idStrings.contains(id);
+        }
+        return id;
+    }
+
+}
+
     public static List searchWithFilter(String searchTerm, String filter) throws SQLException{
         try {
             connect();

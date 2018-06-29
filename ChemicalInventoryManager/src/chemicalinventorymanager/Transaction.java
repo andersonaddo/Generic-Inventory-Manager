@@ -8,10 +8,12 @@ import java.util.Map;
  */
 public class Transaction {
     private String customerID, id;
-    Date date;
-    transactionMode mode;
-    Map<String, Integer> transactions;
-    Double creditAmount;
+    public Date date;
+    public transactionMode mode;
+    public Map<String, Integer> transactions;
+    public Double creditAmount;
+    
+    //TODO: Add total money gotten
     
     public String getID() {return id;}
     public String getCustomerID() {return customerID;}
@@ -21,7 +23,8 @@ public class Transaction {
         customerID = cid;
     }
     
-    enum transactionMode{
+    
+    public enum transactionMode{
         debit,
         credit
     }
