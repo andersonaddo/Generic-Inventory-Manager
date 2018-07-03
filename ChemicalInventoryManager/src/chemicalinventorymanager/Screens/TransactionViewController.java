@@ -68,7 +68,7 @@ public class TransactionViewController implements Initializable {
         
         ////get the transaction in question from the database
         try {
-            tran = DatabaseManager.getTransactionWithId("insert Id here :D");
+            tran = DatabaseManager.getTransactionWithId("1");
         } catch (SQLException ex) {
             Logger.getLogger(TransactionViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
