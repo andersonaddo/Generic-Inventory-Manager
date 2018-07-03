@@ -33,7 +33,7 @@ public class AddItemController implements Initializable {
     private TextField newItemId;
 
     @FXML
-    private ChoiceBox<?> supplierDropdown;
+    private ChoiceBox<String> supplierDropdown;
 
     @FXML
     private TextArea newItemDescription;

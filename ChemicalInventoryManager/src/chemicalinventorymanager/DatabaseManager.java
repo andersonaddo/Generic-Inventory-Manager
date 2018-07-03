@@ -1,4 +1,5 @@
 package chemicalinventorymanager;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.sql.*;
@@ -96,7 +97,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from Customers where ID = " + id;
+            String command = "select * from `Customers` where ID = '" + id + "'";
             
             ResultSet results = statement.executeQuery(command);
             Customer customer = null;
@@ -108,9 +109,9 @@ public final class DatabaseManager {
                 customer.gender = gender;
                 customer.totalDebt = results.getDouble("TOTAL DEBT");
 
-                Blob debtsBytes = results.getBlob("ARRAY OF CREDITS");
-                if (debtsBytes != null  && debtsBytes.length() > 0) {
-                    InputStream binaryInput = debtsBytes.getBinaryStream();
+                byte[] debtsBytes = results.getBytes("ARRAY OF CREDITS");
+                if (debtsBytes != null  && debtsBytes.length > 0) {
+                    InputStream binaryInput = new ByteArrayInputStream(debtsBytes); //The driver that we're using doesn't support results.getBlob
                     ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
                     customer.debts = (Map<String, Double>)inputStream.readObject();
                 }else {
