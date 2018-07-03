@@ -88,7 +88,7 @@ public final class DatabaseManager {
     /**
      * Should only be called if such an id is guaranteed to exist
      * @param id
-     * @return
+     * @return A whole customer object, including the customer's array of debts
      * @throws SQLException 
      */
     public static Customer getCustomerWithId(String id) throws SQLException{
@@ -96,8 +96,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Customers"
-                    + "where ID = " + id;
+            String command = "select * from Customers where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Customer customer = null;
@@ -108,25 +107,25 @@ public final class DatabaseManager {
                 Customer.Gender gender = (results.getString("GENDER")).equals("Male") ? Customer.Gender.male : Customer.Gender.female;
                 customer.gender = gender;
                 customer.totalDebt = results.getDouble("TOTAL DEBT");
-                
+
                 Blob debtsBytes = results.getBlob("ARRAY OF CREDITS");
-                InputStream binaryInput = null;
-                if (null != debtsBytes && debtsBytes.length() > 0) {
-                    binaryInput = debtsBytes.getBinaryStream();
+                if (debtsBytes != null  && debtsBytes.length() > 0) {
+                    InputStream binaryInput = debtsBytes.getBinaryStream();
                     ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
                     customer.debts = (Map<String, Double>)inputStream.readObject();
                 }else {
                     customer.debts = null;
                 }
+                return customer;
+               
             }
             statement.close();
             return customer;
 
         } catch (Exception e) {
             processError(e);
-        } finally{
-            return null;
-        }
+            return  null;
+        } 
     }
     
     
@@ -195,8 +194,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from `Inventory Items` where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -216,7 +214,6 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
         }
     }
@@ -291,8 +288,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from " + DATABADE_NAME + ".Inventory Items"
-                    + "where ID = " + id;
+            String command = "select * from `Suppliers` where ID = '" + id + "'";
             
             ResultSet results = statement.executeQuery(command);
             Supplier supplier = null;
@@ -313,9 +309,8 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
-        }
+        } 
     }
     
     
@@ -407,8 +402,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
             
-            String command = "select * from " + DATABADE_NAME + ".Transactions"
-                    + "where ID = " + id;
+            String command = "select * from Transactions where ID = " + id;
             
             ResultSet results = statement.executeQuery(command);
             Transaction tran = null;
@@ -435,8 +429,8 @@ public final class DatabaseManager {
 
         } catch (Exception e) {
             processError(e);
-        } finally{
             return null;
         }
+        return  null;
     }
 }

@@ -11,6 +11,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -37,14 +39,16 @@ public class SupplierSummaryController implements Initializable {
     @FXML
     ListView itemsSuppliedList;
     
-    public SupplierSummaryController(String id) throws SQLException{
-        supplier = DatabaseManager.getSupplierWithId("1");
-    }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            supplier = DatabaseManager.getSupplierWithId("1");
+        } catch (SQLException ex) {
+            Logger.getLogger(SupplierSummaryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         supplierNameLabel.setText(supplier.name);
         supplierEmailLabel.setText(supplier.email);
         supplierPhoneLabel.setText(supplier.phone);
