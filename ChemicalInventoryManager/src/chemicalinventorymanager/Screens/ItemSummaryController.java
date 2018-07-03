@@ -10,6 +10,8 @@ import chemicalinventorymanager.InventoryItem;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -29,13 +31,13 @@ public class ItemSummaryController implements Initializable {
     Label itemIDLabel;
     
     @FXML
-    Label itemNameLabel;
+    Label ItemNameLabel;
     
     @FXML
     Label itemPriceLabel;
     
     @FXML
-    Label itemSupplierId;
+    Label itemSupplierID;
     
     @FXML
     Label itemStockNumber;
@@ -46,20 +48,20 @@ public class ItemSummaryController implements Initializable {
     @FXML
     ImageView itemImage;
     
-    
-    public ItemSummaryController(String id) throws SQLException{
-        item = DatabaseManager.getItemWithId(id);
-    }
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            item = DatabaseManager.getItemWithId("545454");
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemSummaryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         itemIDLabel.setText(item.getID());
-        itemNameLabel.setText(item.name);
+        ItemNameLabel.setText(item.name);
         itemPriceLabel.setText(String.valueOf(item.price));
-        itemSupplierId.setText(item.supplierId);
+        itemSupplierID.setText(item.supplierId);
         itemStockNumber.setText(String.valueOf(item.amountAvailable));
         itemDesc.setText(item.description);
     }    

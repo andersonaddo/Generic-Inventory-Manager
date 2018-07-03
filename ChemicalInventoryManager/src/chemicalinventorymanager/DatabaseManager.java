@@ -195,7 +195,7 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-            String command = "select * from `Inventory Items` where ID = " + id;
+            String command = "select * from `Inventory Items` where ID = '" + id + "'";
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -403,7 +403,7 @@ public final class DatabaseManager {
             Statement statement = databaseConenction.createStatement();
             SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy");  
             
-            String command = "select * from Transactions where ID = " + id;
+            String command = "select * from Transactions where ID = '" + id + "'";
             
             ResultSet results = statement.executeQuery(command);
             Transaction tran = null;
