@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.SupplierSummaryController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.SupplierSummaryController">
    <children>
-      <Label fx:id="supplierNameLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="82.0" prefWidth="324.0" text="Insert Supplier Name Here" textAlignment="CENTER">
+      <Label fx:id="supplierNameLabel" layoutX="14.0" layoutY="14.0" prefHeight="82.0" prefWidth="324.0" text="Insert Supplier Name Here" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
