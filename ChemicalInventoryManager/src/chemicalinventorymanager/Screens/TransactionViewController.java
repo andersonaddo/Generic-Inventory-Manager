@@ -56,7 +56,7 @@ public class TransactionViewController implements Initializable {
     private TableView<Map.Entry<String, Integer>> itemsTable;
     
     @FXML
-    private TableColumn<Map.Entry<String, Integer>, String> itemsSoldColumn;
+    private TableColumn<Map.Entry<String, Integer>, String> itemSoldColumn;
     
     @FXML
     private TableColumn<Map.Entry<String, Integer>, Integer> quantityColumn;
@@ -99,7 +99,7 @@ public class TransactionViewController implements Initializable {
         transactionModeLabel.setText(tran.getMode());
         
         //bind itemsSoldColumn to ObservableValue of items
-        itemsSoldColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) 
+        itemSoldColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Integer>, String> p) 
                 -> new SimpleObjectProperty<>(p.getValue().getKey()));
         
         
@@ -113,7 +113,7 @@ public class TransactionViewController implements Initializable {
         
         //bind to table view
         itemsTable.setItems(oItemsList);
-        itemsTable.getColumns().setAll(itemsSoldColumn, quantityColumn);
+        itemsTable.getColumns().setAll(itemSoldColumn, quantityColumn);
         
         
     }  
