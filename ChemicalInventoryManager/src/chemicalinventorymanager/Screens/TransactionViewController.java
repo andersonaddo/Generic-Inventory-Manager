@@ -50,6 +50,9 @@ public class TransactionViewController implements Initializable {
     private Label transactionModeLabel;
     
     @FXML
+    private Label creditAmountLabel;
+    
+    @FXML
     private TableView<Map.Entry<String, Integer>> itemsTable;
     
     @FXML
@@ -78,6 +81,9 @@ public class TransactionViewController implements Initializable {
 
         //date of transaction
         transactionDateLabel.setText(tran.getDate());
+        
+        //credit amount
+        creditAmountLabel.setText(String.valueOf(tran.getCreditAmount()));
         
         //name of customer (From Database)
         try {
