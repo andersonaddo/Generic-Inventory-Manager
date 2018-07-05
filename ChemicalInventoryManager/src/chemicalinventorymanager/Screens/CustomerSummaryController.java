@@ -9,12 +9,17 @@ import chemicalinventorymanager.Customer;
 import chemicalinventorymanager.DatabaseManager;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 /**
@@ -24,6 +29,7 @@ import javafx.scene.control.TableView;
  */
 public class CustomerSummaryController implements Initializable {
     Customer customer;
+    Map<String, Double> debts;
     
     @FXML
     Label customerNameLabel;
@@ -38,7 +44,13 @@ public class CustomerSummaryController implements Initializable {
     Label customerTotalDebtLabel;
     
     @FXML
-    TableView customerDebtsTable;
+    TableView <Map.Entry<String, Double>> customerDebtsTable;
+    
+    @FXML
+    TableColumn <Map.Entry<String, Double>, String>transIDColumn;
+    
+    @FXML 
+    TableColumn <Map.Entry<String, Double>, Double> debtColumn;
     
     /**
      * Initializes the controller class.
@@ -53,5 +65,21 @@ public class CustomerSummaryController implements Initializable {
         customerNameLabel.setText(customer.getfullName());
         customerIdLabel.setText(customer.getID());
         customerGenderLabel.setText(customer.getGender());
+        
+        transIDColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Double>, String> p) 
+                -> new SimpleObjectProperty<>(p.getValue().getKey()));
+        
+        debtColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Double>, Double> p) 
+                -> new SimpleObjectProperty<>(p.getValue().getValue()));
+        
+        //make the list of Entry items
+        debts = customer.getDebts(); 
+        ObservableList<Map.Entry<String, Double>> oDebtsList = FXCollections.observableArrayList(debts.entrySet());
+        
+        customerDebtsTable.setItems(oDebtsList);
+        customerDebtsTable.getColumns().setAll(transIDColumn, debtColumn);
+        
+        
+        
     }  
 }
