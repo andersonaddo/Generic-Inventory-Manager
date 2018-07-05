@@ -12,6 +12,8 @@ public class Customer {
     Gender gender;
     Double totalDebt;
     Map<String, Double> debts;
+
+    public Map<String, Double> getDebts() {return debts;}
     private String id;
     
     public Customer(String id){
