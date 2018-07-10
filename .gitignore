@@ -22,3 +22,5 @@ hs_err_pid*
 /ChemicalInventoryManager/build/
 /ChemicalInventoryManager/dist/
 ChemicalInventoryManager/src/chemicalinventorymanager/Databases/ShopDatabase.db
+
+ChemicalInventoryManager/nbproject/private
