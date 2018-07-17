@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.ItemSummaryController">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ImageView fx:id="itemImage" fitHeight="200.0" fitWidth="200.0" layoutX="35.0" layoutY="82.0">
+         <image>
+            <Image url="@../Pictures/defaultItemImage.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="270.0" layoutY="87.0" text="ID:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="TransactionDateLabel" fx:id="itemIDLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="87.0" prefHeight="18.0" prefWidth="186.0" text="insert Id here" />
+      <Label id="CustomerIdLabel" fx:id="ItemNameLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="118.0" prefHeight="18.0" prefWidth="186.0" text="insert Namehere" />
+      <Label layoutX="272.0" layoutY="251.0" text="Description:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="271.0" layoutY="150.0" text="Price:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerNameLabel" fx:id="itemPriceLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="150.0" prefHeight="18.0" prefWidth="186.0" text="insert Price here" />
+      <Label layoutX="271.0" layoutY="119.0" text="Name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerNameLabel" fx:id="customerGenderLabel1" alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" layoutX="352.0" layoutY="251.0" prefHeight="78.0" prefWidth="186.0" />
+      <TextArea fx:id="itemDesc" editable="false" layoutX="358.0" layoutY="251.0" prefHeight="78.0" prefWidth="200.0" promptText="Insert description here" />
+      <Label layoutX="272.0" layoutY="182.0" text="Supplier ID(s):">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerNameLabel" fx:id="itemSupplierID" contentDisplay="CENTER" layoutX="360.0" layoutY="182.0" prefHeight="18.0" prefWidth="186.0" text="insert supplier ID here" />
+      <Label layoutX="272.0" layoutY="215.0" text="Stock:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label id="CustomerNameLabel" fx:id="itemStockNumber" contentDisplay="CENTER" layoutX="360.0" layoutY="215.0" prefHeight="18.0" prefWidth="186.0" text="insert stock number here" />
+   </children>
+</AnchorPane>

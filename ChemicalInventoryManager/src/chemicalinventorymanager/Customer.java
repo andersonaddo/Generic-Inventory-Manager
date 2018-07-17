@@ -11,6 +11,8 @@ public class Customer {
     public Gender gender;
     public Double totalDebt;
     Map<String, Double> debts;
+
+    public Map<String, Double> getDebts() {return debts;}
     private String id;
     
     public Customer(String id){
@@ -23,11 +25,14 @@ public class Customer {
     }
     
     public String getID() {return id;}
+    public String getfullName(){return fullName;}
+    
     
     public enum Gender{
         male,
         female
     }  
+
     
     @Override
     public String toString(){

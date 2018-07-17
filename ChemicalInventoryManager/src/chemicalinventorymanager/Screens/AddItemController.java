@@ -35,7 +35,7 @@ public class AddItemController implements Initializable {
     private Label amountInStockText;
 
     @FXML
-    private ChoiceBox<?> supplierDropdown;
+    private ChoiceBox<String> supplierDropdown;
 
     @FXML
     private TextArea newItemDescription;

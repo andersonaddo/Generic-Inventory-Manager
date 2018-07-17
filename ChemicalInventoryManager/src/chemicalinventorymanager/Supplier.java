@@ -13,6 +13,9 @@ public class Supplier {
     //TODO: Condsider adding a description field
     
     public String getID() {return id;}
+
+    public ArrayList<String> getItemsSupplied() {return itemsSupplied;}
+    
     
     public Supplier(String id){
         this.id = id;
