@@ -1,6 +1,5 @@
 package chemicalinventorymanager;
 
-import java.util.Dictionary;
 import java.util.Map;
 
 /**
@@ -9,8 +8,8 @@ import java.util.Map;
  */
 public class Customer {
     public String imageName, fullName;
-    Gender gender;
-    Double totalDebt;
+    public Gender gender;
+    public Double totalDebt;
     Map<String, Double> debts;
 
     public Map<String, Double> getDebts() {return debts;}
@@ -29,10 +28,38 @@ public class Customer {
     public String getfullName(){return fullName;}
     
     
-    enum Gender{
+    public enum Gender{
         male,
         female
     }  
 
     
+    @Override
+    public String toString(){
+        return "Name: " + fullName;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+       
+        if (o == this) {
+            return true;
+        }
+ 
+        if (!(o instanceof Customer)) {
+            return false;
+        }
+         
+            Customer c = (Customer) o;
+         
+        return id.equals(c.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
 }
+

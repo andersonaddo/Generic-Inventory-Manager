@@ -3,11 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/bentsi-enchill_e/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/ChemicalInventoryManager.java</file>
             <file>file:/C:/Users/bentsi-enchill_e/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Screens/SupplierSummaryController.java</file>
             <file>file:/C:/Users/bentsi-enchill_e/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/DatabaseManager.java</file>
             <file>file:/C:/Users/bentsi-enchill_e/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Screens/ItemSummaryController.java</file>
             <file>file:/C:/Users/bentsi-enchill_e/Documents/GitHub/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Supplier.java</file>
+=======
+            <file>file:/C:/Users/addo_a/Documents/%23GITHUB%20CLONES/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/HelperClass.java</file>
+            <file>file:/C:/Users/addo_a/Documents/%23GITHUB%20CLONES/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/TransDataHolder.java</file>
+            <file>file:/C:/Users/addo_a/Documents/%23GITHUB%20CLONES/Generic-Inventory-Manager/ChemicalInventoryManager/src/chemicalinventorymanager/Screens/AddTransactionController.java</file>
+>>>>>>> master
         </group>
     </open-files>
 </project-private>

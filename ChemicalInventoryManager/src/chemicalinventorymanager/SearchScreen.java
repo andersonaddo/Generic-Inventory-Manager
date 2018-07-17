@@ -6,28 +6,20 @@
 package chemicalinventorymanager;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- *
- * @author ADDO_a
- */
-public class ChemicalInventoryManager extends Application {
+public class SearchScreen extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-<<<<<<< HEAD
-        Parent root = FXMLLoader.load(getClass().getResource("Screens/TransactionView.fxml"));
-=======
-        Parent root = FXMLLoader.load(getClass().getResource("Screens/AddTransaction.fxml"));
->>>>>>> master
+        Parent root = FXMLLoader.load(getClass().getResource("Screens/SearchScreen.fxml"));
         
-        Scene scene = new Scene(root);        
+        Scene scene = new Scene(root); 
         primaryStage.setScene(scene);
         primaryStage.show();        
     }
@@ -35,7 +27,7 @@ public class ChemicalInventoryManager extends Application {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         launch(args);
     }
     

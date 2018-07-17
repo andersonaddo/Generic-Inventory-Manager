@@ -15,55 +15,60 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane prefHeight="452.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.AddItemController">
+<BorderPane prefHeight="605.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.AddItemController">
    <center>
       <AnchorPane prefHeight="446.0" prefWidth="732.0">
          <children>
-          <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="474.0" prefWidth="732.0">
+          <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="581.0" prefWidth="732.0">
             <children>
-                  <Button id="back_btn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
-                  <ImageView id="item_image" fitHeight="304.0" fitWidth="233.0" layoutX="87.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
+                  <Button id="back_btn" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" text="Back" />
+                  <ImageView id="item_image" fitHeight="304.0" fitWidth="233.0" layoutX="87.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Pictures/defaultItemImage.png" />
                      </image>
                   </ImageView>
-                  <TextField id="name_field" fx:id="newItemName" layoutX="451.0" layoutY="71.0" prefHeight="25.0" prefWidth="171.0" promptText="Required" />
-                  <TextField id="price_field" fx:id="newItemPrice" layoutX="451.0" layoutY="113.0" prefHeight="25.0" prefWidth="171.0" promptText="Required" />
-                  <Label layoutX="389.0" layoutY="75.0" text="Name:">
+                  <TextField id="name_field" fx:id="newItemName" layoutX="451.0" layoutY="128.0" prefHeight="25.0" prefWidth="171.0" promptText="Name of the item" />
+                  <TextField id="price_field" fx:id="newItemPrice" layoutX="451.0" layoutY="170.0" prefHeight="25.0" prefWidth="171.0" promptText="Price in GH¢" />
+                  <Label layoutX="389.0" layoutY="132.0" text="Name *:">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="392.0" layoutY="117.0" text="Price:">
+                  <Label layoutX="392.0" layoutY="174.0" text="Price *:">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="385.0" layoutY="304.0" text="Description:">
+                  <Label layoutX="385.0" layoutY="361.0" text="Description:">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button layoutX="158.0" layoutY="327.0" mnemonicParsing="false" text="Upload Image" />
-                  <Button layoutX="158.0" layoutY="403.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-color: #458554;" text="Add new Item" textFill="WHITE" />
-                  <TextField id="price_field" fx:id="amountInStock" layoutX="529.0" layoutY="210.0" prefHeight="25.0" prefWidth="93.0" promptText="Optional" />
-                  <Label layoutX="389.0" layoutY="172.0" text="Supplier">
+                  <Button layoutX="158.0" layoutY="384.0" mnemonicParsing="false" text="Upload Image" />
+                  <Button layoutX="159.0" layoutY="448.0" mnemonicParsing="false" onAction="#addItem" style="-fx-background-color: #458554;" text="Add new Item" textFill="WHITE" />
+                  <TextField id="price_field" fx:id="amountInStock" layoutX="529.0" layoutY="267.0" prefHeight="25.0" prefWidth="93.0" promptText="Amount in Stock" />
+                  <Label layoutX="389.0" layoutY="229.0" text="Supplier *:">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label layoutX="385.0" layoutY="214.0" text="Amount in Stock">
+                  <Label fx:id="amountInStockText" layoutX="385.0" layoutY="271.0" text="Amount in Stock:">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="supplierDropdown" layoutX="451.0" layoutY="168.0" prefHeight="25.0" prefWidth="172.0" />
-                  <TextArea fx:id="newItemDescription" layoutX="461.0" layoutY="304.0" prefHeight="151.0" prefWidth="181.0" promptText="Optional" wrapText="true" />
-                  <TextField id="name_field" fx:id="newItemId" layoutX="454.0" layoutY="262.0" prefHeight="25.0" prefWidth="171.0" promptText="Optional" />
-                  <Label layoutX="392.0" layoutY="266.0" text="Item ID">
+                  <ChoiceBox fx:id="supplierDropdown" layoutX="451.0" layoutY="225.0" prefHeight="25.0" prefWidth="172.0" />
+                  <TextArea fx:id="newItemDescription" layoutX="461.0" layoutY="361.0" prefHeight="151.0" prefWidth="181.0" promptText="Any extra useful information" wrapText="true" />
+                  <TextField id="name_field" fx:id="newItemId" layoutX="454.0" layoutY="319.0" prefHeight="25.0" prefWidth="171.0" promptText="Optional" />
+                  <Label fx:id="itemIdText" layoutX="387.0" layoutY="323.0" text="Item ID:">
                      <font>
                         <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="73.0" layoutY="481.0" prefHeight="62.0" prefWidth="264.0" text="Any field with * is required. Some fields show extra information if you hover the mouse over them." textAlignment="CENTER" textFill="RED" wrapText="true" />
+                  <Label layoutX="218.0" layoutY="43.0" style="-fx-font-weight: bold;" text="Add a new invetory item" textAlignment="CENTER">
+                     <font>
+                        <Font size="27.0" />
                      </font>
                   </Label>
             </children>
