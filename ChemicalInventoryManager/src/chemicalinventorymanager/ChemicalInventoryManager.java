@@ -21,11 +21,8 @@ public class ChemicalInventoryManager extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-<<<<<<< HEAD
-        Parent root = FXMLLoader.load(getClass().getResource("Screens/TransactionView.fxml"));
-=======
         Parent root = FXMLLoader.load(getClass().getResource("Screens/AddTransaction.fxml"));
->>>>>>> master
+
         
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);
