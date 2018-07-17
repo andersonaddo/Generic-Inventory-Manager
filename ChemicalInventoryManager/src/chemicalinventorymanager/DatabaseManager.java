@@ -1,9 +1,6 @@
 package chemicalinventorymanager;
-<<<<<<< HEAD
 import java.io.ByteArrayInputStream;
-=======
 import java.io.IOException;
->>>>>>> master
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.sql.*;
@@ -88,13 +85,10 @@ public final class DatabaseManager {
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-<<<<<<< HEAD
-            String command = String.format("INSERT INTO `Customers` (id, full name, gender)"
-                    + " VALUES ('$s', '%s', '%s')", customer.getID(), customer.fullName, customer.getGender()); //TODO:add total debt and array of debts
-=======
+
             String command = String.format("INSERT INTO `Customers` (`ID`, `Full Name`, `Gender`, `Total Debt`)"
                     + " VALUES ('%s', '%s', '%s', '%f')", customer.getID(), customer.fullName, customer.getGender(), customer.totalDebt);
->>>>>>> master
+            
             statement.executeUpdate(command);
             statement.close(); 
             HelperClass.showSuccess(customer.fullName + " was successfully added to the database!");
@@ -113,11 +107,8 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-<<<<<<< HEAD
             String command = "select * from `Customers` where ID = '" + id + "'";
-=======
-            String command = "select * from Customers where ID = " + id;
->>>>>>> master
+
             
             ResultSet results = statement.executeQuery(command);
             Customer customer = null;
@@ -129,15 +120,10 @@ public final class DatabaseManager {
                 customer.gender = gender;
                 customer.totalDebt = results.getDouble("TOTAL DEBT");
 
-<<<<<<< HEAD
                 byte[] debtsBytes = results.getBytes("ARRAY OF CREDITS");
                 if (debtsBytes != null  && debtsBytes.length > 0) {
                     InputStream binaryInput = new ByteArrayInputStream(debtsBytes); //The driver that we're using doesn't support results.getBlob
-=======
-                Blob debtsBytes = results.getBlob("ARRAY OF CREDITS");
-                if (debtsBytes != null  && debtsBytes.length() > 0) {
-                    InputStream binaryInput = debtsBytes.getBinaryStream();
->>>>>>> master
+
                     ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
                     customer.debts = (Map<String, Double>)inputStream.readObject();
                 }else {
@@ -208,12 +194,8 @@ public final class DatabaseManager {
         try {
             connect();
             Statement statement = databaseConenction.createStatement();
-            
-<<<<<<< HEAD
-            String command = "select * from `Inventory Items` where ID = '" + id + "'";
-=======
+
             String command = "select * from `Inventory Items` where `ID` = '" + id + "'";
->>>>>>> master
             
             ResultSet results = statement.executeQuery(command);
             InventoryItem item = null;
@@ -226,13 +208,8 @@ public final class DatabaseManager {
             
         } catch (Exception e) {
             processError(e);
-<<<<<<< HEAD
             return null;
-=======
-            return  null;
->>>>>>> master
         }
-
     }
     
     
@@ -290,12 +267,9 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-<<<<<<< HEAD
+
             String command = "select * from `Suppliers` where ID = '" + id + "'";
-=======
-            String command = "select * from Suppliers where ID = " + id;
->>>>>>> master
-            
+
             ResultSet results = statement.executeQuery(command);
             Supplier supplier = null;
             
@@ -375,11 +349,8 @@ public final class DatabaseManager {
             connect();
             Statement statement = databaseConenction.createStatement();
             
-<<<<<<< HEAD
             String command = "select * from Transactions where ID = '" + id + "'";
-=======
-            String command = "select * from Inventory Items where ID = " + id;
->>>>>>> master
+
             
             ResultSet results = statement.executeQuery(command);
             Transaction tran = null;
@@ -393,9 +364,7 @@ public final class DatabaseManager {
             processError(e);
             return null;
         }
-        return  null;
-<<<<<<< HEAD
-=======
+
     }
     
     
@@ -448,7 +417,6 @@ public final class DatabaseManager {
         return id;
     }
 
-}
 
     public static List searchWithFilter(String searchTerm, String filter) throws SQLException{
         try {
@@ -584,6 +552,5 @@ public final class DatabaseManager {
         }
         transaction.transactions = transactions;
         return transaction;
->>>>>>> master
     }
 }
