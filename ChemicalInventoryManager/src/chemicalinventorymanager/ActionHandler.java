@@ -51,7 +51,7 @@ public class ActionHandler {
             Parent root = new FXMLLoader().load(getClass().getResource(ActionDirectory.getActionURL(Actions.identify(action))));
             Stage stage = new Stage();
             stage.setTitle(action);
-            stage.setScene(new Scene(root, 450, 450));
+            stage.setScene(new Scene(root, 750, 500));
             stage.show();
         } catch (Exception ex) {
             Logger.getLogger(ActionHandler.class.getName()).log(Level.SEVERE, null, ex);
