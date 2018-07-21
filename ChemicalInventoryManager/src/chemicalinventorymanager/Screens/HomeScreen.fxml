@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="358.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.HomeScreenController">
+<AnchorPane id="AnchorPane" prefHeight="372.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.HomeScreenController">
    <children>
       <Label alignment="CENTER" layoutX="69.0" layoutY="27.0" prefHeight="99.0" prefWidth="261.0" text="Main Menu">
          <font>
@@ -35,6 +35,6 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ListView fx:id="actionslistview" layoutX="400.0" layoutY="26.0" prefHeight="335.0" prefWidth="200.0" />
+      <ListView fx:id="actionslistview" layoutX="400.0" layoutY="26.0" prefHeight="346.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

@@ -19,7 +19,8 @@ public enum Actions {
     RESTOCK("Restock"),
     SEARCH("Search"),
     SUPPLIERSUMMARY("Supplier Summary"),
-    TRANSACTIONVIEW("Transaction View");
+    TRANSACTIONVIEW("Transaction View"),
+    MANAGEDATABASE("Manage Database");
 
     private String action;
     
@@ -35,13 +36,14 @@ public enum Actions {
             case "Add Customer": break;
             case "Add Item": a = ADDITEM; break;
             case "Add Supplier": a = ADDSUPPLIER; break;
-            case "Add Transactions": a = ADDTRANSACTION; break;
+            case "Add Transaction": a = ADDTRANSACTION; break;
             case "Customer Summary": a = CUSTOMERSUMMARY; break;
             case "Item Summary": a = ITEMSUMMARY; break;
             case "Restock": a = RESTOCK; break;
             case "Search": a = SEARCH; break;
             case "Supplier Summary": a = SUPPLIERSUMMARY; break;
-            case "TransactionView": a = TRANSACTIONVIEW; break;
+            case "Transaction View": a = TRANSACTIONVIEW; break;
+            case "Manage Database": a = MANAGEDATABASE; break;
             default: break;
         }
         return a;
