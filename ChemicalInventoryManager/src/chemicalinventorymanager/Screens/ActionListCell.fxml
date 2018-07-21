@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<AnchorPane id="AnchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
+   <children>
+      <HBox fx:id="box" prefHeight="25.0" prefWidth="182.0">
+         <children>
+            <Button fx:id="btn" mnemonicParsing="false" onAction="#open" prefHeight="25.0" prefWidth="182.0" text="Button" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
