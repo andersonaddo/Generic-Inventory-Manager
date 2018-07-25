@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -52,6 +53,7 @@ public class ActionHandler {
             Stage stage = new Stage();
             stage.setTitle(action);
             stage.setScene(new Scene(root, 750, 500));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception ex) {
             Logger.getLogger(ActionHandler.class.getName()).log(Level.SEVERE, null, ex);

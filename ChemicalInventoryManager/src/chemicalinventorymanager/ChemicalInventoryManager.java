@@ -22,7 +22,8 @@ public class ChemicalInventoryManager extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("Screens/HomeScreen.fxml"));
-        Scene scene = new Scene(root);        
+        Scene scene = new Scene(root);
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();        
     }
