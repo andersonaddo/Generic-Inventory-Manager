@@ -9,7 +9,7 @@ package chemicalinventorymanager;
  *
  * @author LAMPTEY_d
  */
-public enum ActionDirectory {
+public enum HomeScreenActionDirectory {
     ADDCUSTOMER("Screens/AddCustomer.fxml"),
     ADDITEM("Screens/AddItem.fxml"),
     ADDSUPPLIER("Screens/AddSupplier.fxml"),
@@ -24,14 +24,14 @@ public enum ActionDirectory {
 
     private String actionURL;
     
-    ActionDirectory(String action) {
+    HomeScreenActionDirectory(String action) {
         this.actionURL = action;
     }
     
     private String value() { return this.actionURL; }
     
-    public static String getActionURL(Actions action) { 
-        ActionDirectory url = ADDCUSTOMER;
+    public static String getActionURL(HomeScreenActions action) { 
+        HomeScreenActionDirectory url = ADDCUSTOMER;
         switch (action) {
             case ADDCUSTOMER: url = ADDCUSTOMER; break;
             case ADDITEM: url = ADDITEM; break;

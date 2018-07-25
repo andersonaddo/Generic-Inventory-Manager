@@ -9,7 +9,7 @@ package chemicalinventorymanager;
  *
  * @author LAMPTEY_d
  */
-public enum Actions {
+public enum HomeScreenActions {
     ADDCUSTOMER("Add Customer"),
     ADDITEM("Add Item"),
     ADDSUPPLIER("Add Supplier"),
@@ -24,14 +24,14 @@ public enum Actions {
 
     private String action;
     
-    Actions(String action) {
+    HomeScreenActions(String action) {
         this.action = action;
     }
     
     public String getAction() { return this.action; }
     
-    public static Actions identify(String action) {
-        Actions a = ADDCUSTOMER;
+    public static HomeScreenActions identify(String action) {
+        HomeScreenActions a = ADDCUSTOMER;
         switch (action) {
             case "Add Customer": break;
             case "Add Item": a = ADDITEM; break;

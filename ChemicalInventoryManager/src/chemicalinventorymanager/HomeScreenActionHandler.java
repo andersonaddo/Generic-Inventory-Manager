@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  *
  * @author LAMPTEY_d
  */
-public class ActionHandler {
+public class HomeScreenActionHandler {
     
     private String action;
     
@@ -31,7 +31,7 @@ public class ActionHandler {
     @FXML
     private Button btn;
     
-    public ActionHandler(String action) {
+    public HomeScreenActionHandler(String action) {
         this.action = action;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Screens/ActionListCell.fxml"));      
         fxmlLoader.setController(this);
@@ -49,14 +49,14 @@ public class ActionHandler {
     @FXML
     private void open() {
         try {
-            Parent root = new FXMLLoader().load(getClass().getResource(ActionDirectory.getActionURL(Actions.identify(action))));
+            Parent root = new FXMLLoader().load(getClass().getResource(HomeScreenActionDirectory.getActionURL(HomeScreenActions.identify(action))));
             Stage stage = new Stage();
             stage.setTitle(action);
             stage.setScene(new Scene(root, 750, 500));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception ex) {
-            Logger.getLogger(ActionHandler.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(HomeScreenActionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

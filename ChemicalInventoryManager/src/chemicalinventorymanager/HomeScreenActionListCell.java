@@ -11,13 +11,13 @@ import javafx.scene.control.ListCell;
  *
  * @author LAMPTEY_d
  */
-public class ActionListCell extends ListCell<Actions> {
+public class HomeScreenActionListCell extends ListCell<HomeScreenActions> {
     
     @Override
-    public void updateItem(Actions action, boolean empty) {
+    public void updateItem(HomeScreenActions action, boolean empty) {
         super.updateItem(action, empty);
         if (action != null && !empty) {
-            ActionHandler handler = new ActionHandler(action.getAction());
+            HomeScreenActionHandler handler = new HomeScreenActionHandler(action.getAction());
             setGraphic(handler.getBox());
         } else {
             setGraphic(null);
