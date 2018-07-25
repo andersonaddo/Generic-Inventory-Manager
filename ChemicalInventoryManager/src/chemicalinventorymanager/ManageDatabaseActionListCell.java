@@ -17,7 +17,7 @@ public class ManageDatabaseActionListCell extends ListCell<ManageDatabaseActions
     public void updateItem(ManageDatabaseActions action, boolean empty) {
         super.updateItem(action, empty);
         if (action != null && !empty) {
-            HomeScreenActionHandler handler = new HomeScreenActionHandler(action.getAction());
+            ManageDatabaseActionHandler handler = new ManageDatabaseActionHandler(action.getAction());
             setGraphic(handler.getBox());
         } else {
             setGraphic(null);

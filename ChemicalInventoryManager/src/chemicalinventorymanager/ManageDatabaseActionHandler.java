@@ -51,7 +51,7 @@ public class ManageDatabaseActionHandler {
             Parent root = new FXMLLoader().load(getClass().getResource(ManageDatabaseActionDirectory.getActionURL(ManageDatabaseActions.identify(action))));
             Stage stage = new Stage();
             stage.setTitle(action);
-            stage.setScene(new Scene(root, 750, 500));
+            stage.setScene(new Scene(root, 195, 105));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception ex) {

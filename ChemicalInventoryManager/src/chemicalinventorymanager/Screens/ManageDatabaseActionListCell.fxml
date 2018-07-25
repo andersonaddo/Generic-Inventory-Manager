@@ -6,13 +6,13 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="61.0" prefWidth="356.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
+<AnchorPane id="AnchorPane" prefHeight="26.0" prefWidth="183.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
    <children>
-      <HBox fx:id="box" prefHeight="61.0" prefWidth="356.0">
+      <HBox fx:id="box" alignment="CENTER" prefHeight="26.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btn" mnemonicParsing="false" prefHeight="61.0" prefWidth="356.0" text="Button">
+            <Button fx:id="btn" alignment="CENTER" mnemonicParsing="false" onAction="#open" prefHeight="18.0" prefWidth="197.0" text="Button">
                <font>
-                  <Font size="25.0" />
+                  <Font size="11.0" />
                </font>
             </Button>
          </children>

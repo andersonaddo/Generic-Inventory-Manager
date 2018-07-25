@@ -9,9 +9,9 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="306.0" prefWidth="357.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.ManageDatabaseController">
+<AnchorPane id="AnchorPane" prefHeight="501.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.ManageDatabaseController">
    <children>
-      <MenuBar layoutY="-1.0" prefHeight="28.0" prefWidth="600.0">
+      <MenuBar layoutY="-1.0" prefHeight="28.0" prefWidth="750.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -30,11 +30,11 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Label alignment="CENTER" layoutX="31.0" layoutY="27.0" prefHeight="105.0" prefWidth="320.0" text="Manage Database">
+      <Label alignment="CENTER" layoutX="106.0" layoutY="27.0" prefHeight="105.0" prefWidth="320.0" text="Manage Database">
          <font>
             <Font name="System Bold" size="37.0" />
          </font>
       </Label>
-      <ListView fx:id="actionslistview" layoutX="382.0" layoutY="27.0" prefHeight="384.0" prefWidth="218.0" />
+      <ListView fx:id="actionslistview" layoutX="532.0" layoutY="27.0" prefHeight="474.0" prefWidth="218.0" />
    </children>
 </AnchorPane>
