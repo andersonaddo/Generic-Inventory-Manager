@@ -2,6 +2,11 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+
+TODO: Refactor code to make generic Actions class
+TODO: Refactor code to make generic ActionListCell class & FXML
+TODO: Refactor code to make generic ActionDirectory class
+TODO: Refactor code to make generic ActionHandler class
  */
 package chemicalinventorymanager;
 

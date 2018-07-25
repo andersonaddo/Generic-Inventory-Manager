@@ -33,7 +33,7 @@ public class HomeScreenActionHandler {
     
     public HomeScreenActionHandler(String action) {
         this.action = action;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Screens/ActionListCell.fxml"));      
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Screens/HomeScreenActionListCell.fxml"));      
         fxmlLoader.setController(this);
         try
         {

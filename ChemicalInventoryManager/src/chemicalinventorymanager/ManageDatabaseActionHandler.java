@@ -32,7 +32,7 @@ public class ManageDatabaseActionHandler {
     
     public ManageDatabaseActionHandler(String action) {
         this.action = action;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Screens/HomeScreenActionListCell.fxml"));      
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Screens/ManageDatabaseActionListCell.fxml"));      
         fxmlLoader.setController(this);
         try
         {
