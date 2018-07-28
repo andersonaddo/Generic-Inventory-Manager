@@ -582,4 +582,18 @@ public final class DatabaseManager {
         }
     }
     
+    public static void deleteSupplier(String id) throws SQLException {
+        try {
+            connect();
+            String command = "DELETE FROM 'Suppliers' WHERE 'ID' = ?";
+            
+            PreparedStatement pstmnt = databaseConenction.prepareStatement(command);
+            pstmnt.setInt(1, Integer.parseInt(id));
+            pstmnt.executeUpdate();
+        
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
 }
