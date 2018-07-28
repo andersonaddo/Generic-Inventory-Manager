@@ -52,7 +52,8 @@ public class HomeScreenActionHandler {
             Parent root = new FXMLLoader().load(getClass().getResource(HomeScreenActionDirectory.getActionURL(HomeScreenActions.identify(action))));
             Stage stage = new Stage();
             stage.setTitle(action);
-            stage.setScene(new Scene(root, 750, 500));
+            stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
+            stage.setResizable(false);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception ex) {

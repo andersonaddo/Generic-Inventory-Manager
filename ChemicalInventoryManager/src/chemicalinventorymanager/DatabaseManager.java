@@ -553,4 +553,20 @@ public final class DatabaseManager {
         transaction.transactions = transactions;
         return transaction;
     }
+    
+    public static void deleteCustomer(String id) throws SQLException {
+        try {
+            connect();
+            String command = "DELETE FROM 'Customers' WHERE ID = ?";
+            
+            PreparedStatement pstmnt = databaseConenction.prepareStatement(command);
+            pstmnt.setInt(1, Integer.parseInt(id));
+            pstmnt.executeUpdate();
+        
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    
 }
