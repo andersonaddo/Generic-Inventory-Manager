@@ -10,9 +10,9 @@ package chemicalinventorymanager;
  * @author LAMPTEY_d
  */
 public enum ManageDatabaseActionDirectory {
-    MANAGECUSTOMERS("Screens/ManageCustomers.fxml"),
-    MANAGEINVENTORY("Screens/ManageInventory.fxml"),
-    MANAGESUPPLIERS("Screens/ManageSuppliers.fxml");
+    MANAGECUSTOMERS("ManageCustomers.fxml"),
+    MANAGEINVENTORY("ManageInventory.fxml"),
+    MANAGESUPPLIERS("ManageSuppliers.fxml");
     
     private String actionURL;
     

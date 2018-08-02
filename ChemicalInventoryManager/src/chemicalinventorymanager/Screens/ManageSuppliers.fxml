@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.ManageSuppliersController">
    <children>
-      <TextField id="search_bar" layoutX="206.0" layoutY="127.0" onInputMethodTextChanged="#search" prefHeight="25.0" prefWidth="278.0" promptText="Search anything" />
+      <TextField id="search_bar" layoutX="206.0" layoutY="127.0" prefHeight="25.0" prefWidth="278.0" promptText="Search anything" />
       <ListView id="transactions_list" layoutY="181.0" prefHeight="229.0" prefWidth="660.0" />
       <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="143.0" layoutY="123.0">
          <image>

@@ -6,6 +6,9 @@
 package chemicalinventorymanager.Screens;
 
 import chemicalinventorymanager.DatabaseManager;
+import chemicalinventorymanager.ManageDatabaseActionDirectory;
+import chemicalinventorymanager.ManageDatabaseActions;
+import java.io.IOException;
 //import chemicalinventorymanager.InventoryItem;
 import java.util.List;
 import java.net.URL;
@@ -14,10 +17,15 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -53,6 +61,19 @@ public class SearchScreenController implements Initializable {
             }
         }
         
+    }
+    
+    @FXML
+    private void manageRecord() throws IOException {
+        String action = ResultsView.getSelectionModel().getSelectedItem().toString().split(" ")[0];
+        System.out.println(action);
+        Parent root = new FXMLLoader().load(getClass().getResource(ManageDatabaseActionDirectory.getActionURL(ManageDatabaseActions.identify(action))));
+        Stage stage = new Stage();
+        stage.setTitle(action);
+        stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
     
     @Override

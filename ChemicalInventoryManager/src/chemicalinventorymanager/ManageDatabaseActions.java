@@ -25,9 +25,9 @@ public enum ManageDatabaseActions {
     public static ManageDatabaseActions identify(String action) {
         ManageDatabaseActions a = MANAGECUSTOMERS;
         switch (action) {
-            case "Manage Customers": break;
-            case "Manage Inventory": a = MANAGEINVENTORY; break;
-            case "Manage Suppliers": a = MANAGESUPPLIERS; break;
+            case "Name:": break;
+            case "Item": a = MANAGEINVENTORY; break;
+            case "Supplier:": a = MANAGESUPPLIERS; break;
             default: break;
         }
         return a;
