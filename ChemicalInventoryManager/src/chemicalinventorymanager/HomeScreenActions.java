@@ -19,8 +19,7 @@ public enum HomeScreenActions {
     RESTOCK("Restock"),
     SEARCH("Search"),
     SUPPLIERSUMMARY("Supplier Summary"),
-    TRANSACTIONVIEW("Transaction View"),
-    MANAGEDATABASE("Manage Database");
+    TRANSACTIONVIEW("Transaction View");
 
     private String action;
     
@@ -43,7 +42,6 @@ public enum HomeScreenActions {
             case "Search": a = SEARCH; break;
             case "Supplier Summary": a = SUPPLIERSUMMARY; break;
             case "Transaction View": a = TRANSACTIONVIEW; break;
-            case "Manage Database": a = MANAGEDATABASE; break;
             default: break;
         }
         return a;

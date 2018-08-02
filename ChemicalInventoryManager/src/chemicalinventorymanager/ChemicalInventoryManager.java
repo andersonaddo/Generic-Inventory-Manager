@@ -29,6 +29,7 @@ public class ChemicalInventoryManager extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Screens/HomeScreen.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setResizable(false);
+        primaryStage.setTitle("Main Menu");
         primaryStage.setScene(scene);
         primaryStage.show();        
     }

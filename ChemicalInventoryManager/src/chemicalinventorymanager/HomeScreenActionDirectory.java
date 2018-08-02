@@ -19,8 +19,7 @@ public enum HomeScreenActionDirectory {
     RESTOCK("Screens/RestockScreen.fxml"),
     SEARCH("Screens/SearchScreen.fxml"),
     SUPPLIERSUMMARY("Screens/SupplierSummary.fxml"),
-    TRANSACTIONVIEW("Screens/TransactionView.fxml"),
-    MANAGEDATABASE("Screens/ManageDatabase.fxml");
+    TRANSACTIONVIEW("Screens/TransactionView.fxml");
 
     private String actionURL;
     
@@ -43,7 +42,6 @@ public enum HomeScreenActionDirectory {
             case SEARCH: url = SEARCH; break;
             case SUPPLIERSUMMARY: url = SUPPLIERSUMMARY; break;
             case TRANSACTIONVIEW: url = TRANSACTIONVIEW; break;
-            case MANAGEDATABASE: url = MANAGEDATABASE; break;
         }
         return url.value();
     }
