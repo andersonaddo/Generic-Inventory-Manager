@@ -14,12 +14,8 @@ public enum HomeScreenActions {
     ADDITEM("Add Item"),
     ADDSUPPLIER("Add Supplier"),
     ADDTRANSACTION("Add Transaction"),
-    CUSTOMERSUMMARY("Customer Summary"),
-    ITEMSUMMARY("Item Summary"),
     RESTOCK("Restock"),
-    SEARCH("Search"),
-    SUPPLIERSUMMARY("Supplier Summary"),
-    TRANSACTIONVIEW("Transaction View");
+    SEARCH("Search");
 
     private String action;
     
@@ -36,12 +32,8 @@ public enum HomeScreenActions {
             case "Add Item": a = ADDITEM; break;
             case "Add Supplier": a = ADDSUPPLIER; break;
             case "Add Transaction": a = ADDTRANSACTION; break;
-            case "Customer Summary": a = CUSTOMERSUMMARY; break;
-            case "Item Summary": a = ITEMSUMMARY; break;
             case "Restock": a = RESTOCK; break;
             case "Search": a = SEARCH; break;
-            case "Supplier Summary": a = SUPPLIERSUMMARY; break;
-            case "Transaction View": a = TRANSACTIONVIEW; break;
             default: break;
         }
         return a;

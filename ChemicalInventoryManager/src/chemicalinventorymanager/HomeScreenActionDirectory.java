@@ -14,13 +14,8 @@ public enum HomeScreenActionDirectory {
     ADDITEM("Screens/AddItem.fxml"),
     ADDSUPPLIER("Screens/AddSupplier.fxml"),
     ADDTRANSACTION("Screens/AddTransaction.fxml"),
-    CUSTOMERSUMMARY("Screens/CustomerSummary.fxml"),
-    ITEMSUMMARY("Screens/ItemSummary.fxml"),
     RESTOCK("Screens/RestockScreen.fxml"),
-    SEARCH("Screens/SearchScreen.fxml"),
-    SUPPLIERSUMMARY("Screens/SupplierSummary.fxml"),
-    TRANSACTIONVIEW("Screens/TransactionView.fxml");
-
+    SEARCH("Screens/SearchScreen.fxml");
     private String actionURL;
     
     HomeScreenActionDirectory(String action) {
@@ -36,12 +31,8 @@ public enum HomeScreenActionDirectory {
             case ADDITEM: url = ADDITEM; break;
             case ADDSUPPLIER: url = ADDSUPPLIER; break;
             case ADDTRANSACTION: url = ADDTRANSACTION; break;
-            case CUSTOMERSUMMARY: url = CUSTOMERSUMMARY; break;
-            case ITEMSUMMARY: url = ITEMSUMMARY; break;
             case RESTOCK: url = RESTOCK; break;
             case SEARCH: url = SEARCH; break;
-            case SUPPLIERSUMMARY: url = SUPPLIERSUMMARY; break;
-            case TRANSACTIONVIEW: url = TRANSACTIONVIEW; break;
         }
         return url.value();
     }
