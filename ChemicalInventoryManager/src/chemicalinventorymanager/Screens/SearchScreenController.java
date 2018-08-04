@@ -5,11 +5,14 @@
  */
 package chemicalinventorymanager.Screens;
 
+import chemicalinventorymanager.Customer;
 import chemicalinventorymanager.DatabaseManager;
 import chemicalinventorymanager.ManageDatabaseActionDirectory;
 import chemicalinventorymanager.ManageDatabaseActions;
 import java.io.IOException;
-//import chemicalinventorymanager.InventoryItem;
+import chemicalinventorymanager.InventoryItem;
+import chemicalinventorymanager.Supplier;
+import chemicalinventorymanager.Transaction;
 import java.util.List;
 import java.net.URL;
 import java.sql.SQLException;
@@ -66,6 +69,34 @@ public class SearchScreenController implements Initializable {
     @FXML
     private void manageRecord() throws IOException {
         String action = ResultsView.getSelectionModel().getSelectedItem().toString().split(" ")[0];
+        InventoryItem item;
+        Customer customer;
+        Supplier supplier;
+        Transaction trans;
+        try {
+            item = (InventoryItem) ResultsView.getSelectionModel().getSelectedItem();
+            System.out.println(item.getID());
+        } catch (Exception e) {
+            
+        }
+        try {
+            customer = (Customer) ResultsView.getSelectionModel().getSelectedItem();
+            System.out.println(customer.getID());
+        } catch (Exception e) {
+            
+        }
+        try {
+            supplier = (Supplier) ResultsView.getSelectionModel().getSelectedItem();
+            System.out.println(supplier.getID());
+        } catch (Exception e) {
+            
+        }
+        try {
+            trans = (Transaction) ResultsView.getSelectionModel().getSelectedItem();
+            System.out.println(trans.getID());
+        } catch (Exception e) {
+            
+        }
         System.out.println(action);
         Parent root = new FXMLLoader().load(getClass().getResource(ManageDatabaseActionDirectory.getActionURL(ManageDatabaseActions.identify(action))));
         Stage stage = new Stage();
