@@ -12,7 +12,8 @@ package chemicalinventorymanager;
 public enum ManageDatabaseActions {
     MANAGECUSTOMERS("Manage Customers"),
     MANAGEINVENTORY("Manage Inventory"),
-    MANAGESUPPLIERS("Manage Suppliers");
+    MANAGESUPPLIERS("Manage Suppliers"),
+    TRANSACTIONVIEW("Transaction");
     
     private String action;
     
@@ -28,6 +29,7 @@ public enum ManageDatabaseActions {
             case "Name:": break;
             case "Item": a = MANAGEINVENTORY; break;
             case "Supplier:": a = MANAGESUPPLIERS; break;
+            case "Transaction": a = TRANSACTIONVIEW; break;
             default: break;
         }
         return a;

@@ -10,9 +10,10 @@ package chemicalinventorymanager;
  * @author LAMPTEY_d
  */
 public enum ManageDatabaseActionDirectory {
-    MANAGECUSTOMERS("ManageCustomers.fxml"),
-    MANAGEINVENTORY("ManageInventory.fxml"),
-    MANAGESUPPLIERS("ManageSuppliers.fxml");
+    MANAGECUSTOMERS("CustomerSummary.fxml"),
+    MANAGEINVENTORY("ItemSummary.fxml"),
+    MANAGESUPPLIERS("SupplierSummary.fxml"),
+    TRANSACTIONVIEW("TransactionView.fxml");
     
     private String actionURL;
     
@@ -28,6 +29,7 @@ public enum ManageDatabaseActionDirectory {
             case MANAGECUSTOMERS: break;
             case MANAGEINVENTORY: url = MANAGEINVENTORY; break;
             case MANAGESUPPLIERS: url = MANAGESUPPLIERS; break;
+            case TRANSACTIONVIEW: url = TRANSACTIONVIEW; break;
             
         }
         return url.value();

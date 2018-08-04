@@ -71,7 +71,7 @@ public class TransactionViewController implements Initializable {
         
         ////get the transaction in question from the database
         try {
-            tran = DatabaseManager.getTransactionWithId("1");
+            tran = DatabaseManager.getTransactionWithId("lml-qa4-t");
         } catch (SQLException ex) {
             Logger.getLogger(TransactionViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,14 +82,14 @@ public class TransactionViewController implements Initializable {
         //date of transaction
         transactionDateLabel.setText(tran.getDate());
         
-        //credit amount
-        creditAmountLabel.setText(String.valueOf(tran.getCreditAmount()));
+        //TODO: credit amount - problematic, returns a NullPointerException Error
+        //creditAmountLabel.setText(String.valueOf(tran.getCreditAmount()));
         
         //name of customer (From Database)
         try {
             customerNameLabel.setText(DatabaseManager.getCustomerWithId(tran.getCustomerID()).getfullName());
-        } catch (SQLException ex) {
-            customerNameLabel.setText(null);
+        } catch (Exception ex) {
+            customerNameLabel.setText("Hello");
         }
         
         //transaction ID

@@ -58,7 +58,7 @@ public class CustomerSummaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            customer = DatabaseManager.getCustomerWithId("1");
+            customer = DatabaseManager.getCustomerWithId("42");
         } catch (SQLException ex) {
             Logger.getLogger(CustomerSummaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -66,18 +66,18 @@ public class CustomerSummaryController implements Initializable {
         customerIdLabel.setText(customer.getID());
         customerGenderLabel.setText(customer.getGender());
         
-        transIDColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Double>, String> p) 
-                -> new SimpleObjectProperty<>(p.getValue().getKey()));
+        /* transIDColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Double>, String> p) 
+                -> new SimpleObjectProperty<>(p.getValue().getKey())); 
         
         debtColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Double>, Double> p) 
-                -> new SimpleObjectProperty<>(p.getValue().getValue()));
+                -> new SimpleObjectProperty<>(p.getValue().getValue())); 
         
         //make the list of Entry items
         debts = customer.getDebts(); 
-        ObservableList<Map.Entry<String, Double>> oDebtsList = FXCollections.observableArrayList(debts.entrySet());
+        ObservableList<Map.Entry<String, Double>> oDebtsList = FXCollections.observableArrayList(debts.entrySet()); 
         
         customerDebtsTable.setItems(oDebtsList);
-        customerDebtsTable.getColumns().setAll(transIDColumn, debtColumn);
+        customerDebtsTable.getColumns().setAll(transIDColumn, debtColumn); */
         
         
         
