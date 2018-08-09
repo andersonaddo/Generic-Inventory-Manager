@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author LAMPTEY_d
  */
-public class ManageDatabaseController implements Initializable {
+public class ManageInventoryController implements Initializable {
 
     /**
      * Initializes the controller class.

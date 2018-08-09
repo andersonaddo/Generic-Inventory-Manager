@@ -5,8 +5,8 @@
  */
 package chemicalinventorymanager.Screens;
 
-import chemicalinventorymanager.ActionListCell;
-import chemicalinventorymanager.Actions;
+import chemicalinventorymanager.HomeScreenActionListCell;
+import chemicalinventorymanager.HomeScreenActions;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -25,7 +25,7 @@ import javafx.util.Callback;
 public class HomeScreenController implements Initializable {
 
     @FXML
-    private ListView<Actions> actionslistview;
+    private ListView<HomeScreenActions> actionslistview;
     
     /**
      * Initializes the controller class.
@@ -33,16 +33,16 @@ public class HomeScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        ObservableList<Actions> list = FXCollections.observableArrayList(Actions.values());
+        ObservableList<HomeScreenActions> list = FXCollections.observableArrayList(HomeScreenActions.values());
         actionslistview.setItems(list);
         actionslistview.setCellFactory(new CallBackImpl());
     }    
 
-    private static class CallBackImpl implements Callback<ListView<Actions>, ListCell<Actions>> {
+    private static class CallBackImpl implements Callback<ListView<HomeScreenActions>, ListCell<HomeScreenActions>> {
 
         @Override
-        public ListCell<Actions> call(ListView<Actions> param) {
-            return new ActionListCell();
+        public ListCell<HomeScreenActions> call(ListView<HomeScreenActions> param) {
+            return new HomeScreenActionListCell();
         }
 
         

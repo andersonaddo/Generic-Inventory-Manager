@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.SearchScreenController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.SearchScreenController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -27,7 +27,7 @@
       <children>
             <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
             <TextField id="search_bar" fx:id="SearchTerm" layoutX="143.0" layoutY="90.0" onInputMethodTextChanged="#search" prefHeight="25.0" prefWidth="278.0" promptText="Search anything" />
-            <ListView id="transactions_list" fx:id="ResultsView" layoutY="161.0" prefHeight="215.0" prefWidth="640.0" />
+            <ListView id="transactions_list" fx:id="ResultsView" layoutY="161.0" onMouseClicked="#manageRecord" prefHeight="215.0" prefWidth="640.0" />
             <ImageView fitHeight="33.0" fitWidth="34.0" layoutX="81.0" layoutY="86.0">
                <image>
                   <Image url="@../Pictures/Search.png" />

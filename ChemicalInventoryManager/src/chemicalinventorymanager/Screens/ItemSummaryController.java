@@ -6,6 +6,7 @@
 package chemicalinventorymanager.Screens;
 
 import chemicalinventorymanager.DatabaseManager;
+import chemicalinventorymanager.HelperClass;
 import chemicalinventorymanager.InventoryItem;
 import java.net.URL;
 import java.sql.SQLException;
@@ -14,9 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -26,6 +29,7 @@ import javafx.scene.image.ImageView;
 public class ItemSummaryController implements Initializable {
 
     InventoryItem item;
+    private String id;
     
     @FXML
     Label itemIDLabel;
@@ -48,13 +52,25 @@ public class ItemSummaryController implements Initializable {
     @FXML
     ImageView itemImage;
     
+    @FXML
+    private Button deletebtn;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+    }    
+    
+    public void setID(String id) {
+        this.id = id;
+        setValues(id);
+    }
+    
+    private void setValues(String id) {
         try {
-            item = DatabaseManager.getItemWithId("545454");
+            item = DatabaseManager.getItemWithId(id);
         } catch (SQLException ex) {
             Logger.getLogger(ItemSummaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,6 +80,14 @@ public class ItemSummaryController implements Initializable {
         itemSupplierID.setText(item.supplierId);
         itemStockNumber.setText(String.valueOf(item.amountAvailable));
         itemDesc.setText(item.description);
-    }    
+    }
+    
+    @FXML
+    private void delete() throws SQLException {
+        if (!HelperClass.confirmUser("Are you sure you want to delete this item?")) return;
+        DatabaseManager.deleteItem(id);
+        Stage stage = (Stage) deletebtn.getScene().getWindow();
+        stage.close();
+    }
     
 }
