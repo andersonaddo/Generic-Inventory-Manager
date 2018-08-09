@@ -30,11 +30,6 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author ADDO_a
- */
 public class SearchScreenController implements Initializable {
     
     @FXML
@@ -113,6 +108,7 @@ public class SearchScreenController implements Initializable {
         } catch (Exception e) {
             
         }
+        
         System.out.println(action);
         Parent p = loader.getRoot();
         Stage stage = new Stage();

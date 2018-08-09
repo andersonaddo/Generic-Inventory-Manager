@@ -35,6 +35,9 @@ public class SupplierSummaryController implements Initializable {
     Label supplierNameLabel;
     
     @FXML
+    Label supplierIDLabel;
+    
+    @FXML
     Label supplierEmailLabel;
     
     @FXML
@@ -76,6 +79,7 @@ public class SupplierSummaryController implements Initializable {
         supplierNameLabel.setText(supplier.name);
         supplierEmailLabel.setText(supplier.email);
         supplierPhoneLabel.setText(supplier.phone);
+        supplierIDLabel.setText(id);
         
         
         ArrayList<String> items = supplier.getItemsSupplied();
