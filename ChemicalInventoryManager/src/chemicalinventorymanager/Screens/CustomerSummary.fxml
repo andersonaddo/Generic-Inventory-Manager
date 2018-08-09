@@ -69,16 +69,11 @@
         </columns>
       </TableView>
       <Label id="TransactionDateLabel" fx:id="customerNameLabel1" contentDisplay="CENTER" layoutX="262.0" layoutY="215.0" prefHeight="85.0" prefWidth="304.0" text="This table shows the debt accumulated by this customer, but some of these may have been paid off. Only the total debt field is a true representation of how much he owes you." wrapText="true" />
-      <Button layoutX="34.0" layoutY="460.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="63.0" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
+      <Button fx:id="deletebtn" layoutX="34.0" layoutY="460.0" mnemonicParsing="false" onAction="#delete" prefHeight="29.0" prefWidth="200.0" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="171.0" layoutY="460.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="63.0" style="-fx-background-color: #008b00;" text="Save" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
-      <Label alignment="TOP_LEFT" layoutX="34.0" layoutY="365.0" prefHeight="71.0" prefWidth="200.0" text="Delete terminates this customer from the database, while save updates current values. Close this window to cancel any changes." textAlignment="JUSTIFY" wrapText="true" />
+      <Label alignment="TOP_LEFT" layoutX="34.0" layoutY="365.0" prefHeight="71.0" prefWidth="200.0" text="Delete terminates this customer from the database. Close this window to cancel any changes." textAlignment="JUSTIFY" wrapText="true" />
    </children>
 </AnchorPane>

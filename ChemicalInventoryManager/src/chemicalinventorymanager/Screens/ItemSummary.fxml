@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -10,8 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="chemicalinventorymanager.Screens.ItemSummaryController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.ItemSummaryController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="600.0">
         <menus>
@@ -74,5 +74,10 @@
          </font>
       </Label>
       <Label id="CustomerNameLabel" fx:id="itemStockNumber" contentDisplay="CENTER" layoutX="360.0" layoutY="215.0" prefHeight="18.0" prefWidth="186.0" text="insert stock number here" />
+      <Button fx:id="deletebtn" layoutX="35.0" layoutY="300.0" mnemonicParsing="false" onAction="#delete" prefHeight="29.0" prefWidth="200.0" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

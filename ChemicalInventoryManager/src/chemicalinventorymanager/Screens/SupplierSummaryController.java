@@ -6,6 +6,7 @@
 package chemicalinventorymanager.Screens;
 
 import chemicalinventorymanager.DatabaseManager;
+import chemicalinventorymanager.HelperClass;
 import chemicalinventorymanager.Supplier;
 import java.net.URL;
 import java.sql.SQLException;
@@ -15,8 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -26,6 +29,7 @@ import javafx.scene.control.ListView;
 public class SupplierSummaryController implements Initializable {
 
     Supplier supplier;
+    private String id;
     
     @FXML
     Label supplierNameLabel;
@@ -39,13 +43,33 @@ public class SupplierSummaryController implements Initializable {
     @FXML
     ListView itemsSuppliedList;
     
+    @FXML
+    Button deletebtn;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+    }    
+    
+    @FXML
+    private void delete() throws SQLException {
+        if (!HelperClass.confirmUser("Are you sure you want to delete this supplier?")) return;
+        DatabaseManager.deleteSupplier(id);
+        Stage stage = (Stage) deletebtn.getScene().getWindow();
+        stage.close();
+    }
+    
+    public void setID(String id) {
+        this.id = id;
+        setValues(id);
+    }
+    
+    private void setValues(String id) {
         try {
-            supplier = DatabaseManager.getSupplierWithId("1");
+            supplier = DatabaseManager.getSupplierWithId(id);
         } catch (SQLException ex) {
             Logger.getLogger(SupplierSummaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,6 +83,5 @@ public class SupplierSummaryController implements Initializable {
         items.forEach((item) -> {
             itemsSuppliedList.getItems().add(item);
         });
-    }    
-    
+    }
 }

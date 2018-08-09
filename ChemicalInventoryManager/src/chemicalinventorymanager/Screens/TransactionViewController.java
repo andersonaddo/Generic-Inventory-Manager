@@ -31,6 +31,7 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class TransactionViewController implements Initializable {
     
+    private String id;
     Transaction tran; 
     Map<String,Integer> transItems;
     
@@ -69,9 +70,17 @@ public class TransactionViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        ////get the transaction in question from the database
+    }  
+    
+    public void setID(String id) {
+        this.id = id;
+        setValues(this.id);
+    }
+    
+    private void setValues(String id) {
+         ////get the transaction in question from the database
         try {
-            tran = DatabaseManager.getTransactionWithId("lml-qa4-t");
+            tran = DatabaseManager.getTransactionWithId(id);
         } catch (SQLException ex) {
             Logger.getLogger(TransactionViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,7 +124,5 @@ public class TransactionViewController implements Initializable {
         itemsTable.setItems(oItemsList);
         itemsTable.getColumns().setAll(itemSoldColumn, quantityColumn);
         
-        
-    }  
-    
+    }
 }

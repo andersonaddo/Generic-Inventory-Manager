@@ -19,7 +19,7 @@ import java.util.Set;
  * This is a static helper class that manages all the logic for the SQLite backend of this application
  */
 public final class DatabaseManager {
-    private static Connection databaseConenction;
+    private static Connection databaseConnection;
 
     private static int DEFAULT_ID_LENGTH = 7;
     private static String DATABASE_PATH = "src\\chemicalinventorymanager\\Databases\\ShopDatabase.db";
@@ -40,11 +40,11 @@ public final class DatabaseManager {
     
     private static void connect() throws SQLException{
         try {
-            if (databaseConenction != null) {
+            if (databaseConnection != null) {
                 return;
             }
             String url = "jdbc:sqlite:" + DATABASE_PATH;
-            databaseConenction = DriverManager.getConnection(url);
+            databaseConnection = DriverManager.getConnection(url);
         } catch (SQLException sQLException) {
             System.out.println(sQLException);
         }    
@@ -60,7 +60,7 @@ public final class DatabaseManager {
         ArrayList<Customer> resultList = new ArrayList <>();
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             String name = Customername.toLowerCase();
 
             String command = "select `ID`, `full name`, `GENDER`, `TOTAL DEBT` from `Customers` where lower(`FULL NAME`) like '%" + name + "%'";
@@ -84,7 +84,7 @@ public final class DatabaseManager {
     public static void addCustomer (Customer customer) throws SQLException{      
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
 
             String command = String.format("INSERT INTO `Customers` (`ID`, `Full Name`, `Gender`, `Total Debt`)"
                     + " VALUES ('%s', '%s', '%s', '%f')", customer.getID(), customer.fullName, customer.getGender(), customer.totalDebt);
@@ -105,7 +105,7 @@ public final class DatabaseManager {
     public static Customer getCustomerWithId(String id) throws SQLException{
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             
             String command = "select * from `Customers` where ID = '" + id + "'";
 
@@ -151,7 +151,7 @@ public final class DatabaseManager {
         ArrayList<InventoryItem> resultList = new ArrayList <>();
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             
             query = query.toLowerCase();
             String command = "select * from `Inventory Items` where lower(`NAME`) like '%" + query + "%'";
@@ -172,7 +172,7 @@ public final class DatabaseManager {
     public static void addItem (InventoryItem item) throws SQLException{      
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             String command = String.format("INSERT INTO `Inventory Items`"
                     + " VALUES ('%s', '%s','%f', '%s', '%d', '%d', '%s', '%s')", 
                     item.getID(), item.name, item.price ,item.description, (item.stillSold) ? 1 : 0, item.amountAvailable, item.imageName, item.supplierId);
@@ -193,7 +193,7 @@ public final class DatabaseManager {
     public static InventoryItem getItemWithId(String id) throws SQLException{
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
 
             String command = "select * from `Inventory Items` where `ID` = '" + id + "'";
             
@@ -222,7 +222,7 @@ public final class DatabaseManager {
         ArrayList<Supplier> resultList = new ArrayList <>();
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             
             query = query.toLowerCase();
             String command = "select * Suppliers where lower(NAME) like '%" + query + "%'";
@@ -243,7 +243,7 @@ public final class DatabaseManager {
     public static void addSupplier (Supplier supplier) throws SQLException{      
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             
             String command = String.format("INSERT INTO `Suppliers`"
                     + " VALUES ('%s', '%s', '%s', '%s', '%s')", 
@@ -265,7 +265,7 @@ public final class DatabaseManager {
     public static Supplier getSupplierWithId(String id) throws SQLException{
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             
 
             String command = "select * from `Suppliers` where ID = '" + id + "'";
@@ -295,7 +295,7 @@ public final class DatabaseManager {
         ArrayList<Transaction> resultList = new ArrayList <>();
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             
             query = query.toLowerCase();
             String command = "select * Transactions where lower(DATE) like '%" + query + "%'";
@@ -315,7 +315,7 @@ public final class DatabaseManager {
     public static void addTransaction (Transaction tran) throws SQLException{      
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             SimpleDateFormat formatter = new SimpleDateFormat("E, MMM dd yyyy"); 
             
             String itemKeys = "";
@@ -347,7 +347,7 @@ public final class DatabaseManager {
     public static Transaction getTransactionWithId(String id) throws SQLException{
         try {
             connect();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             
             String command = "select * from Transactions where ID = '" + id + "'";
 
@@ -391,7 +391,7 @@ public final class DatabaseManager {
     public static HashSet<String> getIDs(tableTypes table) throws SQLException{
         connect();
         HashSet<String> idStrings = new HashSet<String>();
-        Statement statement = databaseConenction.createStatement();      
+        Statement statement = databaseConnection.createStatement();      
         String command = "SELECT DISTINCT ID FROM " + getTableFromEnum(table);            
         ResultSet results = statement.executeQuery(command);
         while (results.next()) idStrings.add(results.getString("ID"));
@@ -424,7 +424,7 @@ public final class DatabaseManager {
             String tableName = "["+filter+"]";
             List ArrSearchResults = new ArrayList<>();
             List<String> ColumnNames = new ArrayList<>();
-            Statement statement = databaseConenction.createStatement();
+            Statement statement = databaseConnection.createStatement();
             String getColumns = "SELECT * FROM " + tableName + "";
             ResultSet rs = statement.executeQuery (getColumns);
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -557,40 +557,34 @@ public final class DatabaseManager {
     public static void deleteCustomer(String id) throws SQLException {
         try {
             connect();
-            String command = "DELETE FROM 'Customers' WHERE 'ID' = ?";
-            
-            PreparedStatement pstmnt = databaseConenction.prepareStatement(command);
-            pstmnt.setInt(1, Integer.parseInt(id));
-            pstmnt.executeUpdate();
-        
+            String command = "DELETE FROM 'Customers' WHERE ID = '" + id + "'";
+            Statement stmnt = databaseConnection.createStatement();
+            stmnt.executeUpdate(command);
+            System.out.println("Deleted");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
     
     public static void deleteItem(String id) throws SQLException {
-        try {
+         try {
             connect();
-            String command = "DELETE FROM 'Inventory Items' WHERE 'ID' = ?";
-            
-            PreparedStatement pstmnt = databaseConenction.prepareStatement(command);
-            pstmnt.setInt(1, Integer.parseInt(id));
-            pstmnt.executeUpdate();
-        
+            String command = "DELETE FROM 'Inventory Items' WHERE ID = '" + id + "'";
+            Statement stmnt = databaseConnection.createStatement();
+            stmnt.executeUpdate(command);
+            System.out.println("Deleted");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
     
     public static void deleteSupplier(String id) throws SQLException {
-        try {
+          try {
             connect();
-            String command = "DELETE FROM 'Suppliers' WHERE 'ID' = ?";
-            
-            PreparedStatement pstmnt = databaseConenction.prepareStatement(command);
-            pstmnt.setInt(1, Integer.parseInt(id));
-            pstmnt.executeUpdate();
-        
+            String command = "DELETE FROM 'Suppliers' WHERE ID = '" + id + "'";
+            Statement stmnt = databaseConnection.createStatement();
+            stmnt.executeUpdate(command);
+            System.out.println("Deleted");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
