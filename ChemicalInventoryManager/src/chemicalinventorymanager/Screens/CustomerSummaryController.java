@@ -98,10 +98,12 @@ public class CustomerSummaryController implements Initializable {
         
         //make the list of Entry items
         debts = customer.getDebts(); 
+        System.out.println(customer.getDebts().toString());
         ObservableList<Map.Entry<String, Double>> oDebtsList = FXCollections.observableArrayList(debts.entrySet()); 
         
         customerDebtsTable.setItems(oDebtsList);
         customerDebtsTable.getColumns().setAll(transIDColumn, debtColumn); 
+        customerDebtsTable.refresh();
         
     }
 }

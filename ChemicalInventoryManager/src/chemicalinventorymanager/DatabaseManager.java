@@ -1,8 +1,10 @@
 package chemicalinventorymanager;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -120,15 +123,21 @@ public final class DatabaseManager {
                 customer.gender = gender;
                 customer.totalDebt = results.getDouble("TOTAL DEBT");
 
-                byte[] debtsBytes = results.getBytes("ARRAY OF CREDITS");
-                if (debtsBytes != null  && debtsBytes.length > 0) {
-                    InputStream binaryInput = new ByteArrayInputStream(debtsBytes); //The driver that we're using doesn't support results.getBlob
-
-                    ObjectInputStream inputStream = new ObjectInputStream(binaryInput);
-                    customer.debts = (Map<String, Double>)inputStream.readObject();
-                }else {
-                    customer.debts = null;
+                String debtsIds = results.getString("DEBTS IDS");
+                String debtsAmounts = results.getString("DEBTS AMOUNTS");
+                
+                if (debtsIds != null && !debtsIds.isEmpty()){
+                    List<String> ids = Arrays.asList(debtsIds.split("\\s*,\\s*"));
+                    List<String> amounts = Arrays.asList(debtsAmounts.split("\\s*,\\s*"));
+                    LinkedHashMap<String, Double> map = new LinkedHashMap<>();
+                    
+                    for (int i = 0; i < ids.size(); i++){
+                        map.put(ids.get(i), Double.parseDouble(amounts.get(i)));
+                    }
+                    
+                    customer.debts = map;
                 }
+                
                 return customer;
                
             }
@@ -141,6 +150,35 @@ public final class DatabaseManager {
         } 
     }
     
+    
+    public static void updateCustomerDebtHistory (String id, LinkedHashMap<String, Double> newMap) throws IOException{
+        
+        String idStrings = "";
+        Set<String> keys = newMap.keySet();
+        idStrings = String.join(",", keys);
+            
+        String amounts = "";
+        Collection<Double> mappings = newMap.values();
+        amounts = mappings.toString();
+        amounts = amounts.substring(1, amounts.length()-1); 
+        
+        try{
+            
+            connect();
+            String command = "UPDATE `Customers` SET `DEBTS IDS`=?, `DEBTS AMOUNTS`=? WHERE ID=?";
+            PreparedStatement statement = databaseConnection.prepareStatement(command);
+            statement.setString(1, idStrings); 
+            statement.setString(2, amounts); 
+            statement.setString(3, id);
+            statement.executeUpdate();
+            statement.close();
+            
+        }catch (Exception e){
+            processError(e);
+        }
+        
+        
+    }
     
      /**
      * This class is designed for integration with ListViews with search-by-name capabilities
@@ -515,6 +553,8 @@ public final class DatabaseManager {
         item.imageName = result.getString("PICTURE NAME");
         return item;
     }
+    
+    
     public static Customer convertCustomer(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
         Customer customer;
         customer = new Customer(result.getString("ID"));
@@ -525,6 +565,8 @@ public final class DatabaseManager {
         
         return customer;
     }
+    
+    
     public static Supplier convertSupplier(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
         Supplier supplier;
         supplier = new Supplier(result.getString("ID"));
@@ -537,6 +579,8 @@ public final class DatabaseManager {
         supplier.itemsSupplied = idArray;
         return supplier;
     }
+    
+    
     public static Transaction convertTransaction(ResultSet result)throws SQLException, ParseException, IOException, ClassNotFoundException{
         Transaction transaction;
         SimpleDateFormat formatDate = new SimpleDateFormat("E, MMM dd yyyy");
@@ -562,7 +606,7 @@ public final class DatabaseManager {
             stmnt.executeUpdate(command);
             System.out.println("Deleted");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            processError(e);
         }
     }
     
@@ -574,7 +618,7 @@ public final class DatabaseManager {
             stmnt.executeUpdate(command);
             System.out.println("Deleted");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+             processError(e);
         }
     }
     
@@ -586,7 +630,7 @@ public final class DatabaseManager {
             stmnt.executeUpdate(command);
             System.out.println("Deleted");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+              processError(e);
         }
     }
     

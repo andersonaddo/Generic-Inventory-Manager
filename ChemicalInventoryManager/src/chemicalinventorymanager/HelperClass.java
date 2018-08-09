@@ -3,6 +3,7 @@ package chemicalinventorymanager;
 
 import java.util.Optional;
 import java.util.function.UnaryOperator;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.beans.value.ChangeListener;
@@ -111,6 +112,7 @@ public class HelperClass {
                     + "\n\nError: " + e);
 
             alert.showAndWait();
+            e.printStackTrace();
        }
        
     public static boolean confirmUser(String message) {

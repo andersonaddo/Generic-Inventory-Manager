@@ -1,6 +1,6 @@
 package chemicalinventorymanager;
 
-import java.util.Map;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -10,9 +10,9 @@ public class Customer {
     public String imageName, fullName;
     public Gender gender;
     public Double totalDebt;
-    Map<String, Double> debts;
+    LinkedHashMap<String, Double> debts = null;
 
-    public Map<String, Double> getDebts() {return debts;}
+    public LinkedHashMap<String, Double> getDebts() {return debts;}
     private String id;
     
     public Customer(String id){

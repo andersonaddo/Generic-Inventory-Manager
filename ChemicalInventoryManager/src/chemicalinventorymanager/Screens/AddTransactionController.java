@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -73,10 +74,18 @@ public class AddTransactionController implements Initializable {
             }else{
                 tran.mode = Transaction.transactionMode.credit;
                 tran.creditAmount = Double.parseDouble(credit.getText());
+                
+                //Updating the customer's transaction debt history
+                //TODO: Update total debt
+                Customer com = DatabaseManager.getCustomerWithId(customerDrawer.getValue());
+                LinkedHashMap<String, Double> transactionHistory = (com.getDebts() == null) ? new LinkedHashMap<>() : com.getDebts();
+                transactionHistory.put(tran.getID(), tran.creditAmount);
+                DatabaseManager.updateCustomerDebtHistory(customerDrawer.getValue(), transactionHistory);
+            
             }
             
             DatabaseManager.addTransaction(tran);
-            
+
             
         }catch(Exception e){
             HelperClass.alertError(e);
