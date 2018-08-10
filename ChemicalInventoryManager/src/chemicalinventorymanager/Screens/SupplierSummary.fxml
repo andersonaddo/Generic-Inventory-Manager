@@ -6,16 +6,12 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.SupplierSummaryController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chemicalinventorymanager.Screens.SupplierSummaryController">
    <children>
-      <Label fx:id="supplierNameLabel" layoutX="14.0" layoutY="14.0" prefHeight="82.0" prefWidth="324.0" text="Insert Supplier Name Here" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
       <MenuBar layoutY="-1.0" prefHeight="25.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -35,22 +31,12 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Label layoutX="29.0" layoutY="126.0" text="Email:">
+      <Label layoutX="30.0" layoutY="120.0" text="Email:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
       <Label layoutX="29.0" layoutY="152.0" text="Phone:">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="supplierEmailLabel" layoutX="82.0" layoutY="126.0" text="Insert email here">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <Label fx:id="supplierPhoneLabel" layoutX="82.0" layoutY="152.0" text="insert phone Number here">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -61,20 +47,32 @@
          </font>
       </Label>
       <ListView fx:id="itemsSuppliedList" layoutX="83.0" layoutY="181.0" prefHeight="82.0" prefWidth="200.0" />
-      <Button fx:id="deletebtn" layoutX="30.0" layoutY="297.0" mnemonicParsing="false" onAction="#delete" prefHeight="29.0" prefWidth="254.0" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
+      <Button fx:id="deletebtn" layoutX="30.0" layoutY="297.0" mnemonicParsing="false" onAction="#delete" prefHeight="29.0" prefWidth="102.0" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Label layoutX="30.0" layoutY="103.0" text="ID:">
+      <Label layoutX="29.0" layoutY="91.0" text="ID:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="supplierIDLabel" layoutX="83.0" layoutY="103.0" text="Insert ID here">
+      <TextField fx:id="supplierEmailTextField" layoutX="83.0" layoutY="116.0" prefHeight="25.0" prefWidth="174.0" promptText="Insert Email here" />
+      <TextField fx:id="supplierPhoneTextField" layoutX="83.0" layoutY="148.0" prefHeight="25.0" prefWidth="174.0" promptText="Insert Phone no. here" />
+      <Button fx:id="updatebtn" layoutX="183.0" layoutY="297.0" mnemonicParsing="false" onAction="#update" prefHeight="29.0" prefWidth="102.0" style="-fx-background-color: #008b00;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label fx:id="supplierIDLabel" layoutX="83.0" layoutY="91.0" prefHeight="17.0" prefWidth="174.0" text="Insert supplier Id">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <TextField fx:id="supplierNameTextField" layoutX="14.0" layoutY="33.0" prefHeight="48.0" prefWidth="353.0" promptText="Insert Name here">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

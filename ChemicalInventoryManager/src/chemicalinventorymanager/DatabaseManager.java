@@ -646,4 +646,16 @@ public final class DatabaseManager {
         }
     }
     
+     public static void updateSupplier(String id, String name, String email, String phone) {
+        try {
+            connect();
+            String command = "UPDATE 'Suppliers' SET 'NAME' = '" + name + "', 'EMAIL' = '" + email + "', 'PHONE' = '" + phone + "' WHERE ID = '" + id + "'";
+            Statement stmnt = databaseConnection.createStatement();
+            stmnt.executeUpdate(command);
+            System.out.println("Updated");
+        } catch (Exception e) {
+              processError(e);
+        }
+    }
+    
 }
