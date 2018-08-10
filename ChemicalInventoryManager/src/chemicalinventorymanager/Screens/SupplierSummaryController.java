@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -32,22 +33,25 @@ public class SupplierSummaryController implements Initializable {
     private String id;
     
     @FXML
-    Label supplierNameLabel;
+    TextField supplierNameTextField;
     
     @FXML
     Label supplierIDLabel;
     
     @FXML
-    Label supplierEmailLabel;
+    TextField supplierEmailTextField;
     
     @FXML
-    Label supplierPhoneLabel;
+    TextField supplierPhoneTextField;
     
     @FXML
     ListView itemsSuppliedList;
     
     @FXML
     Button deletebtn;
+    
+    @FXML
+    Button updatebtn;
     
     /**
      * Initializes the controller class.
@@ -65,6 +69,14 @@ public class SupplierSummaryController implements Initializable {
         stage.close();
     }
     
+    @FXML
+    private void update() throws SQLException {
+        if (!HelperClass.confirmUser("Are you sure you want to update this supplier?")) return;
+        DatabaseManager.updateSupplier(supplier.getID(), supplierNameTextField.getText(), supplierEmailTextField.getText(), supplierPhoneTextField.getText());
+        Stage stage = (Stage) updatebtn.getScene().getWindow();
+        stage.close();
+    }
+    
     public void setID(String id) {
         this.id = id;
         setValues(id);
@@ -76,9 +88,9 @@ public class SupplierSummaryController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(SupplierSummaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        supplierNameLabel.setText(supplier.name);
-        supplierEmailLabel.setText(supplier.email);
-        supplierPhoneLabel.setText(supplier.phone);
+        supplierNameTextField.setText(supplier.name);
+        supplierEmailTextField.setText(supplier.email);
+        supplierPhoneTextField.setText(supplier.phone);
         supplierIDLabel.setText(id);
         
         

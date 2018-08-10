@@ -14,16 +14,17 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -39,14 +40,17 @@ public class CustomerSummaryController implements Initializable {
     @FXML
     Button deletebtn;
     
+    @FXML 
+    Button updatebtn;
+    
     @FXML
-    Label customerNameLabel;
+    TextField customerNameTextField;
     
     @FXML
     Label customerIdLabel;
     
     @FXML
-    Label customerGenderLabel;
+    ComboBox customerGenderComboBox;
     
     @FXML
     Label customerTotalDebtLabel;
@@ -65,6 +69,7 @@ public class CustomerSummaryController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        customerGenderComboBox.setItems(FXCollections.observableArrayList("Male", "Female"));
     }  
     
     public void setID(String id) {
@@ -80,16 +85,24 @@ public class CustomerSummaryController implements Initializable {
         stage.close();
     }
     
+    @FXML
+    private void update() throws SQLException {
+        if (!HelperClass.confirmUser("Are you sure you want to update this record?")) return;
+        DatabaseManager.updateCustomer(customer.getID(), customerNameTextField.getText(), (String) customerGenderComboBox.getSelectionModel().getSelectedItem());
+        Stage stage = (Stage) updatebtn.getScene().getWindow();
+        stage.close();
+    }
+    
     private void setValues(String id) {
         try {
             customer = DatabaseManager.getCustomerWithId(id);
         } catch (SQLException ex) {
             Logger.getLogger(CustomerSummaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        customerNameLabel.setText(customer.getfullName());
+        customerNameTextField.setText(customer.getfullName());
         customerIdLabel.setText(customer.getID());
-        customerGenderLabel.setText(customer.getGender());
-        
+        customerGenderComboBox.getSelectionModel().select(customer.getGender());
+ 
         transIDColumn.setCellValueFactory((TableColumn.CellDataFeatures<Map.Entry<String, Double>, String> p) 
                 -> new SimpleObjectProperty<>(p.getValue().getKey())); 
         
