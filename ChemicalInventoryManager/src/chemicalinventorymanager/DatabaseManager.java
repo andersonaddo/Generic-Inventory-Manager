@@ -646,7 +646,7 @@ public final class DatabaseManager {
         }
     }
     
-     public static void updateSupplier(String id, String name, String email, String phone) {
+    public static void updateSupplier(String id, String name, String email, String phone) {
         try {
             connect();
             String command = "UPDATE 'Suppliers' SET 'NAME' = '" + name + "', 'EMAIL' = '" + email + "', 'PHONE' = '" + phone + "' WHERE ID = '" + id + "'";
@@ -655,7 +655,18 @@ public final class DatabaseManager {
             System.out.println("Updated");
         } catch (Exception e) {
               processError(e);
-        }
+        }  
     }
     
+    public static void updateItem(String id, String name, String price, String desc) {
+        try {
+            connect();
+            String command = "UPDATE 'Inventory Items' SET 'NAME' = '" + name + "', 'PRICE' = '" + price + "', 'DESCRIPTION' = '" + desc + "' WHERE ID = '" + id + "'";
+            Statement stmnt = databaseConnection.createStatement();
+            stmnt.executeUpdate(command);
+            System.out.println("Updated");
+        } catch (Exception e) {
+              processError(e);
+        }
+    }
 }

@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -35,16 +36,16 @@ public class ItemSummaryController implements Initializable {
     Label itemIDLabel;
     
     @FXML
-    Label ItemNameLabel;
+    TextField ItemNameTextField;
     
     @FXML
-    Label itemPriceLabel;
+    TextField itemPriceTextField;
     
     @FXML
     Label itemSupplierID;
     
     @FXML
-    Label itemStockNumber;
+    TextField itemStockNumberTextField;
     
     @FXML
     TextArea itemDesc;
@@ -54,6 +55,9 @@ public class ItemSummaryController implements Initializable {
     
     @FXML
     private Button deletebtn;
+    
+    @FXML
+    private Button updatebtn;
     
     /**
      * Initializes the controller class.
@@ -75,10 +79,10 @@ public class ItemSummaryController implements Initializable {
             Logger.getLogger(ItemSummaryController.class.getName()).log(Level.SEVERE, null, ex);
         }
         itemIDLabel.setText(item.getID());
-        ItemNameLabel.setText(item.name);
-        itemPriceLabel.setText(String.valueOf(item.price));
+        ItemNameTextField.setText(item.name);
+        itemPriceTextField.setText(String.valueOf(item.price));
         itemSupplierID.setText(item.supplierId);
-        itemStockNumber.setText(String.valueOf(item.amountAvailable));
+        itemStockNumberTextField.setText(String.valueOf(item.amountAvailable));
         itemDesc.setText(item.description);
     }
     
@@ -87,6 +91,14 @@ public class ItemSummaryController implements Initializable {
         if (!HelperClass.confirmUser("Are you sure you want to delete this item?")) return;
         DatabaseManager.deleteItem(id);
         Stage stage = (Stage) deletebtn.getScene().getWindow();
+        stage.close();
+    }
+    
+    @FXML
+    private void update() throws SQLException {
+        if (!HelperClass.confirmUser("Are you sure you want to update this item?")) return;
+        DatabaseManager.updateItem(item.getID(), ItemNameTextField.getText(), itemPriceTextField.getText(), itemDesc.getText());
+        Stage stage = (Stage) updatebtn.getScene().getWindow();
         stage.close();
     }
     

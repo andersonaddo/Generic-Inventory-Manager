@@ -6,6 +6,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -43,7 +44,6 @@
          </font>
       </Label>
       <Label id="TransactionDateLabel" fx:id="itemIDLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="87.0" prefHeight="18.0" prefWidth="186.0" text="insert Id here" />
-      <Label id="CustomerIdLabel" fx:id="ItemNameLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="118.0" prefHeight="18.0" prefWidth="186.0" text="insert Namehere" />
       <Label layoutX="272.0" layoutY="251.0" text="Description:">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -54,14 +54,13 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="CustomerNameLabel" fx:id="itemPriceLabel" contentDisplay="CENTER" layoutX="359.0" layoutY="150.0" prefHeight="18.0" prefWidth="186.0" text="insert Price here" />
       <Label layoutX="271.0" layoutY="119.0" text="Name:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
       <Label id="CustomerNameLabel" fx:id="customerGenderLabel1" alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" focusTraversable="false" layoutX="352.0" layoutY="251.0" prefHeight="78.0" prefWidth="186.0" />
-      <TextArea fx:id="itemDesc" editable="false" layoutX="358.0" layoutY="251.0" prefHeight="78.0" prefWidth="200.0" promptText="Insert description here" />
+      <TextArea fx:id="itemDesc" layoutX="358.0" layoutY="251.0" prefHeight="78.0" prefWidth="200.0" promptText="Insert description here" />
       <Label layoutX="272.0" layoutY="182.0" text="Supplier ID(s):">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -73,11 +72,18 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label id="CustomerNameLabel" fx:id="itemStockNumber" contentDisplay="CENTER" layoutX="360.0" layoutY="215.0" prefHeight="18.0" prefWidth="186.0" text="insert stock number here" />
-      <Button fx:id="deletebtn" layoutX="35.0" layoutY="300.0" mnemonicParsing="false" onAction="#delete" prefHeight="29.0" prefWidth="200.0" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
+      <Button fx:id="deletebtn" layoutX="35.0" layoutY="300.0" mnemonicParsing="false" onAction="#delete" prefHeight="29.0" prefWidth="81.0" style="-fx-background-color: #8b0000;" text="Delete" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
+      <Button fx:id="updatebtn" layoutX="154.0" layoutY="300.0" mnemonicParsing="false" onAction="#update" prefHeight="29.0" prefWidth="81.0" style="-fx-background-color: #008b00;" text="Update" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <TextField fx:id="ItemNameTextField" layoutX="359.0" layoutY="115.0" promptText="insert Namehere" />
+      <TextField fx:id="itemPriceTextField" layoutX="359.0" layoutY="146.0" promptText="insert price here" />
+      <TextField fx:id="itemStockNumberTextField" layoutX="359.0" layoutY="211.0" promptText="insert stock number here" />
    </children>
 </AnchorPane>
