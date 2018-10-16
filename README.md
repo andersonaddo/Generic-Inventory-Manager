@@ -12,3 +12,7 @@ For all those who want to edit the codebase, this was made in Netbeans!
 
 ---
 ###### Thanks to Freepik.com for the awesome picture!
+
+
+**Note**
+Due to a change in curcumstances, it doesn't look like this thing will be finished any time soon (or at all, in fact😶). But feel free to use what's present for whatever you want! There's still some good functionality in here.
